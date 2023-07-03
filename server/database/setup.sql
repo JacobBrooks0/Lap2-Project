@@ -1,5 +1,6 @@
+DROP TABLE IF EXISTS user_jobs;
+DROP TABLE IF EXISTS jobs;
 DROP TABLE IF EXISTS token;
-DROP TABLE IF EXISTS play;
 DROP TABLE IF EXISTS user_account;
 
 CREATE TABLE user_account (
@@ -17,24 +18,33 @@ CREATE TABLE token (
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
 
-CREATE TABLE play (
-    play_id INT GENERATED ALWAYS AS IDENTITY,
+CREATE TABLE jobs (
+    job_id INT GENERATED ALWAYS AS IDENTITY,
     user_id INT NOT NULL, 
-    name VARCHAR(50) UNIQUE NOT NULL,
-    summary VARCHAR(500),
-    length INT NOT NULL,
-    time BIGINT NOT NULL,
-    PRIMARY KEY (play_id),
+    job_subject VARCHAR(50) UNIQUE NOT NULL,
+    job_description VARCHAR(500),
+    job_location VARCHAR(100) ,
+    job_requirements VARCHAR(100), 
+    PRIMARY KEY (job_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
+
+CREATE TABLE user_jobs(
+    user_jobs_id INT GENERATED ALWAYS AS IDENTITY,
+    user_id INT NOT NULL,
+    job_id INT NOT NULL,
+    PRIMARY KEY (user_jobs_id),
+    FOREIGN KEY (user_id) REFERENCES user_account("user_id"),
+    FOREIGN KEY (job_id) REFERENCES jobs("job_id")
+) ;
 
 INSERT INTO user_account (username, password)
 VALUES 
     ('Globe', 'asdf');
 
-INSERT INTO play (user_id, name, summary, length, time)
-VALUES 
-    (1, 'Hamlet', 'The ghost of the King of Denmark tells his son Hamlet to avenge his murder by killing the new king, Hamlet''s uncle. Hamlet feigns madness, contemplates life and death, and seeks revenge. His uncle, fearing for his life, also devises plots to kill Hamlet.', 120, 1688230800),
-    (1, 'Romeo And Juliet', 'An age-old vendetta between two powerful families erupts into bloodshed. A group of masked Montagues risk further conflict by gatecrashing a Capulet party. A young lovesick Romeo Montague falls instantly in love with Juliet Capulet, who is due to marry her father''s choice, the County Paris.', 140, 1689451200),
-    (1, 'Othello', 'Iago is furious about being overlooked for promotion and plots to take revenge against his General; Othello, the Moor of Venice. Iago manipulates Othello into believing his wife Desdemona is unfaithful, stirring Othello''s jealousy. Othello allows jealousy to consume him, murders Desdemona, and then kills himself.', 130, 1689620400);
+INSERT INTO jobs (user_id,job_subject,job_description,job_location,job_requirements)
+VALUES
+    (1,'Landscaper Needed','We desperately need a landscaper to help with the area outside of the Town Hall','Florian','Gardening, Landscaping, etc');
+
+
 
