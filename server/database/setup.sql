@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS class_student;
 DROP TABLE IF EXISTS class_skill;
 DROP TABLE IF EXISTS class;
 DROP TABLE IF EXISTS skill;
+DROP TABLE IF EXISTS user_jobs;
+DROP TABLE IF EXISTS jobs;
 DROP TABLE IF EXISTS token;
 -- can't use 'user' as a table name
 DROP TABLE IF EXISTS user_account;
@@ -20,6 +22,26 @@ CREATE TABLE token (
     token CHAR(36) NOT NULL,
     PRIMARY KEY (token_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
+);
+
+CREATE TABLE jobs (
+    job_id INT GENERATED ALWAYS AS IDENTITY,
+    user_id INT NOT NULL, 
+    job_subject VARCHAR(50) UNIQUE NOT NULL,
+    job_description VARCHAR(500),
+    job_location VARCHAR(100) ,
+    job_requirements VARCHAR(100), 
+    PRIMARY KEY (job_id),
+    FOREIGN KEY (user_id) REFERENCES user_account("user_id")
+);
+
+CREATE TABLE user_jobs(
+    user_jobs_id INT GENERATED ALWAYS AS IDENTITY,
+    user_id INT NOT NULL,
+    job_id INT NOT NULL,
+    PRIMARY KEY (user_jobs_id),
+    FOREIGN KEY (user_id) REFERENCES user_account("user_id"),
+    FOREIGN KEY (job_id) REFERENCES jobs("job_id")
 );
 
 CREATE TABLE class (
@@ -81,4 +103,9 @@ VALUES
 INSERT INTO class_student (class_id, student_id)
 VALUES 
     (1, 2);
+
+INSERT INTO jobs (user_id,job_subject,job_description,job_location,job_requirements)
+VALUES
+    (1,'Landscaper Needed','We desperately need a landscaper to help with the area outside of the Town Hall','Florian','Gardening, Landscaping, etc');
+
 
