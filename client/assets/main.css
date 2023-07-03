@@ -30,11 +30,12 @@
     color: #E0B1A9;
 }
 
-#skill-classes,#community-events{
+#skill-classes,#community-events,#job-listings{
     margin:10px;
     padding-left: 150px;
     padding-top: 30px;
 }
+
 
 img {
     width: 150px;
@@ -42,7 +43,7 @@ img {
     border-radius: 20%;
 }
 
-table,td{
+table,td,th{
     padding: 10px;
     max-width: 800px;
 }
