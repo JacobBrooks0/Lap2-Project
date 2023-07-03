@@ -51,12 +51,16 @@ const showSkills = async () => {
 
 const applyToClass = (skill_name) => {
     //add skill to user in dtb
-    alert(`You have joined the ${skill_name} class!`)
+    //alert(`You have joined the ${skill_name} class!`)
+    popupText.innerHTML=`You have joined the ${skill_name} class!`
+    popupText.classList.toggle("show")
 }
 
 const createClass = () => {
-    //take to createskills.html
-    alert(`Create a skills class`)
+    //take to createSkills.html
+    // alert(`Create a skills class`)
+    popupText.innerHTML=`You have created a skills class!`
+    popupText.classList.toggle("show")
 }
 
 const skillsTable = document.querySelector('#skill-classes')
@@ -75,6 +79,9 @@ const createButton = document.querySelector('#create')
 createButton.addEventListener('click', () => {
     createClass()
 })
+
+const popup = document.querySelector('.popup')
+const popupText = document.querySelector('.popupText')
 
 showSkills()
 

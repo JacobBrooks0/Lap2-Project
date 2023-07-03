@@ -44,12 +44,16 @@ const showJobs = async () => {
 
 const applyToJob = (job_name) => {
     //add job to user in dtb
-    alert(`You have applied to the ${job_name} job!`)
+    // alert(`You have applied to the ${job_name} job!`)
+    popupText.innerHTML=`You have applied to the ${job_name} job!`
+    popupText.classList.toggle("show")
 }
 
 const createJob = () => {
     //take to createjobs.html
-    alert(`Create a job listing`)
+    //alert(`Create a job listing`)
+    popupText.innerHTML=`You have created a job listing!`
+    popupText.classList.toggle("show")
 }
 
 const jobsTable = document.querySelector('#job-listings')
@@ -68,5 +72,8 @@ const createButton = document.querySelector('#create')
 createButton.addEventListener('click', () => {
     createJob()
 })
+
+const popup = document.querySelector('.popup')
+const popupText = document.querySelector('.popupText')
 
 showJobs()
