@@ -1,10 +1,17 @@
 DROP TABLE IF EXISTS class_student;
+
 DROP TABLE IF EXISTS class_skill;
+
 DROP TABLE IF EXISTS class;
+
 DROP TABLE IF EXISTS skill;
+
 DROP TABLE IF EXISTS user_jobs;
+
 DROP TABLE IF EXISTS jobs;
+
 DROP TABLE IF EXISTS token;
+
 -- can't use 'user' as a table name
 DROP TABLE IF EXISTS user_account;
 
@@ -26,11 +33,11 @@ CREATE TABLE token (
 
 CREATE TABLE jobs (
     job_id INT GENERATED ALWAYS AS IDENTITY,
-    user_id INT NOT NULL, 
+    user_id INT NOT NULL,
     job_subject VARCHAR(50) UNIQUE NOT NULL,
     job_description VARCHAR(500),
-    job_location VARCHAR(100) ,
-    job_requirements VARCHAR(100), 
+    job_location VARCHAR(100),
+    job_requirements VARCHAR(100),
     PRIMARY KEY (job_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
@@ -46,14 +53,20 @@ CREATE TABLE user_jobs(
 
 CREATE TABLE class (
     class_id INT GENERATED ALWAYS AS IDENTITY,
-    teacher_id INT NOT NULL,
+    creator_id INT NOT NULL,
     name VARCHAR(50) UNIQUE NOT NULL,
-    summary VARCHAR(500),
-    main_image_url VARCHAR(500),
+    info VARCHAR(1000),
+    main_image_url VARCHAR,
     start_date BIGINT NOT NULL,
     end_date BIGINT NOT NULL,
+    enrolled_at FLOAT DEFAULT extract(
+        epoch
+        from
+            now()
+    ),
+    capacity INT,
     PRIMARY KEY (class_id),
-    FOREIGN KEY (teacher_id) REFERENCES user_account("user_id")
+    FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );
 
 CREATE TABLE skill (
@@ -70,7 +83,8 @@ CREATE TABLE class_student (
     student_id INT NOT NULL,
     PRIMARY KEY (class_student_id),
     FOREIGN KEY (class_id) REFERENCES class("class_id"),
-    FOREIGN KEY (student_id) REFERENCES user_account("user_id")
+    FOREIGN KEY (student_id) REFERENCES user_account("user_id"),
+    UNIQUE (class_id, student_id)
 );
 
 CREATE TABLE class_skill (
@@ -82,30 +96,109 @@ CREATE TABLE class_skill (
     FOREIGN KEY (skill_id) REFERENCES skill("skill_id")
 );
 
-INSERT INTO user_account (username, password, name)
-VALUES 
-    ('florin', '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC', 'Florin Florinberg'),
-    ('Student', '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC', 'Stu Dent');
+INSERT INTO
+    user_account (username, password, name)
+VALUES
+    (
+        'florin',
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'Florin Florinberg'
+    ),
+    (
+        'Student1',
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'Stu Dent'
+    ),
+    (
+        'Student2',
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'Rosario Benson'
+    ),
+    (
+        'Student3',
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'Lora Pace'
+    ),
+    (
+        'Student4',
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'Carroll Arias'
+    ),
+    (
+        'Student5',
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'Anthony Mooney'
+    );
+
 -- the password is 1
+INSERT INTO
+    class (
+        creator_id,
+        name,
+        info,
+        start_date,
+        end_date,
+        capacity
+    )
+VALUES
+    (
+        1,
+        'Gardening 101',
+        'Learn to garden so you don''t have to hire one',
+        1688230800,
+        1688240800,
+        6
+    ),
+    (
+        1,
+        'Garbage Learning',
+        'Learn to manage rubbish disposal',
+        1688230800,
+        1688240800,
+        5
+    );
 
-INSERT INTO class (name, summary, start_date, end_date, teacher_id)
-VALUES 
-    ('Gardening 101', 'Learn to garden so you don''t have to hire one', 1688230800, 1688230800, 1);
+INSERT INTO
+    skill (name, description, image_id)
+VALUES
+    (
+        'Gardening Pro',
+        'Has professional gardening ability',
+        1
+    ),
+    (
+        'Garbage General',
+        'Knows exactly how to deal with rubbish',
+        2
+    );
 
-INSERT INTO skill (name, description, image_id)
-VALUES 
-    ('Gardening Pro', 'Has professional gardening ability', 54);
-
-INSERT INTO class_skill (class_id, skill_id)
-VALUES 
+INSERT INTO
+    class_skill (class_id, skill_id)
+VALUES
     (1, 1);
 
-INSERT INTO class_student (class_id, student_id)
-VALUES 
-    (1, 2);
-
-INSERT INTO jobs (user_id,job_subject,job_description,job_location,job_requirements)
+INSERT INTO
+    class_student (class_id, student_id)
 VALUES
-    (1,'Landscaper Needed','We desperately need a landscaper to help with the area outside of the Town Hall','Florian','Gardening, Landscaping, etc');
+    (1, 2),
+    (1, 3),
+    (1, 4),
+    (1, 5),
+    (2, 2);
 
-
+INSERT INTO
+    jobs (
+        user_id,
+        job_subject,
+        job_description,
+        job_location,
+        job_requirements
+    )
+VALUES
+    (
+        1,
+        'Landscaper Needed',
+        'We desperately need a landscaper to help with the area outside of the Town Hall',
+        'Florian',
+        'Gardening, Landscaping, etc'
+    );
