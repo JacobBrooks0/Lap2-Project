@@ -1,14 +1,24 @@
 DROP TABLE IF EXISTS class_student;
+
 DROP TABLE IF EXISTS class_skill;
+
 DROP TABLE IF EXISTS skill;
+
 DROP TABLE IF EXISTS class;
+
 DROP TABLE IF EXISTS user_jobs;
+
 DROP TABLE IF EXISTS jobs;
+
 DROP TABLE IF EXISTS event_attendee;
+
 DROP TABLE IF EXISTS community_event;
+
 DROP TABLE IF EXISTS token;
+
 -- can't use 'user' as a table name
 DROP TABLE IF EXISTS user_account;
+
 CREATE TABLE user_account (
     user_id INT GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(30) UNIQUE NOT NULL,
@@ -16,6 +26,7 @@ CREATE TABLE user_account (
     name VARCHAR(30) UNIQUE NOT NULL,
     PRIMARY KEY (user_id)
 );
+
 CREATE TABLE token (
     token_id INT GENERATED ALWAYS AS IDENTITY,
     user_id INT NOT NULL,
@@ -23,6 +34,7 @@ CREATE TABLE token (
     PRIMARY KEY (token_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
+
 CREATE TABLE community_event (
     event_id INT GENERATED ALWAYS AS IDENTITY,
     creator_id INT NOT NULL,
@@ -34,16 +46,22 @@ CREATE TABLE community_event (
     PRIMARY KEY (event_id),
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );
+
 CREATE TABLE event_attendee (
     event_attendee_id INT GENERATED ALWAYS AS IDENTITY,
     event_id INT NOT NULL,
     attendee_id INT NOT NULL,
-    confirmed_at FLOAT DEFAULT extract(epoch from now()),
+    confirmed_at FLOAT DEFAULT extract(
+        epoch
+        from
+            now()
+    ),
     PRIMARY KEY (event_attendee_id),
     FOREIGN KEY (event_id) REFERENCES community_event("event_id"),
     FOREIGN KEY (attendee_id) REFERENCES user_account("user_id"),
     UNIQUE (event_id, attendee_id)
 );
+
 CREATE TABLE jobs (
     job_id INT GENERATED ALWAYS AS IDENTITY,
     user_id INT NOT NULL,
@@ -54,6 +72,7 @@ CREATE TABLE jobs (
     PRIMARY KEY (job_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
+
 CREATE TABLE user_jobs(
     user_jobs_id INT GENERATED ALWAYS AS IDENTITY,
     user_id INT NOT NULL,
@@ -62,6 +81,7 @@ CREATE TABLE user_jobs(
     FOREIGN KEY (user_id) REFERENCES user_account("user_id"),
     FOREIGN KEY (job_id) REFERENCES jobs("job_id")
 );
+
 CREATE TABLE class (
     class_id INT GENERATED ALWAYS AS IDENTITY,
     creator_id INT NOT NULL,
@@ -74,23 +94,30 @@ CREATE TABLE class (
     PRIMARY KEY (class_id),
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );
+
 CREATE TABLE skill (
     skill_id INT GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(50) UNIQUE NOT NULL,
     description VARCHAR(500),
-    image_id VARCHAR(500),
+    image_id VARCHAR,
     PRIMARY KEY (skill_id)
 );
+
 CREATE TABLE class_student (
     class_student_id INT GENERATED ALWAYS AS IDENTITY,
     class_id INT NOT NULL,
     student_id INT NOT NULL,
-    enrolled_at FLOAT DEFAULT extract(epoch from now()),
+    enrolled_at FLOAT DEFAULT extract(
+        epoch
+        from
+            now()
+    ),
     PRIMARY KEY (class_student_id),
     FOREIGN KEY (class_id) REFERENCES class("class_id"),
     FOREIGN KEY (student_id) REFERENCES user_account("user_id"),
     UNIQUE (class_id, student_id)
 );
+
 CREATE TABLE class_skill (
     class_skill_id INT GENERATED ALWAYS AS IDENTITY,
     class_id INT NOT NULL,
@@ -99,6 +126,7 @@ CREATE TABLE class_skill (
     FOREIGN KEY (class_id) REFERENCES class("class_id"),
     FOREIGN KEY (skill_id) REFERENCES skill("skill_id")
 );
+
 -- the password is 1
 INSERT INTO
     user_account (username, password, name)
@@ -133,6 +161,7 @@ VALUES
         '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
         'Anthony Mooney'
     );
+
 INSERT INTO
     community_event (
         creator_id,
@@ -149,12 +178,14 @@ VALUES
         1688230800,
         1688240800
     );
+
 INSERT INTO
     event_attendee (event_id, attendee_id)
 VALUES
     (1, 1),
     (1, 2),
     (1, 3);
+
 INSERT INTO
     class (
         creator_id,
@@ -181,6 +212,7 @@ VALUES
         1688240800,
         5
     );
+
 INSERT INTO
     skill (name, description, image_id)
 VALUES
@@ -194,10 +226,12 @@ VALUES
         'Knows exactly how to deal with rubbish',
         2
     );
+
 INSERT INTO
     class_skill (class_id, skill_id)
 VALUES
     (1, 1);
+
 INSERT INTO
     class_student (class_id, student_id)
 VALUES
@@ -206,6 +240,7 @@ VALUES
     (1, 4),
     (1, 5),
     (2, 2);
+
 INSERT INTO
     jobs (
         user_id,
@@ -215,7 +250,31 @@ INSERT INTO
         job_requirements
     )
 VALUES
-    (1,'Landscaper Needed','We desperately need a landscaper to help with the area outside of the Town Hall','Florian','Gardening, Landscaping, etc'),
-    (1,'Baker needed?','Does anybody around here know a local bakers that would be able to make a custom cake for my daughters birthday?','Florian','Baking'),
-    (1,'Emergency Plumber!!!','I need a Plumber to come round asap we have a huge leak','Whittle','Plumber'),
-    (2,'Driveway fitting','Would anybody be able to give me a quote for my driveway?','Bridalhull','Specailist Tradesperson');
+    (
+        1,
+        'Landscaper Needed',
+        'We desperately need a landscaper to help with the area outside of the Town Hall',
+        'Florian',
+        'Gardening, Landscaping, etc'
+    ),
+    (
+        1,
+        'Baker needed?',
+        'Does anybody around here know a local bakers that would be able to make a custom cake for my daughters birthday?',
+        'Florian',
+        'Baking'
+    ),
+    (
+        1,
+        'Emergency Plumber!!!',
+        'I need a Plumber to come round asap we have a huge leak',
+        'Whittle',
+        'Plumber'
+    ),
+    (
+        2,
+        'Driveway fitting',
+        'Would anybody be able to give me a quote for my driveway?',
+        'Bridalhull',
+        'Specailist Tradesperson'
+    );
