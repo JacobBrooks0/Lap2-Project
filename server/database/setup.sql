@@ -2,13 +2,17 @@ DROP TABLE IF EXISTS class_student;
 
 DROP TABLE IF EXISTS class_skill;
 
-DROP TABLE IF EXISTS class;
-
 DROP TABLE IF EXISTS skill;
+
+DROP TABLE IF EXISTS class;
 
 DROP TABLE IF EXISTS user_jobs;
 
 DROP TABLE IF EXISTS jobs;
+
+DROP TABLE IF EXISTS event_attendee;
+
+DROP TABLE IF EXISTS community_event;
 
 DROP TABLE IF EXISTS token;
 
@@ -29,6 +33,29 @@ CREATE TABLE token (
     token CHAR(36) NOT NULL,
     PRIMARY KEY (token_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
+);
+
+CREATE TABLE community_event (
+    event_id INT GENERATED ALWAYS AS IDENTITY,
+    creator_id INT NOT NULL,
+    name VARCHAR(50) UNIQUE NOT NULL,
+    info VARCHAR(1000),
+    main_image_url VARCHAR,
+    start_date BIGINT NOT NULL,
+    end_date BIGINT NOT NULL,
+    PRIMARY KEY (event_id),
+    FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
+);
+
+CREATE TABLE event_attendee (
+    event_attendee_id INT GENERATED ALWAYS AS IDENTITY,
+    event_id INT NOT NULL,
+    attendee_id INT NOT NULL,
+    confirmed_at FLOAT DEFAULT extract(epoch from now()),
+    PRIMARY KEY (event_attendee_id),
+    FOREIGN KEY (event_id) REFERENCES community_event("event_id"),
+    FOREIGN KEY (attendee_id) REFERENCES user_account("user_id"),
+    UNIQUE (event_id, attendee_id)
 );
 
 CREATE TABLE jobs (
@@ -59,11 +86,6 @@ CREATE TABLE class (
     main_image_url VARCHAR,
     start_date BIGINT NOT NULL,
     end_date BIGINT NOT NULL,
-    enrolled_at FLOAT DEFAULT extract(
-        epoch
-        from
-            now()
-    ),
     capacity INT,
     PRIMARY KEY (class_id),
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
@@ -81,6 +103,7 @@ CREATE TABLE class_student (
     class_student_id INT GENERATED ALWAYS AS IDENTITY,
     class_id INT NOT NULL,
     student_id INT NOT NULL,
+    enrolled_at FLOAT DEFAULT extract(epoch from now()),
     PRIMARY KEY (class_student_id),
     FOREIGN KEY (class_id) REFERENCES class("class_id"),
     FOREIGN KEY (student_id) REFERENCES user_account("user_id"),
@@ -96,6 +119,7 @@ CREATE TABLE class_skill (
     FOREIGN KEY (skill_id) REFERENCES skill("skill_id")
 );
 
+-- the password is 1
 INSERT INTO
     user_account (username, password, name)
 VALUES
@@ -130,7 +154,30 @@ VALUES
         'Anthony Mooney'
     );
 
--- the password is 1
+INSERT INTO
+    community_event (
+        creator_id,
+        name,
+        info,
+        start_date,
+        end_date
+    )
+VALUES
+    (
+        1,
+        'Florin Barbecue',
+        'Our annual summer barbecue. Everyone''s invited.',
+        1688230800,
+        1688240800
+    );
+
+INSERT INTO
+    event_attendee (event_id, attendee_id)
+VALUES
+    (1, 1),
+    (1, 2),
+    (1, 3);
+
 INSERT INTO
     class (
         creator_id,

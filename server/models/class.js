@@ -5,7 +5,6 @@ class Class {
   constructor({
     creator_id,
     name,
-    category,
     info,
     main_image_url,
     start_date,
@@ -14,7 +13,6 @@ class Class {
   }) {
     this.id = creator_id;
     this.name = name;
-    this.category = category;
     this.info = info;
     this.main_image_url = main_image_url;
     this.start_date = start_date;
@@ -36,7 +34,7 @@ class Class {
       [id]
     );
     if (response.rows.length != 1) {
-      throw new Error("Unable to locate class.");
+      throw new Error("Unable to find the class you're looking for");
     }
     return new Class(response.rows[0]);
   }
@@ -102,6 +100,10 @@ class Class {
   }
 
   async removeClass() {
+    await db.query(
+      "DELETE FROM class_student WHERE class_id = $1 RETURNING *;",
+      [this.id]
+    );
     const response = await db.query(
       "DELETE FROM class WHERE class_id = $1 RETURNING *;",
       [this.id]
