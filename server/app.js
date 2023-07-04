@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const logger = require("morgan");
 
-const playsRouter = require("./routes/play");
+const JobRouter = require("./routes/jobRouter");
 const userRouter = require("./routes/user");
 
 const app = express();
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res.status(200).send("Welcome to 'A Play Today' api");
 });
 
-app.use("/plays", playsRouter);
+app.use("/jobs", JobRouter);
 app.use("/users", userRouter);
 
 module.exports = app;
