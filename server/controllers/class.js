@@ -23,6 +23,17 @@ class ClassController {
     }
   }
 
+  static async getUsersEnrolled(req, res) {
+    const class_id = req.params.id;
+    try {
+      const data = await Class.getUsersEnrolled(class_id);
+      res.status(200).json(data);
+    } catch (error) {
+      console.log(error);
+      res.status(404).json({ Error: error.message });
+    }
+  }
+
   static async getMyEnrolledClasses(req, res) {
     const user_id = req.tokenObj.user_id;
     try {

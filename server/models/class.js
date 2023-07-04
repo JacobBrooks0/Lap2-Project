@@ -1,4 +1,5 @@
 const db = require("../database/connect");
+const User = require("./user");
 
 class Class {
   constructor({
@@ -38,6 +39,17 @@ class Class {
       throw new Error("Unable to locate class.");
     }
     return new Class(response.rows[0]);
+  }
+
+  static async getUsersEnrolled(id) {
+    const response = await db.query(
+      "SELECT * FROM user_account u LEFT JOIN class_student cs ON u.user_id = cs.student_id WHERE class_id = $1;",
+      [id]
+    );
+    if (response.rows.length < 1) {
+      throw new Error("No students have enrolled to this class yet");
+    }
+    return response.rows.map((r) => new User(r)).map((u) => u.name);
   }
 
   static async getEnrolledByUserId(id) {
