@@ -138,8 +138,7 @@ INSERT INTO
         info,
         start_date,
         end_date,
-        capacity,
-        main_image_url
+        capacity
     )
 VALUES
     (
@@ -148,8 +147,7 @@ VALUES
         'Learn to garden so you don''t have to hire one',
         1688230800,
         1688240800,
-        6,
-        'https://www.rd.com/wp-content/uploads/2017/01/07_Immune_Surprising_Health_benefits_Gardening_459405181_monkeybusinessimages.jpg'
+        6
     ),
     (
         1,
@@ -157,8 +155,7 @@ VALUES
         'Learn to manage rubbish disposal',
         1688230800,
         1688240800,
-        5,
-        'https://tse1.mm.bing.net/th?id=OIP.Ru3_sPxBtXeB95xhHwVGgwHaFj&pid=Api'
+        5
     );
 
 INSERT INTO
