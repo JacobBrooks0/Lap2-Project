@@ -1,39 +1,40 @@
 const showSkills = async () => {
-    // //fetch skills from dtb
-    // const resp = await fetch('api')
-    // if (!resp.ok) {
-    //     console.log('something went wrong')
-    // }
-    // const skillClasses = await resp.json()
-    // skillClasses.forEach(skillClass => {
-    //     const { name, summary, main_image_url, start_date, end_date} = skillClass
-        
-    //     const row = document.createElement('tr')
-    //     const skillImageColumn = document.createElement('td')
-    //     const skillButtonColumn = document.createElement('td')
-    //     const skillInfo = document.createElement('td')
-    //     const skillImage = document.createElement('img')
-    //     const classDate = document.createElement('td')
-    //     const applyButton = document.createElement('button')
-    //     applyButton.textContent='Apply'
+    //fetch skills from dtb
+    const resp = await fetch('http://localhost:3000/class')
+    if (!resp.ok) {
+        console.log('something went wrong')
+    }
+    const skillClasses = await resp.json()
+    skillClasses.forEach(skillClass => {
+        const { name, summary, main_image_url, start_date, end_date} = skillClass
 
-    //     skillImage.src = main_image_url
-    //     skillInfo.innerHTML = `${name}<br>${summary}`
-    //     classDate.textContent = `${start_date} to ${end_date}`
+        const row = document.createElement('tr')
+        const skillImageColumn = document.createElement('td')
+        const skillButtonColumn = document.createElement('td')
+        const skillInfo = document.createElement('td')
+        const skillImage = document.createElement('img')
+        const classDate = document.createElement('td')
+        const applyButton = document.createElement('button')
+        applyButton.textContent='Enrol'
 
-    //     skillsTable.appendChild(row)
-    //     skillImageColumn.appendChild(skillImage)
-    //     row.appendChild(skillImageColumn)
-    //     row.appendChild(skillInfo)
-    //     row.appendChild(classDate)
-    //     skillButtonColumn.appendChild(applyButton)
+        skillImage.src = main_image_url
+        skillInfo.innerHTML = `${name ? name : ''}<br>${summary ? summary : ''}`
+        classDate.textContent = `${(new Date(start_date* 1000)).toUTCString()}`
+        // classDate.textContent = `${start_date.split('T23:00:00.000Z')[0]} to ${end_date.split('T23:00:00.000Z')[0]}`
+
+        skillsTable.appendChild(row)
+        skillImageColumn.appendChild(skillImage)
+        row.appendChild(skillImageColumn)
+        row.appendChild(skillInfo)
+        row.appendChild(classDate)
+        skillButtonColumn.appendChild(applyButton)
     
-    //     applyButton.addEventListener('click',() => {
-    //         applyToClass(name)
-    //     }) 
+        applyButton.addEventListener('click',() => {
+            applyToClass(name)
+        }) 
 
-    //     row.appendChild(skillButtonColumn)
-    // })
+        row.appendChild(skillButtonColumn)
+    })
 
 }
 

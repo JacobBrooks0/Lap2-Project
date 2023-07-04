@@ -2,6 +2,7 @@
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
+    font-size: 15px;
 }
 
 #navbar ul li{
@@ -30,10 +31,30 @@
     color: #E0B1A9;
 }
 
-#skill-classes,#community-events,#job-listings{
-    margin:10px;
+button,#post{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding: 4px;
+    border-radius: 5px;
+    border-color:#E0B1A9  ;
+    background-color: #E0B1A9;
+}
+
+form h1{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.skills, .jobs, .events {
     padding-left: 150px;
-    padding-top: 30px;
+    padding-top: 20px;
+    margin: 10px;
+}
+
+#skill-classes,#community-events,#job-listings{
+    /* margin:10px; */
+    /* padding-left: 150px; */
+    padding-top: 10px;
 }
 
 
@@ -48,6 +69,28 @@ table,td,th{
     max-width: 800px;
 }
 
+
+th{
+    text-align: left;
+}
+
+#job-form{
+    display: grid;
+    padding: 50px;
+    justify-content: center;
+}
+
+input, label,textarea{
+    width:500px;
+    padding: 10px;
+}
+
+#post{
+    display: inline;
+    width:60px;
+    text-align: center;
+    justify-self: right;
+}
 
 .popup {
     /* position: relative; */
@@ -97,3 +140,4 @@ table,td,th{
     50% {opacity:1 ;}
 	100%{opacity:0;}
 }
+

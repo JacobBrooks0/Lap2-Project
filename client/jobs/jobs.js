@@ -4,7 +4,6 @@ const showJobs = async () => {
         console.log('something went wrong')
     }
     const jobs = await resp.json()
-    console.log(jobs)
     jobs.forEach(job => {
         const { job_subject, job_description, job_location, job_requirements} = job
 
@@ -38,16 +37,19 @@ const showJobs = async () => {
 const applyToJob = (job) => {
     //add job to user in dtb
     // alert(`You have applied to the ${job_name} job!`)
-    const { job_name } = job
-    popupText.innerHTML=`You have applied to the ${job_name} job!`
+    const { job_subject } = job
+    popupText.innerHTML=`You have applied to the ${job_subject} job!`
     popupText.classList.toggle("show")
 }
 
 const createJob = () => {
     //take to createJobs.html
     //alert(`Create a job listing`)
-    popupText.innerHTML=`You have created a job listing!`
-    popupText.classList.toggle("show")
+    localStorage.setItem('user_id',1)
+    localStorage.setItem('token',123456789123456789123456789123456789)
+    window.open('./createJobs.html','_self')
+    // popupText.innerHTML=`You have created a job listing!`
+    // popupText.classList.toggle("show")
 }
 
 const jobsTable = document.querySelector('#job-listings')
