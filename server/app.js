@@ -3,6 +3,7 @@ const cors = require("cors");
 const logger = require("morgan");
 
 const classesRouter = require("./routes/class");
+const JobRouter = require("./routes/jobRouter");
 const userRouter = require("./routes/user");
 
 const app = express();
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/class", classesRouter);
+app.use("/jobs", JobRouter);
 app.use("/users", userRouter);
 
 module.exports = app;
