@@ -73,8 +73,8 @@ table,td,th{
 th{
     text-align: left;
 }
-
-#job-form{
+ 
+form{
     display: grid;
     padding: 50px;
     justify-content: center;

@@ -52,7 +52,7 @@ const createJob = () => {
     //take to createJobs.html
     //alert(`Create a job listing`)
     localStorage.setItem('user_id',1)
-    localStorage.setItem('token',123456789123456789123456789123456789)
+    localStorage.setItem('token','f921ce3d-5dcc-48c2-8cbe-09693a62c488')
     window.open('./createJobs.html','_self')
     // popupText.innerHTML=`You have created a job listing!`
     // popupText.classList.toggle("show")

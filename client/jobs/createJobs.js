@@ -1,7 +1,6 @@
 let user_id = localStorage.getItem('user_id')
 
 
-
 document.querySelector('#create').addEventListener('submit', async (e) => {
     // e.preventDefault()
     alert('hello')
@@ -12,7 +11,7 @@ document.querySelector('#create').addEventListener('submit', async (e) => {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            authorization: localStorage.getItem("token"),
+            //authorization: localStorage.getItem("token"),
         },
         body: JSON.stringify({
             job_subject: form.get("subject"),
