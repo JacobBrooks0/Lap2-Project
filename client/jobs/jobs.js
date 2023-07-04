@@ -1,56 +1,39 @@
 const showJobs = async () => {
-    //fetch jobs from dtb
-    // const resp = await fetch('api')
-    // if (!resp.ok) {
-    //     console.log('something went wrong')
-    // }
-    // const jobs = await resp.json()
-    // jobs.forEach(job => {
-    //     const { job_subject, job_description, job_location, job_requirements} = job
-    //     jobSubject.textContent = job_subject
-    //     jobDesc.textContent = job_description
-    //     jobLocation.textContent = job_location
-    //     jobRequirements.textContent = job_requirements
-    //     jobsTable.appendChild(row)
-    //     row.appendChild(jobSubject)
-    //     row.appendChild(jobDesc)
-    //     row.appendChild(jobRequirements)
-    //     row.appendChild(jobLocation)
-            // jobButtonColumn.appendChild(joinButton)
-            // applyButton.addEventListener('click',() => {
-            //     applyToJob(job)
-            // }) 
-
-            // row.appendChild(jobButtonColumn)
-    //})
-
-        jobSubject.textContent = 'subject'
-        jobDesc.textContent = 'job_description'
-        jobLocation.textContent = 'job_location'
-        jobRequirements.textContent = 'job_requirements'
+    const resp = await fetch('http://localhost:3000/jobs')
+    if (!resp.ok) {
+        console.log('something went wrong')
+    }
+    const jobs = await resp.json()
+    jobs.forEach(job => {
+        const { job_subject, job_description, job_location, job_requirements} = job
+        jobSubject.textContent = job_subject
+        jobDesc.textContent = job_description
+        jobLocation.textContent = job_location
+        jobRequirements.textContent = job_requirements
         jobsTable.appendChild(row)
         row.appendChild(jobSubject)
         row.appendChild(jobDesc)
         row.appendChild(jobRequirements)
         row.appendChild(jobLocation)
-        jobButtonColumn.appendChild(applyButton)
+        jobButtonColumn.appendChild(joinButton)
         applyButton.addEventListener('click',() => {
-            applyToJob('subject')
+            applyToJob(job)
         }) 
-
         row.appendChild(jobButtonColumn)
+    })
 
 }
 
-const applyToJob = (job_name) => {
+const applyToJob = (job) => {
     //add job to user in dtb
     // alert(`You have applied to the ${job_name} job!`)
+    const { job_name } = job
     popupText.innerHTML=`You have applied to the ${job_name} job!`
     popupText.classList.toggle("show")
 }
 
 const createJob = () => {
-    //take to createjobs.html
+    //take to createJobs.html
     //alert(`Create a job listing`)
     popupText.innerHTML=`You have created a job listing!`
     popupText.classList.toggle("show")

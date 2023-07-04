@@ -25,7 +25,6 @@ const showSkills = async () => {
     //     row.appendChild(skillButtonColumn)
     // })
 
-    
     const skill_name = 'skill name 1'
     const skill_info = 'skill info'
     const skill_image_url = 'https://www.rd.com/wp-content/uploads/2017/01/07_Immune_Surprising_Health_benefits_Gardening_459405181_monkeybusinessimages.jpg'
