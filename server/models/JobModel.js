@@ -36,7 +36,7 @@ class Job {
     // }
 
     static async createJob(data) {
-        let response = await db.query('INSERT INTO jobs (job_id, user_id, job_subject, job_description, job_location, job_requirements) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',data);
+        let response = await db.query('INSERT INTO jobs (user_id, job_subject, job_description, job_location, job_requirements) VALUES ($1, $2, $3, $4, $5) RETURNING *;',data);
         return response.rows[0];
     }
 

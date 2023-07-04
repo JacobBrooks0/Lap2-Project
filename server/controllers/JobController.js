@@ -21,12 +21,12 @@ class JobController {
 //   static async getOneById(req, res) {
         
 //     const user_id = req.tokenObj.user_id;
-//     const id = req.params;
+//     const job_id = req.params.id;
    
 //     try {
 //         const data = await Job.getAllById(user_id);
 //         console.log(data)
-//         const job = await data.getOneById(id)
+//         const job = await data.getOneById(job_id)
 //         res.status(200).json(job);
 //     } catch (err) {
 //         res.status(404).json({"error": err.message})
