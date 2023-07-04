@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS class_student;
-
 DROP TABLE IF EXISTS class_skill;
 
 DROP TABLE IF EXISTS skill;
@@ -7,7 +6,6 @@ DROP TABLE IF EXISTS skill;
 DROP TABLE IF EXISTS class;
 
 DROP TABLE IF EXISTS user_jobs;
-
 DROP TABLE IF EXISTS jobs;
 
 DROP TABLE IF EXISTS event_attendee;
@@ -15,10 +13,8 @@ DROP TABLE IF EXISTS event_attendee;
 DROP TABLE IF EXISTS community_event;
 
 DROP TABLE IF EXISTS token;
-
 -- can't use 'user' as a table name
 DROP TABLE IF EXISTS user_account;
-
 CREATE TABLE user_account (
     user_id INT GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(30) UNIQUE NOT NULL,
@@ -26,7 +22,6 @@ CREATE TABLE user_account (
     name VARCHAR(30) UNIQUE NOT NULL,
     PRIMARY KEY (user_id)
 );
-
 CREATE TABLE token (
     token_id INT GENERATED ALWAYS AS IDENTITY,
     user_id INT NOT NULL,
@@ -68,7 +63,6 @@ CREATE TABLE jobs (
     PRIMARY KEY (job_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
-
 CREATE TABLE user_jobs(
     user_jobs_id INT GENERATED ALWAYS AS IDENTITY,
     user_id INT NOT NULL,
@@ -77,7 +71,6 @@ CREATE TABLE user_jobs(
     FOREIGN KEY (user_id) REFERENCES user_account("user_id"),
     FOREIGN KEY (job_id) REFERENCES jobs("job_id")
 );
-
 CREATE TABLE class (
     class_id INT GENERATED ALWAYS AS IDENTITY,
     creator_id INT NOT NULL,
@@ -90,7 +83,6 @@ CREATE TABLE class (
     PRIMARY KEY (class_id),
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );
-
 CREATE TABLE skill (
     skill_id INT GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(50) UNIQUE NOT NULL,
@@ -98,7 +90,6 @@ CREATE TABLE skill (
     image_id VARCHAR(500),
     PRIMARY KEY (skill_id)
 );
-
 CREATE TABLE class_student (
     class_student_id INT GENERATED ALWAYS AS IDENTITY,
     class_id INT NOT NULL,
@@ -109,7 +100,6 @@ CREATE TABLE class_student (
     FOREIGN KEY (student_id) REFERENCES user_account("user_id"),
     UNIQUE (class_id, student_id)
 );
-
 CREATE TABLE class_skill (
     class_skill_id INT GENERATED ALWAYS AS IDENTITY,
     class_id INT NOT NULL,
@@ -227,7 +217,6 @@ VALUES
 INSERT INTO
     class_student (class_id, student_id)
 VALUES
-
     (1, 2),
     (1, 3),
     (1, 4),
@@ -248,4 +237,3 @@ VALUES
     (1,'Emergency Plumber!!!','I need a Plumber to come round asap we have a huge leak','Whittle','Plumber'),
     (2,'Driveway fitting','Would anybody be able to give me a quote for my driveway?','Bridalhull','Specailist Tradesperson');
 
--- fjeirjeireirjeirjeirjeijreijrejrie

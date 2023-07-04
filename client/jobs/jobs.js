@@ -38,6 +38,12 @@ const applyToJob = (job) => {
     //add job to user in dtb
     // alert(`You have applied to the ${job_name} job!`)
     const { job_subject } = job
+    
+    popup.firstChild.remove()
+    const popupText = document.createElement('p')
+    popup.appendChild(popupText)
+    popupText.classList.add('popupText')
+
     popupText.innerHTML=`You have applied to the ${job_subject} job!`
     popupText.classList.toggle("show")
 }
@@ -46,7 +52,7 @@ const createJob = () => {
     //take to createJobs.html
     //alert(`Create a job listing`)
     localStorage.setItem('user_id',1)
-    localStorage.setItem('token',123456789123456789123456789123456789)
+    localStorage.setItem('token','f921ce3d-5dcc-48c2-8cbe-09693a62c488')
     window.open('./createJobs.html','_self')
     // popupText.innerHTML=`You have created a job listing!`
     // popupText.classList.toggle("show")
@@ -60,6 +66,5 @@ createButton.addEventListener('click', () => {
 })
 
 const popup = document.querySelector('.popup')
-const popupText = document.querySelector('.popupText')
 
 showJobs()
