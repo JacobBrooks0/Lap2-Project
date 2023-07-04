@@ -10,7 +10,7 @@ async function authenticator(req, res, next) {
       next();
     }
   } catch (error) {
-    res.status(403).json({ error: "Your not authenticated" });
+    res.status(403).json({ error: "You're not authenticated" });
   }
 }
 
