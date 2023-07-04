@@ -45,8 +45,41 @@ async function logout(req, res) {
   }
 }
 
+async function getUserSkills(req, res) {
+  try {
+    const userId = req.params.userId;
+    const skills = await User.getSkills(userId);
+    res.status(200).json(skills);
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+}
+
+async function getUserClasses(req, res) {
+  try {
+    const userId = req.params.userId;
+    const classes = await User.getClasses(userId);
+    res.status(200).json(classes);
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+}
+
+async function getUserEvents(req, res) {
+  try {
+    const userId = req.params.userId;
+    const events = await User.getEvents(userId);
+    res.status(200).json(events);
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+}
+
 module.exports = {
   register,
   login,
-  logout
+  logout,
+  getUserSkills,
+  getUserClasses,
+  getUserEvents
 };
