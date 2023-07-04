@@ -5,6 +5,7 @@ const ClassController = require("../controllers/class");
 const classRouter = Router();
 
 classRouter.get('/', ClassController.getAllClasses);
+classRouter.get('/:id/students', ClassController.getUsersEnrolled);
 classRouter.get('/:id/find', ClassController.getClassById);
 
 classRouter.use(authenticator);
