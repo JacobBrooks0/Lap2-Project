@@ -11,7 +11,7 @@ describe("Class Router", () => {
 
   //READ ALL
   it("Should get all classes", async () => {
-    const response = await request(app).get("/class").expect(200);
+    const response = await request(app).get("/classes").expect(200);
 
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBeGreaterThan(0);
