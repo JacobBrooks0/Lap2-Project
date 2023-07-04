@@ -1,12 +1,12 @@
 const showSkills = async () => {
-    //fetch skills from dtb
-    const resp = await fetch('http://localhost:3000/class')
+    //fetch classes from dtb
+    const resp = await fetch('http://localhost:3000/classes')
     if (!resp.ok) {
         console.log('something went wrong')
     }
     const skillClasses = await resp.json()
     skillClasses.forEach(skillClass => {
-        const { name, summary, main_image_url, start_date, end_date} = skillClass
+        const { name, info, main_image_url, start_date, end_date} = skillClass
 
         const row = document.createElement('tr')
         const skillImageColumn = document.createElement('td')
@@ -18,9 +18,8 @@ const showSkills = async () => {
         applyButton.textContent='Enrol'
 
         skillImage.src = main_image_url
-        skillInfo.innerHTML = `${name ? name : ''}<br>${summary ? summary : ''}`
-        classDate.textContent = `${(new Date(start_date* 1000)).toUTCString()}`
-        // classDate.textContent = `${start_date.split('T23:00:00.000Z')[0]} to ${end_date.split('T23:00:00.000Z')[0]}`
+        skillInfo.innerHTML = `${name ? name : ''}<br>${info ? info : ''}`
+        classDate.textContent = `${(new Date(start_date* 1000)).toUTCString()} to ${(new Date(end_date* 1000)).toUTCString()}`
 
         skillsTable.appendChild(row)
         skillImageColumn.appendChild(skillImage)
@@ -40,14 +39,22 @@ const showSkills = async () => {
 
 const applyToClass = (skill_name) => {
     //add skill to user in dtb
-    //alert(`You have joined the ${skill_name} class!`)
+    popup.firstChild.remove()
+    const popupText = document.createElement('p')
+    popup.appendChild(popupText)
+    popupText.classList.add('popupText')
+
     popupText.innerHTML=`You have joined the ${skill_name} class!`
     popupText.classList.toggle("show")
 }
 
 const createClass = () => {
     //take to createSkills.html
-    // alert(`Create a skills class`)
+    popup.firstChild.remove()
+    const popupText = document.createElement('p')
+    popup.appendChild(popupText)
+    popupText.classList.add('popupText')
+
     popupText.innerHTML=`You have created a skills class!`
     popupText.classList.toggle("show")
 }
@@ -61,7 +68,6 @@ createButton.addEventListener('click', () => {
 })
 
 const popup = document.querySelector('.popup')
-const popupText = document.querySelector('.popupText')
 
 showSkills()
 

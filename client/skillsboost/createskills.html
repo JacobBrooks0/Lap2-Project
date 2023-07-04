@@ -1,20 +1,42 @@
-<!-- <h1>Create a Skills Class</h1>
-        <form id="play-form">
-            <fieldset>
-                <label for="title">Skill: </label>
-                <input type="text" id="name" name="name" required>
-            </fieldset>
-            <fieldset>
-                <label for="summary">Summary: </label>
-                <textarea id="summary" name="summary" required></textarea>
-            </fieldset>
-            <fieldset>
-                <label for="length">Length (Minutes): </label>
-                <input type="number" id="length" name="length" required />
-            </fieldset>
-            <fieldset>
-                <label for="time">Time: </label>
-                <input type="datetime-local" id="time" name="time" required />
-            </fieldset>
-            <input type="submit" value="Post">
-        </form> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/main.css">
+    <style src="./createJobs.js"></style>
+    <title>Create a Job Listing</title>
+</head>
+<body>
+
+    <div id="navbar">
+        <ul>
+            <li><a href="#">Profile</a></li>
+            <li><a href="../skillsboost/skills.html">Skills Boost</a></li>
+            <li><a href="../community-events/events.html">Community Events</a></li>
+            <li><a href="../jobs/jobs.html">Jobs</a></li>
+        </ul>
+    </div>
+    <main>
+
+    <form id="job-form">
+            <h1>Fill out the information below for your job listing.</h1> 
+            <label for="name">Skill name: </label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="info">Description: </label>
+            <textarea id="description" name="description" required></textarea>
+
+            <label for="requirements">Requirements: </label>
+            <input type="text" id="requirements" name="requirements" required />
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location">
+            <br>
+            <input type="submit" value="Create" id="post">
+    </form>
+    </form>       
+    </main>
+
+</body>
+</html>
