@@ -39,6 +39,11 @@ const showEvents = async () => {
 const joinEvent = (event_name) => {
     //add event to user in dtb
     //alert(`You have joined the ${event_name} event!`)
+    popup.firstChild.remove()
+    const popupText = document.createElement('p')
+    popup.appendChild(popupText)
+    popupText.classList.add('popupText')
+
     popupText.innerHTML=`You have joined the ${event_name} event!`
     popupText.classList.toggle("show")
 }
@@ -46,6 +51,11 @@ const joinEvent = (event_name) => {
 const createEvent = () => {
     //take to createEvents.html
     // alert(`Create a community event`)
+    popup.firstChild.remove()
+    const popupText = document.createElement('p')
+    popup.appendChild(popupText)
+    popupText.classList.add('popupText')
+
     popupText.innerHTML=`You have created a community event!`
     popupText.classList.toggle("show")
 }
@@ -59,6 +69,5 @@ createButton.addEventListener('click', () => {
 })
 
 const popup = document.querySelector('.popup')
-const popupText = document.querySelector('.popupText')
 
 showEvents()

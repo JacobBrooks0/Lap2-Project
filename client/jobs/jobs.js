@@ -38,6 +38,12 @@ const applyToJob = (job) => {
     //add job to user in dtb
     // alert(`You have applied to the ${job_name} job!`)
     const { job_subject } = job
+    
+    popup.firstChild.remove()
+    const popupText = document.createElement('p')
+    popup.appendChild(popupText)
+    popupText.classList.add('popupText')
+
     popupText.innerHTML=`You have applied to the ${job_subject} job!`
     popupText.classList.toggle("show")
 }
@@ -60,6 +66,5 @@ createButton.addEventListener('click', () => {
 })
 
 const popup = document.querySelector('.popup')
-const popupText = document.querySelector('.popupText')
 
 showJobs()
