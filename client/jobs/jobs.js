@@ -4,24 +4,35 @@ const showJobs = async () => {
         console.log('something went wrong')
     }
     const jobs = await resp.json()
+    console.log(jobs)
     jobs.forEach(job => {
         const { job_subject, job_description, job_location, job_requirements} = job
+
+        const row = document.createElement('tr')
+        const jobButtonColumn = document.createElement('td')
+        const jobSubject = document.createElement('td')
+        const jobDesc = document.createElement('td')
+        const jobLocation = document.createElement('td')
+        const jobRequirements = document.createElement('td')
+        const applyButton = document.createElement('button')
+        applyButton.textContent='Apply'
+
         jobSubject.textContent = job_subject
         jobDesc.textContent = job_description
         jobLocation.textContent = job_location
         jobRequirements.textContent = job_requirements
+
         jobsTable.appendChild(row)
         row.appendChild(jobSubject)
         row.appendChild(jobDesc)
         row.appendChild(jobRequirements)
         row.appendChild(jobLocation)
-        jobButtonColumn.appendChild(joinButton)
+        jobButtonColumn.appendChild(applyButton)
         applyButton.addEventListener('click',() => {
             applyToJob(job)
         }) 
         row.appendChild(jobButtonColumn)
     })
-
 }
 
 const applyToJob = (job) => {
@@ -40,16 +51,6 @@ const createJob = () => {
 }
 
 const jobsTable = document.querySelector('#job-listings')
-
-const row = document.createElement('tr')
-const jobImageColumn = document.createElement('td')
-const jobButtonColumn = document.createElement('td')
-const jobSubject = document.createElement('td')
-const jobDesc = document.createElement('td')
-const jobLocation = document.createElement('td')
-const jobRequirements = document.createElement('td')
-const applyButton = document.createElement('button')
-applyButton.textContent='Apply'
 
 const createButton = document.querySelector('#create')
 createButton.addEventListener('click', () => {
