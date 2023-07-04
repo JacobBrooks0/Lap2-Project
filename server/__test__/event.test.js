@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../app");
 const db = require("../database/connect");
 
-describe("Class Router", () => {
+describe("Community Events Endpoints", () => {
   afterAll(async () => {
     await db.end(); // Close the database connection
   });
@@ -10,8 +10,8 @@ describe("Class Router", () => {
   let classID;
 
   //READ ALL
-  it("Should get all classes", async () => {
-    const response = await request(app).get("/classes").expect(200);
+  it("Should get all community events", async () => {
+    const response = await request(app).get("/events").expect(200);
 
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBeGreaterThan(0);

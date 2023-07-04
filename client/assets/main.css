@@ -1,0 +1,143 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+}
+
+#navbar ul li{
+    display: inline-block;
+    text-transform: uppercase;
+    list-style-type: none;
+    margin: 0 15px;
+    position: relative;
+}
+
+#navbar{
+    width: 90%;
+    margin: auto;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#navbar a{
+    text-decoration: none;
+    color: black;
+}
+
+#navbar a:hover{
+    color: #E0B1A9;
+}
+
+button,#post{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding: 4px;
+    border-radius: 5px;
+    border-color:#E0B1A9  ;
+    background-color: #E0B1A9;
+}
+
+form h1{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.skills, .jobs, .events {
+    padding-left: 150px;
+    padding-top: 20px;
+    margin: 10px;
+}
+
+#skill-classes,#community-events,#job-listings{
+    /* margin:10px; */
+    /* padding-left: 150px; */
+    padding-top: 10px;
+}
+
+
+img {
+    width: 150px;
+    /* max-width: 100%; */
+    border-radius: 20%;
+}
+
+table,td,th{
+    padding: 10px;
+    max-width: 800px;
+}
+
+
+th{
+    text-align: left;
+}
+ 
+form{
+    display: grid;
+    padding: 50px;
+    justify-content: center;
+}
+
+input, label,textarea{
+    width:500px;
+    padding: 10px;
+}
+
+#post{
+    display: inline;
+    width:60px;
+    text-align: center;
+    justify-self: right;
+}
+
+.popup {
+    /* position: relative; */
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 50px;
+}
+
+.popup .popupText {
+    visibility: hidden;
+    /* width: 300px; */
+    background-color: #E0B1A9;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 1; 
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    opacity: 0;
+    visibility: visible;
+    -webkit-animation: fadeIn 5s;
+    animation: fadeIn 5s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    0% {opacity: 0;}
+    50% {opacity:1 ;}
+	100%{opacity:0;}
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    50% {opacity:1 ;}
+	100%{opacity:0;}
+}
+

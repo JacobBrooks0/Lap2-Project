@@ -17,17 +17,29 @@ class Job {
     }
 
     static async getAllById(id) {
-        const response = await db.query('SELECT * FROM jobs where job_id = $1', [id]);
+        const response = await db.query('SELECT * FROM jobs where user_id = $1', [id]);
         if (response.rows.length === 0) {
             throw new Error('No Jobs found')
         }
         return response.rows;
     }
 
+    // static async getOneById(id) {
+    //     const response = await db.query('SELECT * FROM jobs WHERE job_id = $1 AND user_id = $2;',[id]);
+    //     // console.log(`job id ${job_id}`)
+    //     // console.log(`user_id ${user_id}`)
+    //     console.log(response)
+    //     if (response.rows.length != 1) {
+    //         throw new Error("Unable to locate Job.")
+    //     }
+    //     return new Job(response.rows[0]);
+    // }
+
     static async createJob(data) {
-        let response = await db.query('INSERT INTO job (job_id, user_id, job_subject, job_description, job_location, job_requirements) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',data);
+        let response = await db.query('INSERT INTO jobs (user_id, job_subject, job_description, job_location, job_requirements) VALUES ($1, $2, $3, $4, $5) RETURNING *;',data);
         return response.rows[0];
     }
+
 
     
     static async deleteJob(id) {
@@ -40,10 +52,3 @@ class Job {
 }
 
 module.exports = Job;
-
-// job_id INT GENERATED ALWAYS AS IDENTITY,
-//     user_id INT NOT NULL, 
-//     job_subject VARCHAR(50) UNIQUE NOT NULL,
-//     job_description VARCHAR(500),
-//     job_location VARCHAR(100) ,
-//     job_requirements
