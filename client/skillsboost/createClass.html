@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/main.css">
-    <style src="./createJobs.js"></style>
-    <title>Create a Job Listing</title>
+    <script src="createClass.js" defer></script>
+    <title>Create a SkillsBoost Class</title>
 </head>
+
 <body>
 
     <div id="navbar">
@@ -21,25 +22,33 @@
 
     <form id="class-form">
             <h1>Fill out the information below for your SkillsBoost class</h1> 
-            <label for="name">Skill name: </label>
+            <label for="name">*Skill name: </label>
             <input type="text" id="name" name="name" required>
             
-            <label for="info">Information: </label>
+            <label for="info">*Information: </label>
             <textarea id="info" name="info" required></textarea>
 
             <label for="image">Image URL: </label>
-            <input type="text" id="image" name="image" required />
+            <input type="text" id="image" name="image" />
 
-            <label for="start-date">Start Date: </label>
+            <label for="start-date">*Start Date: </label>
             <input type="datetime-local" id="start-date" name="start-date" required />
 
-            <label for="end">End Date: </label>
+            <label for="end-date">*End Date: </label>
             <input type="datetime-local" id="end-date" name="end-date" required />
+
+            <label for="capacity">Capacity:</label>
+            <input type="text" id="capacity" name="capacity">
 
             <br>
             <input type="submit" value="Create" id="post">
     </form>
-    </form>       
+    </form>  
+    
+    <div class="popup">
+
+    </div>
+
     </main>
 
 </body>

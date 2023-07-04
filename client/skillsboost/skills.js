@@ -49,10 +49,8 @@ const applyToClass = (skill_name) => {
 }
 
 const createClass = () => {
-    //take to createSkills.html
-
     localStorage.setItem('user_id',1)
-    localStorage.setItem('token','123')
+    localStorage.setItem('token','8da282d1-cb26-48a0-939c-e8f01cea5354')
     window.open('./createClass.html','_self')
 }
 
