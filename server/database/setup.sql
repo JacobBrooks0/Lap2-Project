@@ -106,6 +106,9 @@ VALUES
 
 INSERT INTO jobs (user_id,job_subject,job_description,job_location,job_requirements)
 VALUES
-    (1,'Landscaper Needed','We desperately need a landscaper to help with the area outside of the Town Hall','Florian','Gardening, Landscaping, etc');
+    (1,'Landscaper Needed','We desperately need a landscaper to help with the area outside of the Town Hall','Florian','Gardening, Landscaping, etc'),
+    (1,'Baker needed?','Does anybody around here know a local bakers that would be able to make a custom cake for my daughters birthday?','Florian','Baking'),
+    (1,'Emergency Plumber!!!','I need a Plumber to come round asap we have a huge leak','Whittle','Plumber'),
+    (2,'Driveway fitting','Would anybody be able to give me a quote for my driveway?','Bridalhull','Specailist Tradesperson');
 
 
