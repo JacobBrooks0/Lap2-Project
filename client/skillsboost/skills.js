@@ -50,13 +50,18 @@ const applyToClass = (skill_name) => {
 
 const createClass = () => {
     //take to createSkills.html
-    popup.firstChild.remove()
-    const popupText = document.createElement('p')
-    popup.appendChild(popupText)
-    popupText.classList.add('popupText')
 
-    popupText.innerHTML=`You have created a skills class!`
-    popupText.classList.toggle("show")
+    localStorage.setItem('user_id',1)
+    localStorage.setItem('token','123')
+    window.open('./createClass.html','_self')
+
+    // popup.firstChild.remove()
+    // const popupText = document.createElement('p')
+    // popup.appendChild(popupText)
+    // popupText.classList.add('popupText')
+
+    // popupText.innerHTML=`You have created a skills class!`
+    // popupText.classList.toggle("show")
 }
 
 const skillsTable = document.querySelector('#skill-classes')
