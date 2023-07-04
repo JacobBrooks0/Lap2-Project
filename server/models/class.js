@@ -1,10 +1,10 @@
 const db = require("../database/connect");
+const User = require("./user");
 
 class Class {
   constructor({
     creator_id,
     name,
-    category,
     info,
     main_image_url,
     start_date,
@@ -13,7 +13,6 @@ class Class {
   }) {
     this.id = creator_id;
     this.name = name;
-    this.category = category;
     this.info = info;
     this.main_image_url = main_image_url;
     this.start_date = start_date;
@@ -35,9 +34,20 @@ class Class {
       [id]
     );
     if (response.rows.length != 1) {
-      throw new Error("Unable to locate class.");
+      throw new Error("Unable to find the class you're looking for");
     }
     return new Class(response.rows[0]);
+  }
+
+  static async getUsersEnrolled(id) {
+    const response = await db.query(
+      "SELECT * FROM user_account u LEFT JOIN class_student cs ON u.user_id = cs.student_id WHERE class_id = $1;",
+      [id]
+    );
+    if (response.rows.length < 1) {
+      throw new Error("No students have enrolled to this class yet");
+    }
+    return response.rows.map((r) => new User(r)).map((u) => u.name);
   }
 
   static async getEnrolledByUserId(id) {
@@ -90,6 +100,10 @@ class Class {
   }
 
   async removeClass() {
+    await db.query(
+      "DELETE FROM class_student WHERE class_id = $1 RETURNING *;",
+      [this.id]
+    );
     const response = await db.query(
       "DELETE FROM class WHERE class_id = $1 RETURNING *;",
       [this.id]
