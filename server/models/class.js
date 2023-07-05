@@ -43,15 +43,19 @@ class Class {
     return new Class(response.rows[0]);
   }
 
-  static async getUsersEnrolled() {
+  static async getUsersEnrolled(class_id) {
     const response = await db.query(
       "SELECT * FROM user_account u LEFT JOIN class_student cs ON u.user_id = cs.student_id WHERE class_id = $1;",
-      [this.class_id]
+      [class_id]
     );
     if (response.rows.length < 1) {
       throw new Error("No students have enrolled to this class yet");
     }
-    return response.rows.map((r) => new User(r)).map((u) => u.name);
+    return response.rows.map((r) => new User(r)).map((u) => {
+      delete u.password;
+      delete u.id;
+      return u;
+    } );
   }
 
   static async getEnrolledByStudentId(student_id) {
@@ -129,9 +133,6 @@ class Class {
       "DELETE FROM class WHERE class_id = $1 RETURNING *;",
       [this.class_id]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to delete class.");
-    }
     return new Class(response.rows[0]);
   }
 
@@ -149,9 +150,6 @@ class Class {
       "INSERT INTO class_student (class_id, student_id) VALUES ($1, $2) RETURNING *;",
       [this.class_id, studentId]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to enroll student.");
-    }
     return response.rows[0];
   }
 
@@ -160,9 +158,6 @@ class Class {
       "DELETE FROM class_student WHERE class_id = $1 AND student_id = $2 RETURNING *;",
       [this.class_id, studentId]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to delist student.");
-    }
     return response.rows[0];
   }
 }

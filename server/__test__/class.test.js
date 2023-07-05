@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const db = require("../database/connect");
-const setupMockDB = require("./setup/setup-mock-db");
+const setupMockDB = require("./mock/database/setup");
 
 describe("Class Endpoints", () => {
   let token;
@@ -25,15 +25,22 @@ describe("Class Endpoints", () => {
     await db.end(); // Close the database connection
   });
 
-  //READ ALL
-  it("Should get all classes", async () => {
-    const response = await request(app).get("/classes").expect(200);
-
-    expect(Array.isArray(response.body)).toBe(true);
-    expect(response.body.length).toBeGreaterThan(0);
+  it("Should give correct status codes when there are no classes available", async () => {
+    await request(app).get("/classes").expect(404);
+    await request(app).get("/classes/1/students").expect(404);
+    await request(app).get("/classes/1/find").expect(404);
+    await request(app).get("/classes/1/is-at-capacity").expect(404);
+    await request(app)
+      .get("/classes/enrolled")
+      .set({ authorization: token })
+      .expect(404);
+    await request(app)
+      .get("/classes/created")
+      .set({ authorization: token })
+      .expect(404);
   });
 
-  //CREATE ONE
+  //POST
   it("Should create a new class", async () => {
     const newClass = {
       name: "Learn Carpentry",
@@ -57,7 +64,38 @@ describe("Class Endpoints", () => {
     expect(response.body).toHaveProperty("class_id", classId);
   });
 
-  //READ ONE
+  it("Should return an error message if conditions for creating a new class haven't been met", async () => {
+    const newClass = {
+      info: "Learn how to fix wooden appliances around the house",
+      start_date: 1688230800,
+      end_date: 1688330800,
+      capacity: 4,
+    };
+
+    await request(app)
+      .post("/classes")
+      .set({ authorization: token })
+      .send(newClass)
+      .expect(500);
+  });
+
+  //GET
+  it("Should get all classes", async () => {
+    const response = await request(app).get("/classes").expect(200);
+    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body.length).toBeGreaterThan(0);
+  });
+
+  //GET
+  it("Should make class not full before this user has enrolled", async () => {
+    const response = await request(app)
+      .get(`/classes/${classId}/is-at-capacity`)
+      .expect(200);
+    const { classIsFull } = response.body;
+    expect(classIsFull).toBe(false);
+  });
+
+  //GET
   it("Should get the class that has been created", async () => {
     const response = await request(app)
       .get(`/classes/${classId}/find`)
@@ -67,14 +105,31 @@ describe("Class Endpoints", () => {
     expect(name).toBe("Learn Carpentry");
   });
 
-  //UPDATE ONE
+  //GET
+  it("Should get users created classes when requested", async () => {
+    const response = await request(app)
+      .get(`/classes/created`)
+      .set({ authorization: token })
+      .expect(200);
+
+    const createdArr = response.body;
+
+    expect(Array.isArray(createdArr)).toBe(true);
+    expect(createdArr.length).toBe(1);
+
+    const { name, capacity } = createdArr[0];
+    expect(name).toBe("Learn Carpentry");
+    expect(capacity).toBe(4);
+  });
+
+  //PATCH
   it("Should update a class", async () => {
     const updatedClass = {
       name: "Test Carpentry",
       info: "Test",
       start_date: 1688230800,
       end_date: 1688330800,
-      capacity: 4,
+      capacity: 1,
     };
 
     const response = await request(app)
@@ -88,9 +143,83 @@ describe("Class Endpoints", () => {
     expect(main_image_url).toBe(null);
   });
 
-  //   //DELETE ONE
-  //   it("Should delete a class", async () => {
-  //     await request(app).delete(`/class/${classID}`).expect(204);
-  //     await request(app).get(`/class/${classID}`).expect(404);
-  //   });
+  //POST
+  it("Should enroll a student/user to a class", async () => {
+    const response = await request(app)
+      .post(`/classes/${classId}/enroll`)
+      .set({ authorization: token })
+      .expect(201);
+
+    expect(response.body).toHaveProperty("class_student_id");
+  });
+
+  //POST
+  it("Should give an error already enrolled user tries to enroll to a class again", async () => {
+    const response = await request(app)
+      .post(`/classes/${classId}/enroll`)
+      .set({ authorization: token })
+      .expect(500);
+
+    // expect(response.body).toHaveProperty("class_student_id");
+  });
+
+  //GET
+  it("Should get all student/users enrolled to class when requested", async () => {
+    const response = await request(app)
+      .get(`/classes/${classId}/students`)
+      .expect(200);
+
+    const studentArr = response.body;
+    expect(Array.isArray(studentArr)).toBe(true);
+    expect(studentArr.length).toBe(1);
+
+    const { username } = studentArr[0];
+    expect(username).toBe("user");
+  });
+
+  //GET
+  it("Should make class full after this user has enrolled", async () => {
+    const response = await request(app)
+      .get(`/classes/${classId}/is-at-capacity`)
+      .expect(200);
+    const { classIsFull } = response.body;
+    expect(classIsFull).toBe(true);
+  });
+
+  //GET
+  it("Should get users enrolled classes when requested", async () => {
+    const response = await request(app)
+      .get(`/classes/enrolled`)
+      .set({ authorization: token })
+      .expect(200);
+
+    const enrolledArr = response.body;
+
+    expect(Array.isArray(enrolledArr)).toBe(true);
+    expect(enrolledArr.length).toBe(1);
+
+    const { name, info } = enrolledArr[0];
+    expect(name).toBe("Test Carpentry");
+    expect(info).toBe("Test");
+  });
+
+  //DELETE
+  it("Should delist a student/user from a class", async () => {
+    await request(app)
+      .delete(`/classes/${classId}/delist`)
+      .set({ authorization: token })
+      .expect(204);
+  });
+
+  //DELETE
+  it("Should delete a class", async () => {
+    await request(app)
+      .delete(`/classes/${classId}`)
+      .set({ authorization: token })
+      .expect(204);
+    await request(app)
+      .get(`/class/${classId}`)
+      .set({ authorization: token })
+      .expect(404);
+  });
 });

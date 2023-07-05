@@ -70,7 +70,7 @@ class UserController {
     const tokenObj = req.tokenObj;
     try {
       const response = await tokenObj.deleteToken();
-      res.status(204).json({ message: response });
+      res.status(202).json({ message: response });
     } catch (error) {
       console.log(error);
       res.status(403).json({ Error: error.message });

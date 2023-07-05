@@ -15,9 +15,6 @@ class User {
       "SELECT * FROM user_account WHERE user_id = $1",
       [id]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to locate user.");
-    }
     return new User(response.rows[0]);
   }
 
@@ -27,7 +24,7 @@ class User {
       [username]
     );
     if (response.rows.length != 1) {
-      throw new Error("Unable to locate user.");
+      throw new Error("User with this username doesn't exist");
     }
     return new User(response.rows[0]);
   }
@@ -54,5 +51,6 @@ class User {
     return newUser;
   }
 }
+
 
 module.exports = User;

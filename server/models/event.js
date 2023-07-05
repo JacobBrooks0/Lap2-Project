@@ -49,9 +49,9 @@ class CommunityEvent {
     return response.rows.map((record) => new CommunityEvent(record));
   }
 
-  static async getConfirmedByUserId(id) {
+  static async getBookmarkedByUserId(id) {
     const response = await db.query(
-      "SELECT * FROM community_event ce LEFT JOIN event_attendee ea ON ce.event_id = ea.event_id WHERE ea.attendee_id = $1;",
+      "SELECT * FROM community_event ce LEFT JOIN event_bookmarker ea ON ce.event_id = ea.event_id WHERE ea.bookmarker_id = $1;",
       [id]
     );
     if (response.rows.length < 1) {
@@ -77,7 +77,7 @@ class CommunityEvent {
       end_date,
     ];
     const response = await db.query(
-      "INSERT INTO community_event (creator_id, name, main_image_url, info, start_date, end_date, capacity) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
+      "INSERT INTO community_event (creator_id, name, main_image_url, info, start_date, end_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;",
       values
     );
     const event_id = response.rows[0].event_id;
@@ -87,7 +87,7 @@ class CommunityEvent {
 
   async deleteCommunityEvent() {
     await db.query(
-      "DELETE FROM event_attendee WHERE event_id = $1 RETURNING *;",
+      "DELETE FROM event_bookmarker WHERE event_id = $1 RETURNING *;",
       [this.id]
     );
     const response = await db.query(
@@ -100,9 +100,9 @@ class CommunityEvent {
     return new CommunityEvent(response.rows[0]);
   }
 
-  async confirmAttendance(userId) {
+  async bookmarkEvent(userId) {
     const response = await db.query(
-      "INSERT INTO event_attendee (event_id, attendee_id) VALUES ($1, $2) RETURNING *;",
+      "INSERT INTO event_bookmarker (event_id, bookmarker_id) VALUES ($1, $2) RETURNING *;",
       [this.id, userId]
     );
     if (response.rows.length != 1) {
@@ -111,9 +111,9 @@ class CommunityEvent {
     return response.rows[0];
   }
 
-  async removeAttendanceConfirmation(userId) {
+  async removeEventBookmark(userId) {
     const response = await db.query(
-      "DELETE FROM event_attendee WHERE attendee_id = $1 RETURNING *;",
+      "DELETE FROM event_bookmarker WHERE bookmarker_id = $1 RETURNING *;",
       [userId]
     );
     if (response.rows.length != 1) {
