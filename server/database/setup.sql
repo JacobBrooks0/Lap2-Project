@@ -91,9 +91,14 @@ CREATE TABLE class (
     name VARCHAR(50) UNIQUE NOT NULL,
     info VARCHAR(1000),
     main_image_url VARCHAR,
-    start_date BIGINT NOT NULL,
-    end_date BIGINT NOT NULL,
+    start_date BIGINT,
+    end_date BIGINT,
     capacity INT,
+    created_at FLOAT DEFAULT extract(
+        epoch
+        from
+            now()
+    ),
     PRIMARY KEY (class_id),
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest --detectOpenHandles",
+    "coverage": "jest --coverage",
     "dev": "nodemon ./index.js",
     "set-up": "node ./database/setup.js"
   },
