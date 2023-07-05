@@ -15,12 +15,12 @@ const showSkills = async () => {
     }
 
     const resp2 = await fetch('http://localhost:3000/classes/enrolled',options)
-
     const enrolledClasses = (resp2.ok ? await resp2.json():false)
+
 
     allSkillClasses.forEach(async skillClass => {
 
-        const {name, info, main_image_url, start_date, end_date } = skillClass
+        const {class_id, name, info, main_image_url, start_date, end_date } = skillClass
 
         const row = document.createElement('tr')
         const skillImageColumn = document.createElement('td')
@@ -30,7 +30,17 @@ const showSkills = async () => {
         const classDate = document.createElement('td')
         const applyButton = document.createElement('button')
 
-        console.log('enrolled: '+enrolledClasses)
+        const resp3 = await fetch(`http://localhost:3000/classes/${class_id}/is-at-capacity`)
+        const data = await resp3.json()
+        console.log(data)
+
+        const fullCapacity = () => {
+            if(data.classIsFull==true){
+                return true
+            } else {
+                return false
+            }
+        }
 
         const checkIfEnrolled = () => {
             if (enrolledClasses) {
@@ -50,6 +60,14 @@ const showSkills = async () => {
             applyButton.addEventListener('click',() => {
                 applyToClass(skillClass)
             })
+        }
+
+        if (fullCapacity()){
+            row.style.backgroundColor = 'lightgrey'
+            applyButton.textContent = 'Full'
+            applyButton.style.backgroundColor = 'lightgrey'
+            applyButton.style.borderColor = 'lightgrey'
+            applyButton.disabled = true
         }
 
         skillImage.src = main_image_url ? main_image_url : null
@@ -72,10 +90,7 @@ const applyToClass = async (skillClass) => {
     //add skill class to user in dtb
     console.log('enroll')
     try{
-        //check capacity by comparing num of students in class_student
-        //const resp1 = await fetch(`http://localhost:3000/${class_id}classes`) -> isAtCapacity()
-
-        const { class_id, name, capacity } = skillClass
+        const { class_id, name } = skillClass
 
         const options = {
             method: 'POST',
@@ -139,7 +154,7 @@ const createClass = () => {
 }
 
 localStorage.setItem('user_id',1)
-localStorage.setItem('token','b13dc503-22f5-4ed9-9c87-b4f3a16610ac')
+localStorage.setItem('token','85b5265c-522f-4efb-ab18-c956012a5b4e')
 
 const user_id = localStorage.getItem('user_id')
 const token = localStorage.getItem('token')

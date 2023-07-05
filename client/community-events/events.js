@@ -82,7 +82,7 @@ const createEvent = () => {
     // popupText.innerHTML=`You have created a community event!`
     // popupText.classList.toggle("show")
     localStorage.setItem('user_id',1)
-    localStorage.setItem('token','f921ce3d-5dcc-48c2-8cbe-09693a62c488')
+    localStorage.setItem('token','85b5265c-522f-4efb-ab18-c956012a5b4e')
     window.open('./createEvent.html','_self')
 }
 
