@@ -73,7 +73,6 @@ class ClassController {
     const classInfo = req.body;
     try {
       const skillsClass = await Class.getOneByClassId(class_id);
-      console.log(skillsClass);
       const data = await skillsClass.updateClass(creator_id, classInfo);
       res.status(202).json(data);
     } catch (error) {
@@ -83,7 +82,7 @@ class ClassController {
   }
 
   static async deleteClass(req, res) {
-    
+    const class_id = req.params.id;
     const creator_id = req.tokenObj.user_id;
     try {
       const skillsClass = await Class.getOneByClassId(class_id);
