@@ -114,6 +114,16 @@ CREATE TABLE class_student (
     UNIQUE (class_id, student_id)
 );
 
+CREATE TABLE class_skill (
+    class_skill_id INT GENERATED ALWAYS AS IDENTITY,
+    class_id INT NOT NULL,
+    skill_id INT NOT NULL,
+    PRIMARY KEY (class_skill_id),
+    FOREIGN KEY (class_id) REFERENCES class("class_id"),
+    FOREIGN KEY (skill_id) REFERENCES skill("skill_id")
+);
+
+
 -- the password is 1
 INSERT INTO
     user_account (username, password)
@@ -194,6 +204,27 @@ VALUES
         5
     );
 
+
+INSERT INTO
+    skill (name, description, image_id)
+VALUES
+    (
+        'Gardening Pro',
+        'Has professional gardening ability',
+        1
+    ),
+    (
+        'Garbage General',
+        'Knows exactly how to deal with rubbish',
+        2
+    );
+
+INSERT INTO
+    class_skill (class_id, skill_id)
+VALUES
+    (1, 1);
+
+
 INSERT INTO
     class_student (class_id, student_id)
 VALUES
@@ -212,6 +243,7 @@ INSERT INTO
         job_requirements
     )
 VALUES
+
     (
         1,
         'Landscaper Needed',
@@ -240,3 +272,4 @@ VALUES
         'Bridalhull',
         'Specailist Tradesperson'
     );
+
