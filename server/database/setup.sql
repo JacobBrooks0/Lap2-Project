@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS class_skill;
 
 DROP TABLE IF EXISTS user_skill;
 
-DROP TABLE IF EXISTS skill;
 
 DROP TABLE IF EXISTS class;
 
@@ -205,19 +204,19 @@ VALUES
     );
 
 
-INSERT INTO
-    skill (name, description, image_id)
-VALUES
-    (
-        'Gardening Pro',
-        'Has professional gardening ability',
-        1
-    ),
-    (
-        'Garbage General',
-        'Knows exactly how to deal with rubbish',
-        2
-    );
+-- INSERT INTO
+--     skill (name, description, image_id)
+-- VALUES
+--     (
+--         'Gardening Pro',
+--         'Has professional gardening ability',
+--         1
+--     ),
+--     (
+--         'Garbage General',
+--         'Knows exactly how to deal with rubbish',
+--         2
+--     );
 
 INSERT INTO
     class_skill (class_id, skill_id)
