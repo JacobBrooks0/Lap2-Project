@@ -57,9 +57,9 @@ class ClassController {
 
   static async createClass(req, res) {
     const creator_id = req.tokenObj.user_id;
-    const classInfo = { ...req.body, creator_id };
+    const classInfo = req.body;
     try {
-      const data = await Class.createClass(classInfo);
+      const data = await Class.createClass(creator_id, classInfo);
       res.status(201).json(data);
     } catch (error) {
       console.log(error);
@@ -67,8 +67,23 @@ class ClassController {
     }
   }
 
-  static async deleteClass(req, res) {
+  static async updateClass(req, res) {
     const class_id = req.params.id;
+    const creator_id = req.tokenObj.user_id;
+    const classInfo = req.body;
+    try {
+      const skillsClass = await Class.getOneByClassId(class_id);
+      console.log(skillsClass);
+      const data = await skillsClass.updateClass(creator_id, classInfo);
+      res.status(202).json(data);
+    } catch (error) {
+      console.log(error);
+      res.status(304).json({ Error: error.message });
+    }
+  }
+
+  static async deleteClass(req, res) {
+    
     const creator_id = req.tokenObj.user_id;
     try {
       const skillsClass = await Class.getOneByClassId(class_id);
