@@ -19,7 +19,15 @@ const showSkills = async () => {
 
         skillImage.src = main_image_url
         skillInfo.innerHTML = `${name ? name : ''}<br>${info ? info : ''}`
-        classDate.textContent = `${(new Date(start_date* 1000)).toUTCString()} to ${(new Date(end_date* 1000)).toUTCString()}`
+        classDate.textContent = `${(new Date(start_date* 1000)).toLocaleString('en-GB', {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })} to ${(new Date(end_date* 1000)).toLocaleString('en-GB', {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}`
 
         skillsTable.appendChild(row)
         skillImageColumn.appendChild(skillImage)
