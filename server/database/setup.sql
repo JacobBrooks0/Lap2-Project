@@ -1,10 +1,10 @@
+-- must drop all tables that have ever existed
 DROP TABLE IF EXISTS class_student;
 
 DROP TABLE IF EXISTS class_skill;
 
 DROP TABLE IF EXISTS user_skill;
 
-DROP TABLE IF EXISTS skill;
 
 DROP TABLE IF EXISTS class;
 
@@ -13,6 +13,8 @@ DROP TABLE IF EXISTS user_jobs;
 DROP TABLE IF EXISTS jobs;
 
 DROP TABLE IF EXISTS event_attendee;
+
+DROP TABLE IF EXISTS event_bookmarker;
 
 DROP TABLE IF EXISTS community_event;
 
@@ -51,19 +53,19 @@ CREATE TABLE community_event (
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );
 
-CREATE TABLE event_attendee (
-    event_attendee_id INT GENERATED ALWAYS AS IDENTITY,
+CREATE TABLE event_bookmarker (
+    event_bookmarker_id INT GENERATED ALWAYS AS IDENTITY,
     event_id INT NOT NULL,
-    attendee_id INT NOT NULL,
-    confirmed_at FLOAT DEFAULT extract(
+    bookmarker_id INT NOT NULL,
+    bookmarked_at FLOAT DEFAULT extract(
         epoch
         from
             now()
     ),
-    PRIMARY KEY (event_attendee_id),
+    PRIMARY KEY (event_bookmarker_id),
     FOREIGN KEY (event_id) REFERENCES community_event("event_id"),
-    FOREIGN KEY (attendee_id) REFERENCES user_account("user_id"),
-    UNIQUE (event_id, attendee_id)
+    FOREIGN KEY (bookmarker_id) REFERENCES user_account("user_id"),
+    UNIQUE (event_id, bookmarker_id)
 );
 
 CREATE TABLE jobs (
@@ -92,9 +94,14 @@ CREATE TABLE class (
     name VARCHAR(50) UNIQUE NOT NULL,
     info VARCHAR(1000),
     main_image_url VARCHAR,
-    start_date BIGINT NOT NULL,
-    end_date BIGINT NOT NULL,
+    start_date BIGINT,
+    end_date BIGINT,
     capacity INT,
+    created_at FLOAT DEFAULT extract(
+        epoch
+        from
+            now()
+    ),
     PRIMARY KEY (class_id),
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );
@@ -113,6 +120,16 @@ CREATE TABLE class_student (
     FOREIGN KEY (student_id) REFERENCES user_account("user_id"),
     UNIQUE (class_id, student_id)
 );
+
+CREATE TABLE class_skill (
+    class_skill_id INT GENERATED ALWAYS AS IDENTITY,
+    class_id INT NOT NULL,
+    skill_id INT NOT NULL,
+    PRIMARY KEY (class_skill_id),
+    FOREIGN KEY (class_id) REFERENCES class("class_id"),
+    FOREIGN KEY (skill_id) REFERENCES skill("skill_id")
+);
+
 
 -- the password is 1
 INSERT INTO
@@ -176,10 +193,17 @@ VALUES
         'Our annual summer barbecue. Everyone''s invited.',
         1688230800,
         1688240800
+    ),
+    (
+        1,
+        'Florin Fun Fair',
+        'Have a great time at our summer fun fair. Everyone''s invited.',
+        1688230800,
+        1689240800
     );
 
 INSERT INTO
-    event_attendee (event_id, attendee_id)
+    event_bookmarker (event_id, bookmarker_id)
 VALUES
     (1, 1),
     (1, 2),
@@ -212,6 +236,27 @@ VALUES
         5
     );
 
+
+-- INSERT INTO
+--     skill (name, description, image_id)
+-- VALUES
+--     (
+--         'Gardening Pro',
+--         'Has professional gardening ability',
+--         1
+--     ),
+--     (
+--         'Garbage General',
+--         'Knows exactly how to deal with rubbish',
+--         2
+--     );
+
+INSERT INTO
+    class_skill (class_id, skill_id)
+VALUES
+    (1, 1);
+
+
 INSERT INTO
     class_student (class_id, student_id)
 VALUES
@@ -230,6 +275,7 @@ INSERT INTO
         job_requirements
     )
 VALUES
+
     (
         1,
         'Landscaper Needed',
@@ -258,3 +304,4 @@ VALUES
         'Bridalhull',
         'Specailist Tradesperson'
     );
+

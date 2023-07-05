@@ -26,7 +26,7 @@ class CommunityEventController {
   static async getMyBookmarkedCommunityEvents(req, res) {
     const user_id = req.tokenObj.user_id;
     try {
-      const data = await CommunityEvent.getConfirmedByUserId(user_id);
+      const data = await CommunityEvent.getBookmarkedByUserId(user_id);
       res.status(200).json(data);
     } catch (error) {
       console.log(error);
@@ -41,7 +41,7 @@ class CommunityEventController {
       res.status(200).json(data);
     } catch (error) {
       console.log(error);
-      res.status(404).json({ Error: error });
+      res.status(404).json({ Error: error.message });
     }
   }
 
@@ -53,7 +53,7 @@ class CommunityEventController {
       res.status(201).json(data);
     } catch (error) {
       console.log(error);
-      res.status(500).json({ Error: error });
+      res.status(500).json({ Error: error.message });
     }
   }
 
@@ -76,7 +76,7 @@ class CommunityEventController {
     const user_id = req.tokenObj.user_id;
     try {
       const communityEvent = await CommunityEvent.getOneById(event_id);
-      const data = await communityEvent.confirmAttendance(user_id);
+      const data = await communityEvent.bookmarkEvent(user_id);
       res.status(201).json(data);
     } catch (error) {
       console.log(error);
@@ -102,11 +102,11 @@ class CommunityEventController {
     const user_id = req.tokenObj.user_id;
     try {
       const communityEvent = await CommunityEvent.getOneById(event_id);
-      const data = await communityEvent.removeAttendanceConfirmation(user_id);
+      const data = await communityEvent.removeEventBookmark(user_id);
       res.status(204).json(data);
     } catch (error) {
       console.log(error);
-      res.status(500).json({ Error: error });
+      res.status(500).json({ Error: error.message });
     }
   }
 }

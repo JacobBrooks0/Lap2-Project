@@ -52,10 +52,8 @@ const createJob = () => {
     //take to createJobs.html
     //alert(`Create a job listing`)
     localStorage.setItem('user_id',1)
-    localStorage.setItem('token','f921ce3d-5dcc-48c2-8cbe-09693a62c488')
+    localStorage.setItem('token','b13dc503-22f5-4ed9-9c87-b4f3a16610ac')
     window.open('./createJobs.html','_self')
-    // popupText.innerHTML=`You have created a job listing!`
-    // popupText.classList.toggle("show")
 }
 
 const jobsTable = document.querySelector('#job-listings')

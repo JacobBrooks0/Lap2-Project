@@ -5,6 +5,11 @@
     font-size: 15px;
 }
 
+/* #E0B1A9 */
+/* #46458C */
+/* #090580 */
+/* #F4D3D3 */
+
 #navbar ul li{
     display: inline-block;
     text-transform: uppercase;
@@ -20,6 +25,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    position: fixed;
+    top:0;
+    width:100%;
+    background-color: #E0B1A9;
 }
 
 #navbar a{
@@ -28,16 +37,28 @@
 }
 
 #navbar a:hover{
-    color: #E0B1A9;
+    color: white;
 }
 
 button,#post{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
     padding: 4px;
-    border-radius: 5px;
-    border-color:#E0B1A9  ;
+    border-radius: 7px;
+    /* border-color:#46458C;
+    background-color: white ; */
+    border-color: #E0B1A9 ;
     background-color: #E0B1A9;
+    color: black;
+}
+
+/* button:hover{
+    background-color:#46458C;
+    color: white;
+} */
+
+main{
+    padding-top: 50px;
 }
 
 form h1{
