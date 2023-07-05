@@ -1,15 +1,17 @@
+-- must drop all tables that have ever existed
 DROP TABLE IF EXISTS class_student;
 
 DROP TABLE IF EXISTS class_skill;
 
 DROP TABLE IF EXISTS user_skill;
 
-
 DROP TABLE IF EXISTS class;
 
 DROP TABLE IF EXISTS user_jobs;
 
 DROP TABLE IF EXISTS jobs;
+
+DROP TABLE IF EXISTS event_attendee;
 
 DROP TABLE IF EXISTS event_bookmarker;
 
@@ -118,43 +120,51 @@ CREATE TABLE class_student (
     UNIQUE (class_id, student_id)
 );
 
-CREATE TABLE class_skill (
-    class_skill_id INT GENERATED ALWAYS AS IDENTITY,
-    class_id INT NOT NULL,
-    skill_id INT NOT NULL,
-    PRIMARY KEY (class_skill_id),
-    FOREIGN KEY (class_id) REFERENCES class("class_id"),
-    FOREIGN KEY (skill_id) REFERENCES skill("skill_id")
-);
-
-
 -- the password is 1
 INSERT INTO
-    user_account (username, password)
+    user_account (username, password, name, dp_url,	profile_summary)
 VALUES
     (
         'florin',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'flo rin',
+        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
+        'My name is florin. Description ... '
     ),
     (
         'Student1',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'flo rin',
+        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
+        'My name is florin. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     ),
     (
         'Student2',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'flo rin',
+        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
+        'My name is florin'
     ),
     (
         'Student3',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'flo rin',
+        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
+        'My name is florin'
     ),
     (
         'Student4',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'flo rin',
+        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
+        'My name is florin'
     ),
     (
         'Student5',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
+        'flo rin',
+        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
+        'My name is florin'
     );
 
 INSERT INTO
@@ -216,26 +226,6 @@ VALUES
     );
 
 
--- INSERT INTO
---     skill (name, description, image_id)
--- VALUES
---     (
---         'Gardening Pro',
---         'Has professional gardening ability',
---         1
---     ),
---     (
---         'Garbage General',
---         'Knows exactly how to deal with rubbish',
---         2
---     );
-
-INSERT INTO
-    class_skill (class_id, skill_id)
-VALUES
-    (1, 1);
-
-
 INSERT INTO
     class_student (class_id, student_id)
 VALUES
@@ -254,7 +244,6 @@ INSERT INTO
         job_requirements
     )
 VALUES
-
     (
         1,
         'Landscaper Needed',

@@ -51,7 +51,7 @@ class CommunityEvent {
 
   static async getBookmarkedByUserId(id) {
     const response = await db.query(
-      "SELECT * FROM community_event ce LEFT JOIN event_attendee ea ON ce.event_id = ea.event_id WHERE ea.attendee_id = $1;",
+      "SELECT * FROM community_event ce LEFT JOIN event_bookmarker ea ON ce.event_id = ea.event_id WHERE ea.bookmarker_id = $1;",
       [id]
     );
     if (response.rows.length < 1) {
@@ -87,7 +87,7 @@ class CommunityEvent {
 
   async deleteCommunityEvent() {
     await db.query(
-      "DELETE FROM event_attendee WHERE event_id = $1 RETURNING *;",
+      "DELETE FROM event_bookmarker WHERE event_id = $1 RETURNING *;",
       [this.id]
     );
     const response = await db.query(
@@ -102,7 +102,7 @@ class CommunityEvent {
 
   async bookmarkEvent(userId) {
     const response = await db.query(
-      "INSERT INTO event_attendee (event_id, attendee_id) VALUES ($1, $2) RETURNING *;",
+      "INSERT INTO event_bookmarker (event_id, bookmarker_id) VALUES ($1, $2) RETURNING *;",
       [this.id, userId]
     );
     if (response.rows.length != 1) {
@@ -113,7 +113,7 @@ class CommunityEvent {
 
   async removeEventBookmark(userId) {
     const response = await db.query(
-      "DELETE FROM event_attendee WHERE attendee_id = $1 RETURNING *;",
+      "DELETE FROM event_bookmarker WHERE bookmarker_id = $1 RETURNING *;",
       [userId]
     );
     if (response.rows.length != 1) {
