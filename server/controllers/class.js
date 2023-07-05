@@ -126,7 +126,7 @@ class ClassController {
             .json({ Error: "You've already enrolled to this class" });
           break;
         default:
-          res.status(500).json({ Error: error });
+          res.status(500).json({ Error: error.message });
           break;
       }
     }

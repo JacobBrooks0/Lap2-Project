@@ -5,7 +5,7 @@ const setupMockDB = require("./mock/database/setup");
 
 describe("User Endpoints", () => {
   beforeAll(async () => {
-    setupMockDB(); //Set the database to it's default state before starting test
+    await setupMockDB(); //Set the database to it's default state before starting test
   });
   afterAll(async () => {
     await db.end(); // Close the database connection
@@ -38,12 +38,22 @@ describe("User Endpoints", () => {
     token = userObj.token;
   });
 
-  it("Should return error if user give an incorrect username", async () => {
+  it("Should return error if user gives an incorrect username", async () => {
     await request(app)
       .post("/users/login")
       .send({
         username: "user1",
         password: "password",
+      })
+      .expect(403);
+  });
+
+  it("Should return error if user gives an incorrect password", async () => {
+    await request(app)
+      .post("/users/login")
+      .send({
+        username: "user",
+        password: "pass",
       })
       .expect(403);
   });
@@ -74,11 +84,12 @@ describe("User Endpoints", () => {
     expect(userObj).toHaveProperty("name", null);
   });
 
+  const profileDetails = {
+    name: "My Name",
+    profile_summary: "This is who I am",
+  };
   it("Should update profile details", async () => {
-    const profileDetails = {
-      name: "My Name",
-      profile_summary: "This is who I am",
-    };
+    
     const response = await request(app)
       .patch("/users/update")
       .set({ authorization: token })

@@ -49,7 +49,7 @@ describe("Class Endpoints", () => {
       info: "Learn how to fix wooden appliances around the house",
       start_date: 1688230800,
       end_date: 1688330800,
-      capacity: 4,
+      capacity: 0,
     };
 
     const response = await request(app)
@@ -87,15 +87,6 @@ describe("Class Endpoints", () => {
   });
 
   //GET
-  it("Should make class not full before this user has enrolled", async () => {
-    const response = await request(app)
-      .get(`/classes/${classId}/is-at-capacity`)
-      .expect(200);
-    const { classIsFull } = response.body;
-    expect(classIsFull).toBe(false);
-  });
-
-  //GET
   it("Should get the class that has been created", async () => {
     const response = await request(app)
       .get(`/classes/${classId}/find`)
@@ -119,7 +110,18 @@ describe("Class Endpoints", () => {
 
     const { name, capacity } = createdArr[0];
     expect(name).toBe("Learn Carpentry");
-    expect(capacity).toBe(4);
+    expect(capacity).toBe(0);
+  });
+
+  //POST
+  it("Should give an error if user tries to enrol to a full class already", async () => {
+    const response = await request(app)
+      .post(`/classes/${classId}/enroll`)
+      .set({ authorization: token })
+      .expect(500);
+
+    let { Error } = response.body;
+    expect(Error).toMatch(/Sorry, the class is full/);
   });
 
   //PATCH
@@ -143,6 +145,15 @@ describe("Class Endpoints", () => {
     expect(main_image_url).toBe(null);
   });
 
+  //GET
+  it("Should make class not full before this user has enrolled", async () => {
+    const response = await request(app)
+      .get(`/classes/${classId}/is-at-capacity`)
+      .expect(200);
+    const { classIsFull } = response.body;
+    expect(classIsFull).toBe(false);
+  });
+
   //POST
   it("Should enroll a student/user to a class", async () => {
     const response = await request(app)
@@ -153,14 +164,37 @@ describe("Class Endpoints", () => {
     expect(response.body).toHaveProperty("class_student_id");
   });
 
+  //GET
+  it("Should make class full after this user has enrolled", async () => {
+    const response = await request(app)
+      .get(`/classes/${classId}/is-at-capacity`)
+      .expect(200);
+    const { classIsFull } = response.body;
+    expect(classIsFull).toBe(true);
+  });
+
   //POST
   it("Should give an error already enrolled user tries to enroll to a class again", async () => {
+    await request(app)
+      .patch(`/classes/${classId}`)
+      .set({ authorization: token })
+      .send({
+        name: "Test Carpentry",
+        info: "Test",
+        start_date: 1688230800,
+        end_date: 1688330800,
+        capacity: 2,
+      })
+      .expect(202);
+    
     const response = await request(app)
       .post(`/classes/${classId}/enroll`)
       .set({ authorization: token })
       .expect(500);
 
-    // expect(response.body).toHaveProperty("class_student_id");
+    let { Error } = response.body;
+
+    expect(Error).toBe("You've already enrolled to this class");
   });
 
   //GET
@@ -177,14 +211,6 @@ describe("Class Endpoints", () => {
     expect(username).toBe("user");
   });
 
-  //GET
-  it("Should make class full after this user has enrolled", async () => {
-    const response = await request(app)
-      .get(`/classes/${classId}/is-at-capacity`)
-      .expect(200);
-    const { classIsFull } = response.body;
-    expect(classIsFull).toBe(true);
-  });
 
   //GET
   it("Should get users enrolled classes when requested", async () => {
