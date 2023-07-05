@@ -67,8 +67,8 @@ describe("User Endpoints", () => {
 
   it("Should logout", async () => {
     await request(app)
-      .delete("/users/logout", {})
+      .delete("/users/logout")
       .set({ authorization: token })
-      .expect(204);
+      .expect(202);
   });
 });
