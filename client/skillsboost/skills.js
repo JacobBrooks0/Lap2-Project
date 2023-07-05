@@ -2,7 +2,7 @@ const showSkills = async () => {
     //fetch classes from dtb
     const resp = await fetch('http://localhost:3000/classes')
     if (!resp.ok) {
-        console.log('something went wrong')
+        console.log(Error.detail)
     }
     const skillClasses = await resp.json()
     skillClasses.forEach(skillClass => {
