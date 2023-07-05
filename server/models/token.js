@@ -47,7 +47,7 @@ class Token {
     }
   }
 
-  async removeToken() {
+  async deleteToken() {
     const response = await db.query("DELETE FROM token WHERE token = $1", [
       this.token,
     ]);

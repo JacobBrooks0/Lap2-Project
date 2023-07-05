@@ -57,13 +57,13 @@ class CommunityEventController {
     }
   }
 
-  static async removeCommunityEvent(req, res) {
+  static async deleteCommunityEvent(req, res) {
     const event_id = req.params.id;
     const creator_id = req.tokenObj.user_id;
     try {
       const communityEvent = await CommunityEvent.getOneById(event_id);
-      console.log(communityEvent)
-      const data = await communityEvent.removeCommunityEvent(creator_id);
+      console.log(communityEvent);
+      const data = await communityEvent.deleteCommunityEvent(creator_id);
       res.status(204).json(data);
     } catch (error) {
       console.log(error);
@@ -83,11 +83,9 @@ class CommunityEventController {
       if (error instanceof DatabaseError) {
         switch (+error.code) {
           case 23505:
-            res
-              .status(500)
-              .json({
-                Error: "You've already bookmarked this community event",
-              });
+            res.status(500).json({
+              Error: "You've already bookmarked this community event",
+            });
             break;
           default:
             res.status(500).json({ Error: error });
