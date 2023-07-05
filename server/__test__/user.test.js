@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
+const db = require("../database/connect");
 const setupMockDB = require("./setup/setup-mock-db");
 
 describe("User Endpoints", () => {
@@ -15,8 +16,6 @@ describe("User Endpoints", () => {
     username: "user",
     password: "password",
   };
-
-  const db = require("../database/connect");
 
   it("Should register user to app", async () => {
     const response = await request(app)
@@ -39,13 +38,24 @@ describe("User Endpoints", () => {
     token = userObj.token;
   });
 
+  it("Should get profile details when created", async () => {
+    const response = await request(app)
+      .get("/users/details")
+      .set({ authorization: token })
+      .expect(200);
+    
+    const userObj = response.body;
+    expect(userObj).toHaveProperty("username", "user");
+    expect(userObj).toHaveProperty("name", null);
+  });
+
   it("Should update profile details", async () => {
     const profileDetails = {
       name: "My Name",
       profile_summary: "This is who I am",
     };
     const response = await request(app)
-      .patch("/users/update", {})
+      .patch("/users/update")
       .set({ authorization: token })
       .send(profileDetails)
       .expect(202);
