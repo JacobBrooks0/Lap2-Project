@@ -6,7 +6,7 @@ class JobController {
       const data = await Job.getAll();
       res.status(200).json(data);
     } catch (error) {
-      res.status(404).json({ Error: error });
+      res.status(404).json({ Error: error.message });
     }
   }
   static async getMyJobs(req, res) {
@@ -15,7 +15,7 @@ class JobController {
       const data = await Job.getAllById(user_id);
       res.status(200).json(data);
     } catch (error) {
-      res.status(404).json({ Error: error });
+      res.status(404).json({ Error: error.message });
     }
   }
 //   static async getOneById(req, res) {
@@ -41,7 +41,7 @@ class JobController {
       res.status(201).json(data);
     } catch (error) {
       console.log(error);
-      res.status(500).json({ Error: error });
+      res.status(500).json({ Error: error.message });
     }
   }
   static async deleteJob(req, res) {
