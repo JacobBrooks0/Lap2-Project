@@ -41,6 +41,18 @@ class UserController {
     }
   }
 
+  static async getProfileDetails(req, res) {
+    const user_id = req.tokenObj.user_id;
+    try {
+      const result = await User.getOneById(user_id);
+      delete result.password;
+      res.status(200).send(result);
+    } catch (error) {
+      console.log(error);
+      res.status(404).json({ Error: error.message });
+    }
+  }
+
   static async updateProfileDetails(req, res) {
     const user_id = req.tokenObj.user_id;
     const data = req.body;
