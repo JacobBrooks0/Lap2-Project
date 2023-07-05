@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const db = require("../database/connect");
-const setupMockDB = require("./setup/setup-mock-db");
+const setupMockDB = require("./mock/database/setup");
 
 describe("User Endpoints", () => {
   beforeAll(async () => {
@@ -38,12 +38,37 @@ describe("User Endpoints", () => {
     token = userObj.token;
   });
 
+  it("Should return error if user give an incorrect username", async () => {
+    await request(app)
+      .post("/users/login")
+      .send({
+        username: "user1",
+        password: "password",
+      })
+      .expect(403);
+  });
+
+  it("Should return an error message if the user tries to get their profile details without a valid token or one at all", async () => {
+    const response1 = await request(app)
+      .get("/users/details")
+      .set({ authorization: "asdf" })
+      .expect(403);
+
+    let { Error } = response1.body;
+    expect(Error).toBeDefined();
+
+    const response2 = await request(app).get("/users/details").expect(403);
+
+    ({ Error } = response2.body);
+    expect(Error).toBeDefined();
+  });
+
   it("Should get profile details after being created", async () => {
     const response = await request(app)
       .get("/users/details")
       .set({ authorization: token })
       .expect(200);
-    
+
     const userObj = response.body;
     expect(userObj).toHaveProperty("username", "user");
     expect(userObj).toHaveProperty("name", null);

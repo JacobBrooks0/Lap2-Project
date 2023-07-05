@@ -133,9 +133,6 @@ class Class {
       "DELETE FROM class WHERE class_id = $1 RETURNING *;",
       [this.class_id]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to delete class.");
-    }
     return new Class(response.rows[0]);
   }
 
@@ -153,9 +150,6 @@ class Class {
       "INSERT INTO class_student (class_id, student_id) VALUES ($1, $2) RETURNING *;",
       [this.class_id, studentId]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to enroll student.");
-    }
     return response.rows[0];
   }
 
@@ -164,9 +158,6 @@ class Class {
       "DELETE FROM class_student WHERE class_id = $1 AND student_id = $2 RETURNING *;",
       [this.class_id, studentId]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to delist student.");
-    }
     return response.rows[0];
   }
 }

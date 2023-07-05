@@ -8,9 +8,7 @@ const setupMockDB = async () => {
   const db = new Pool({
     connectionString: process.env.DB_URL
   })
-
-  const sql = fs.readFileSync(path.join(__dirname, "../../database/setup.sql")).toString();
-
+  const sql = fs.readFileSync(path.join(__dirname, "./setup.sql")).toString();
   try {
     await db.query(sql)
     db.end();
