@@ -36,6 +36,7 @@ class ClassController {
 
   static async getMyEnrolledClasses(req, res) {
     const student_id = req.tokenObj.user_id;
+    console.log(student_id)
     try {
       const data = await Class.getEnrolledByStudentId(student_id);
       res.status(200).json(data);
