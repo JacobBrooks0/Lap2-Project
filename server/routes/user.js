@@ -9,6 +9,7 @@ userRouter.post("/login", UserController.login);
 
 userRouter.use(authenticator); 
 
+userRouter.get("/details", UserController.getProfileDetails);
 userRouter.patch("/update", UserController.updateProfileDetails);
 userRouter.delete("/logout", UserController.logout);
 
