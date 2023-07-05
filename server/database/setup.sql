@@ -1,3 +1,4 @@
+-- must drop all tables that have ever existed
 DROP TABLE IF EXISTS class_student;
 
 DROP TABLE IF EXISTS class_skill;
@@ -10,6 +11,8 @@ DROP TABLE IF EXISTS class;
 DROP TABLE IF EXISTS user_jobs;
 
 DROP TABLE IF EXISTS jobs;
+
+DROP TABLE IF EXISTS event_attendee;
 
 DROP TABLE IF EXISTS event_bookmarker;
 
