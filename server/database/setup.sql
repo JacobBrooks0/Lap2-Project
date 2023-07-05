@@ -120,16 +120,6 @@ CREATE TABLE class_student (
     UNIQUE (class_id, student_id)
 );
 
-CREATE TABLE class_skill (
-    class_skill_id INT GENERATED ALWAYS AS IDENTITY,
-    class_id INT NOT NULL,
-    skill_id INT NOT NULL,
-    PRIMARY KEY (class_skill_id),
-    FOREIGN KEY (class_id) REFERENCES class("class_id"),
-    FOREIGN KEY (skill_id) REFERENCES skill("skill_id")
-);
-
-
 -- the password is 1
 INSERT INTO
     user_account (username, password, name, dp_url,	profile_summary)
@@ -234,11 +224,6 @@ VALUES
         1688240800,
         5
     );
-
-INSERT INTO
-    class_skill (class_id, skill_id)
-VALUES
-    (1, 1);
 
 
 INSERT INTO
