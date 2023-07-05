@@ -67,5 +67,47 @@ body {
     color: #666;
 }
 
+#navbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 20px 0;
+    width: 99%;
+    margin: 0 auto;
+}
+
+.navbar-items, .logout-container {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.navbar-items ul, .logout-container ul {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.navbar-items ul li, .logout-container ul li {
+    margin: 0 15px;
+}
+
+.navbar-items a, .logout-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar-items a:hover, .logout-container a:hover {
+    color: #E0B1A9;
+}
+
+.logout-container {
+    justify-self: end;
+}
+
+
+
 
 

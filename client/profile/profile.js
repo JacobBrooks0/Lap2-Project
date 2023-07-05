@@ -10,8 +10,7 @@ async function displayUserData(endpoint, containerId) {
   const userId = getLoggedInUserId();
   const response = await fetch(`http://localhost:3000/users/${userId}/${endpoint}`);
   const data = await response.json();
-  console.log('*************************************************************');
-  console.log(data);  
+   
   document.getElementById('user-name').innerText = data.name;
   document.getElementById('user-email').innerText = data.email;
 
