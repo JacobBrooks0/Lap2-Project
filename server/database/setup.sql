@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS class_student;
 
 DROP TABLE IF EXISTS class_skill;
 
+DROP TABLE IF EXISTS user_skill;
+
 DROP TABLE IF EXISTS skill;
 
 DROP TABLE IF EXISTS class;
@@ -23,7 +25,9 @@ CREATE TABLE user_account (
     user_id INT GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(30) UNIQUE NOT NULL,
     password CHAR(60) NOT NULL,
-    name VARCHAR(30) UNIQUE NOT NULL,
+    name VARCHAR(30),
+    dp_url VARCHAR,
+    profile_summary VARCHAR,
     PRIMARY KEY (user_id)
 );
 
@@ -95,14 +99,6 @@ CREATE TABLE class (
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );
 
-CREATE TABLE skill (
-    skill_id INT GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(50) UNIQUE NOT NULL,
-    description VARCHAR(500),
-    image_id VARCHAR,
-    PRIMARY KEY (skill_id)
-);
-
 CREATE TABLE class_student (
     class_student_id INT GENERATED ALWAYS AS IDENTITY,
     class_id INT NOT NULL,
@@ -118,48 +114,33 @@ CREATE TABLE class_student (
     UNIQUE (class_id, student_id)
 );
 
-CREATE TABLE class_skill (
-    class_skill_id INT GENERATED ALWAYS AS IDENTITY,
-    class_id INT NOT NULL,
-    skill_id INT NOT NULL,
-    PRIMARY KEY (class_skill_id),
-    FOREIGN KEY (class_id) REFERENCES class("class_id"),
-    FOREIGN KEY (skill_id) REFERENCES skill("skill_id")
-);
-
 -- the password is 1
 INSERT INTO
-    user_account (username, password, name)
+    user_account (username, password)
 VALUES
     (
         'florin',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'Florin Florinberg'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
     ),
     (
         'Student1',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'Stu Dent'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
     ),
     (
         'Student2',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'Rosario Benson'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
     ),
     (
         'Student3',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'Lora Pace'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
     ),
     (
         'Student4',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'Carroll Arias'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
     ),
     (
         'Student5',
-        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'Anthony Mooney'
+        '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC'
     );
 
 INSERT INTO
@@ -212,25 +193,6 @@ VALUES
         1688240800,
         5
     );
-
-INSERT INTO
-    skill (name, description, image_id)
-VALUES
-    (
-        'Gardening Pro',
-        'Has professional gardening ability',
-        1
-    ),
-    (
-        'Garbage General',
-        'Knows exactly how to deal with rubbish',
-        2
-    );
-
-INSERT INTO
-    class_skill (class_id, skill_id)
-VALUES
-    (1, 1);
 
 INSERT INTO
     class_student (class_id, student_id)
