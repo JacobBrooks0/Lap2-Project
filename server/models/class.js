@@ -3,6 +3,7 @@ const User = require("./user");
 
 class Class {
   constructor({
+    class_id,
     creator_id,
     name,
     info,
@@ -11,7 +12,8 @@ class Class {
     end_date,
     capacity,
   }) {
-    this.id = creator_id;
+    this.class_id = class_id;
+    this.creator_id = creator_id;
     this.name = name;
     this.info = info;
     this.main_image_url = main_image_url;
@@ -28,10 +30,10 @@ class Class {
     return response.rows.map((g) => new Class(g));
   }
 
-  static async getOneById(id) {
+  static async getOneByClassId(class_id) {
     const response = await db.query(
       "SELECT * FROM class WHERE class_id = $1;",
-      [id]
+      [class_id]
     );
     if (response.rows.length != 1) {
       throw new Error("Unable to find the class you're looking for");
@@ -39,10 +41,10 @@ class Class {
     return new Class(response.rows[0]);
   }
 
-  static async getUsersEnrolled(id) {
+  static async getUsersEnrolled() {
     const response = await db.query(
       "SELECT * FROM user_account u LEFT JOIN class_student cs ON u.user_id = cs.student_id WHERE class_id = $1;",
-      [id]
+      [this.class_id]
     );
     if (response.rows.length < 1) {
       throw new Error("No students have enrolled to this class yet");
@@ -50,10 +52,10 @@ class Class {
     return response.rows.map((r) => new User(r)).map((u) => u.name);
   }
 
-  static async getEnrolledByUserId(id) {
+  static async getEnrolledByStudentId(student_id) {
     const response = await db.query(
       "SELECT * FROM class c LEFT JOIN class_student cs ON c.class_id = cs.class_id WHERE cs.student_id = $1;",
-      [id]
+      [student_id]
     );
     if (response.rows.length < 1) {
       throw new Error("You haven't enrolled to any classes yet.");
@@ -61,10 +63,10 @@ class Class {
     return response.rows.map((record) => new Class(record));
   }
 
-  static async getCreatedByUserId(id) {
+  static async getCreatedByCreatorId(creator_id) {
     const response = await db.query(
       "SELECT * FROM class WHERE creator_id = $1 ORDER BY name",
-      [id]
+      [creator_id]
     );
     if (response.rows.length < 1) {
       throw new Error("You haven't created any classes.");
@@ -102,11 +104,11 @@ class Class {
   async deleteClass() {
     await db.query(
       "DELETE FROM class_student WHERE class_id = $1 RETURNING *;",
-      [this.id]
+      [this.class_id]
     );
     const response = await db.query(
       "DELETE FROM class WHERE class_id = $1 RETURNING *;",
-      [this.id]
+      [this.class_id]
     );
     if (response.rows.length != 1) {
       throw new Error("Unable to delete class.");
@@ -117,7 +119,7 @@ class Class {
   async isAtCapacity() {
     const response = await db.query(
       "SELECT COUNT(*) FROM class_student WHERE class_id = $1",
-      [this.id]
+      [this.class_id]
     );
     const studentCount = response.rows[0].count;
     return studentCount >= this.capacity;
@@ -126,7 +128,7 @@ class Class {
   async enrollStudent(studentId) {
     const response = await db.query(
       "INSERT INTO class_student (class_id, student_id) VALUES ($1, $2) RETURNING *;",
-      [this.id, studentId]
+      [this.class_id, studentId]
     );
     if (response.rows.length != 1) {
       throw new Error("Unable to enroll student.");
@@ -136,8 +138,8 @@ class Class {
 
   async delistStudent(studentId) {
     const response = await db.query(
-      "DELETE FROM class_student WHERE student_id = $1 RETURNING *;",
-      [studentId]
+      "DELETE FROM class_student WHERE class_id = $1 AND student_id = $2 RETURNING *;",
+      [this.class_id, studentId]
     );
     if (response.rows.length != 1) {
       throw new Error("Unable to delist student.");
