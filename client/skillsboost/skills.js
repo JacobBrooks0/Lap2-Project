@@ -13,14 +13,12 @@ const showSkills = async () => {
             authorization: localStorage.getItem("token"),
         }
     }
+
     const resp2 = await fetch('http://localhost:3000/classes/enrolled',options)
 
-    if(!resp2.ok) {
-        console.log(Error.detail)
-    }
-    const enrolledClasses = await resp2.json()
+    const enrolledClasses = (resp2.ok ? await resp2.json():false)
 
-    allSkillClasses.forEach(skillClass => {
+    allSkillClasses.forEach(async skillClass => {
 
         const {name, info, main_image_url, start_date, end_date } = skillClass
 
@@ -32,29 +30,31 @@ const showSkills = async () => {
         const classDate = document.createElement('td')
         const applyButton = document.createElement('button')
 
-        applyButton.textContent='Enrol'
+        console.log('enrolled: '+enrolledClasses)
 
-        const checkIfEnrolled = enrolledClasses.find(enrolledClass => {
-            return enrolledClass.class_id==skillClass.class_id
-        })
+        const checkIfEnrolled = () => {
+            if (enrolledClasses) {
+                const enrolled = enrolledClasses.find(enrolledClass => enrolledClass.class_id==skillClass.class_id)
+                return enrolled
+            }
+        }
 
-        if (checkIfEnrolled) {
+        if (checkIfEnrolled()) {
             row.style.backgroundColor = 'lightgrey'
             applyButton.textContent = 'Leave'
-            // applyButton.style.backgroundColor = 'lightgrey'
-            // applyButton.style.borderColor = 'lightgrey'
             applyButton.addEventListener('click',() => {
             leaveClass(skillClass)
             }) 
         } else {
+            applyButton.textContent='Enrol'
             applyButton.addEventListener('click',() => {
                 applyToClass(skillClass)
             })
         }
 
-        skillImage.src = main_image_url
+        skillImage.src = main_image_url ? main_image_url : null
         skillInfo.innerHTML = `${name ? name : ''}<br>${info ? info : ''}`
-        classDate.textContent = `${(new Date(start_date* 1000)).toUTCString()} to ${(new Date(end_date* 1000)).toUTCString()}`
+        classDate.innerHTML = `${(new Date(start_date* 1000)).toUTCString()}<br>to ${(new Date(end_date* 1000)).toUTCString()}`
 
         skillsTable.appendChild(row)
         skillImageColumn.appendChild(skillImage)
@@ -90,14 +90,12 @@ const applyToClass = async (skillClass) => {
         const data = await resp.json()
 
         if (resp.status==201){
-            popup.firstChild.remove()
+            // popup.firstChild.remove()
             const popupText = document.createElement('p')
             popup.appendChild(popupText)
             popupText.classList.add('popupText')
-        
             popupText.innerHTML=`You have joined the ${name} class!`
             popupText.classList.toggle("show")
-            // window.location.reload()
         } else {
             alert('Something went wrong :(')
         }
@@ -124,7 +122,7 @@ const leaveClass = async(skillClass) => {
         }
         console.log('left class')
         if (resp.status==204){
-            popup.firstChild.remove()
+            // popup.firstChild.remove()
             const popupText = document.createElement('p')
             popup.appendChild(popupText)
             popupText.classList.add('popupText')
@@ -147,7 +145,6 @@ const user_id = localStorage.getItem('user_id')
 const token = localStorage.getItem('token')
 
 const skillsTable = document.querySelector('#skill-classes')
-
 
 const createButton = document.querySelector('#create')
 createButton.addEventListener('click', () => {
