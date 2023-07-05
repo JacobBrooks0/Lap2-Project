@@ -1,12 +1,27 @@
 const showSkills = async () => {
     //fetch classes from dtb
     const resp = await fetch('http://localhost:3000/classes')
-    if (!resp.ok) {
+    if (!resp.ok ) {
         console.log(Error.detail)
     }
-    const skillClasses = await resp.json()
-    skillClasses.forEach(skillClass => {
-        const { class_id, name, info, main_image_url, start_date, end_date } = skillClass
+    const allSkillClasses = await resp.json()
+
+    const options = {
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+        }
+    }
+    const resp2 = await fetch('http://localhost:3000/classes/enrolled',options)
+
+    if(!resp2.ok) {
+        console.log(Error.detail)
+    }
+    const enrolledClasses = await resp2.json()
+
+    allSkillClasses.forEach(skillClass => {
+        const {class_id, name, info, main_image_url, start_date, end_date } = skillClass
 
         const row = document.createElement('tr')
         const skillImageColumn = document.createElement('td')
