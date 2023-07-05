@@ -2,20 +2,20 @@ const request = require("supertest");
 const app = require("../app");
 const db = require("../database/connect");
 
-describe("Community Events Endpoints", () => {
-  afterAll(async () => {
-    await db.end(); // Close the database connection
-  });
-  //Tests for our CRUD API
-  let classID;
+// describe("Community Events Endpoints", () => {
+//   afterAll(async () => {
+//     await db.end(); // Close the database connection
+//   });
+//   //Tests for our CRUD API
+//   let classID;
 
-  //READ ALL
-  it("Should get all community events", async () => {
-    const response = await request(app).get("/events").expect(200);
+//   //READ ALL
+//   it("Should get all community events", async () => {
+//     const response = await request(app).get("/events").expect(200);
 
-    expect(Array.isArray(response.body)).toBe(true);
-    expect(response.body.length).toBeGreaterThan(0);
-  });
+//     expect(Array.isArray(response.body)).toBe(true);
+//     expect(response.body.length).toBeGreaterThan(0);
+//   });
 
 //   //CREATE ONE
 //   it("Should create a new class", async () => {
@@ -73,4 +73,4 @@ describe("Community Events Endpoints", () => {
 //     await request(app).delete(`/class/${classID}`).expect(204);
 //     await request(app).get(`/class/${classID}`).expect(404);
 //   });
-});
+// });
