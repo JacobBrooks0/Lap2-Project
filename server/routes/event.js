@@ -16,7 +16,6 @@ eventsRouter.get("/bookmarked", CommunityEventController.getMyBookmarkedCommunit
 eventsRouter.get("/created", CommunityEventController.getMyCreatedCommunityEvents);
 
 eventsRouter.post("/:id/bookmark", CommunityEventController.bookmarkCommunityEvent);
-
 eventsRouter.delete("/:id/bookmark", CommunityEventController.removeCommunityEventBookmark);
 
 module.exports = eventsRouter;
