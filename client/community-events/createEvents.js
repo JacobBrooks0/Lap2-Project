@@ -22,7 +22,7 @@ document.querySelector('#create').addEventListener('submit', async (e) => {
           }),
     }
     try {
-        const result = await fetch(`http://localhost:3000/jobs`, options)
+        const result = await fetch(`http://localhost:3000/events`, options)
         const data = await result.json()
         if (result.status==201) {
             // window.location.reload()
