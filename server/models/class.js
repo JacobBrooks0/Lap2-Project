@@ -97,7 +97,7 @@ class Class {
       values
     );
     const classId = response.rows[0].class_id;
-    const newClass = await Class.getOneById(classId);
+    const newClass = await Class.getOneByClassId(classId);
     return newClass;
   }
 
