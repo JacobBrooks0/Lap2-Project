@@ -30,12 +30,10 @@ document.querySelector('#class-form').addEventListener('submit', async (e) => {
             const popupText = document.createElement('p')
             popup.appendChild(popupText)
             popupText.classList.add('popupText')
-
             popupText.innerHTML=`You have created a skills class!`
             popupText.classList.toggle("show")
-            alert('job created')
         } else {
-            alert(data.Error.detail)
+            alert(data.Error)
         }
     } catch (error) {
         console.log(error)
