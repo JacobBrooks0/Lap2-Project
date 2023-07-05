@@ -119,7 +119,6 @@ class ClassController {
     } catch (error) {
       console.log(error);
       res.status(500).json({ Error: "You haven't enrolled to this class or the class doesn't exist anymore." });
-      // res.status(304).json({ Error: "You haven't enrolled to this class or the class doesn't exist anymore." });
     }
   }
 }
