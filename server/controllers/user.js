@@ -33,7 +33,7 @@ class UserController {
         throw new Error("Wrong username or password");
       } else {
         const token = await Token.create(user["id"]);
-        res.status(200).json({ authenticated: true, token: token.token });
+        res.status(201).json({ authenticated: true, token: token.token });
       }
     } catch (error) {
       console.log(error);

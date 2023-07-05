@@ -9,13 +9,12 @@ logout.addEventListener("click", async (e) => {
     },
   };
 
-  const response = await fetch("http://localhost:3000/users/logout", options);
-  const data = await response.json();
-
-  if (response.status == 202) {
+  try {
+    const response = await fetch("http://localhost:3000/users/logout", options);
+    const data = await response.json();
     localStorage.removeItem("token");
     window.location.assign("../login/index.html");
-  } else {
-    console.log(data);
+  } catch (error) {
+    console.log(error);
   }
 });

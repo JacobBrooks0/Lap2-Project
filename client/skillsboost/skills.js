@@ -19,7 +19,15 @@ const showSkills = async () => {
 
         skillImage.src = main_image_url
         skillInfo.innerHTML = `${name ? name : ''}<br>${info ? info : ''}`
-        classDate.textContent = `${(new Date(start_date* 1000)).toUTCString()} to ${(new Date(end_date* 1000)).toUTCString()}`
+        classDate.textContent = `${(new Date(start_date* 1000)).toLocaleString('en-GB', {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })} to ${(new Date(end_date* 1000)).toLocaleString('en-GB', {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}`
 
         skillsTable.appendChild(row)
         skillImageColumn.appendChild(skillImage)
@@ -81,10 +89,10 @@ const createClass = () => {
     window.open('./createClass.html','_self')
 }
 
-localStorage.setItem('user_id',1)
-localStorage.setItem('token','b13dc503-22f5-4ed9-9c87-b4f3a16610ac')
+// localStorage.setItem('user_id',1)
+// localStorage.setItem('token','b13dc503-22f5-4ed9-9c87-b4f3a16610ac')
 
-const user_id = localStorage.getItem('user_id')
+// const user_id = localStorage.getItem('user_id')
 const token = localStorage.getItem('token')
 
 const skillsTable = document.querySelector('#skill-classes')
