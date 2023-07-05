@@ -6,7 +6,7 @@ const showSkills = async () => {
     }
     const skillClasses = await resp.json()
     skillClasses.forEach(skillClass => {
-        const { name, info, main_image_url, start_date, end_date} = skillClass
+        const { class_id, name, info, main_image_url, start_date, end_date } = skillClass
 
         const row = document.createElement('tr')
         const skillImageColumn = document.createElement('td')
@@ -29,7 +29,7 @@ const showSkills = async () => {
         skillButtonColumn.appendChild(applyButton)
     
         applyButton.addEventListener('click',() => {
-            applyToClass(name)
+            applyToClass(skillClass)
         }) 
 
         row.appendChild(skillButtonColumn)
@@ -37,22 +37,55 @@ const showSkills = async () => {
 
 }
 
-const applyToClass = (skill_name) => {
-    //add skill to user in dtb
-    popup.firstChild.remove()
-    const popupText = document.createElement('p')
-    popup.appendChild(popupText)
-    popupText.classList.add('popupText')
+const applyToClass = async (skillClass) => {
+    //add skill class to user in dtb
+    try{
+        //check capacity by comparing num of students in class_student
+        //const resp1 = await fetch(`http://localhost:3000/${class_id}classes`) -> isAtCapacity()
 
-    popupText.innerHTML=`You have joined the ${skill_name} class!`
-    popupText.classList.toggle("show")
+        console.log(token)
+        console.log(skillClass)
+        const { class_id, name, capacity } = skillClass
+
+        const options = {
+            method: 'POST',
+            headers: {
+                authorization: localStorage.getItem("token"),
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            }
+        }
+
+        const resp = await fetch(`http://localhost:3000/classes/${class_id}/enroll`,options)
+        const data = await resp.json()
+        console.log(data)
+
+        if (resp.status==201){
+            popup.firstChild.remove()
+            const popupText = document.createElement('p')
+            popup.appendChild(popupText)
+            popupText.classList.add('popupText')
+        
+            popupText.innerHTML=`You have joined the ${name} class!`
+            popupText.classList.toggle("show")
+        } else {
+            alert('Something went wrong :(')
+        }
+    } catch (err) {
+        console.log(err)
+        alert(err)
+    }
 }
 
 const createClass = () => {
-    localStorage.setItem('user_id',1)
-    localStorage.setItem('token','8da282d1-cb26-48a0-939c-e8f01cea5354')
     window.open('./createClass.html','_self')
 }
+
+localStorage.setItem('user_id',1)
+localStorage.setItem('token','b13dc503-22f5-4ed9-9c87-b4f3a16610ac')
+
+const user_id = localStorage.getItem('user_id')
+const token = localStorage.getItem('token')
 
 const skillsTable = document.querySelector('#skill-classes')
 
