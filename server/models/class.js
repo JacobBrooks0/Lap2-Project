@@ -11,6 +11,7 @@ class Class {
     start_date,
     end_date,
     capacity,
+    created_at,
   }) {
     this.class_id = class_id;
     this.creator_id = creator_id;
@@ -20,6 +21,7 @@ class Class {
     this.start_date = start_date;
     this.end_date = end_date;
     this.capacity = capacity;
+    this.created_at = created_at;
   }
 
   static async getAll() {
@@ -74,15 +76,10 @@ class Class {
     return response.rows.map((record) => new Class(record));
   }
 
-  static async createClass({
+  static async createClass(
     creator_id,
-    name,
-    main_image_url,
-    info,
-    start_date,
-    end_date,
-    capacity,
-  }) {
+    { name, main_image_url, info, start_date, end_date, capacity }
+  ) {
     const values = [
       creator_id,
       name,
@@ -94,6 +91,28 @@ class Class {
     ];
     const response = await db.query(
       "INSERT INTO class (creator_id, name, main_image_url, info, start_date, end_date, capacity) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
+      values
+    );
+    const classId = response.rows[0].class_id;
+    const newClass = await Class.getOneByClassId(classId);
+    return newClass;
+  }
+
+  async updateClass(
+    creator_id,
+    { name, main_image_url, info, start_date, end_date, capacity }
+  ) {
+    const values = [
+      name,
+      main_image_url,
+      info,
+      start_date,
+      end_date,
+      capacity,
+      creator_id,
+    ];
+    const response = await db.query(
+      "UPDATE class SET name = $1, main_image_url = $2, info = $3, start_date = $4, end_date = $5, capacity = $6 WHERE creator_id = $7 RETURNING *;",
       values
     );
     const classId = response.rows[0].class_id;

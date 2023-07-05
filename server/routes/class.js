@@ -11,6 +11,7 @@ classRouter.get("/:id/find", ClassController.getClassByClassId);
 classRouter.use(authenticator);
 
 classRouter.post("/", ClassController.createClass);
+classRouter.patch("/:id", ClassController.updateClass);
 classRouter.delete("/:id", ClassController.deleteClass);
 
 classRouter.get("/enrolled", ClassController.getMyEnrolledClasses);
