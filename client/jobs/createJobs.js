@@ -1,8 +1,11 @@
 let user_id = localStorage.getItem('user_id')
 const popup = document.querySelector('.popup')
 
+console.log('test')
+
 document.querySelector('#job-form').addEventListener('submit', async (e) => {
     e.preventDefault()
+    console.log('test 2')
     try {
         const form = new FormData(e.target)
         const options = {
@@ -30,6 +33,7 @@ document.querySelector('#job-form').addEventListener('submit', async (e) => {
             popupText.innerHTML=`You have created a job listing!`
             popupText.classList.toggle("show")
         } else {
+            console.log(data.Error)
             alert(data.Error)
         }
     } catch (error) {
