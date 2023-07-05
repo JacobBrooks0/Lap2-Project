@@ -67,12 +67,12 @@ class ClassController {
     }
   }
 
-  static async removeClass(req, res) {
+  static async deleteClass(req, res) {
     const class_id = req.params.id;
     const creator_id = req.tokenObj.user_id;
     try {
       const skillsClass = await Class.getOneById(class_id);
-      const data = await skillsClass.removeClass(creator_id);
+      const data = await skillsClass.deleteClass(creator_id);
       res.status(204).json(data);
     } catch (error) {
       console.log(error);

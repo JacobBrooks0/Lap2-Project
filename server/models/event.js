@@ -85,7 +85,7 @@ class CommunityEvent {
     return newCommunityEvent;
   }
 
-  async removeCommunityEvent() {
+  async deleteCommunityEvent() {
     await db.query(
       "DELETE FROM event_attendee WHERE event_id = $1 RETURNING *;",
       [this.id]
@@ -95,7 +95,7 @@ class CommunityEvent {
       [this.id]
     );
     if (response.rows.length != 1) {
-      throw new Error("Unable to remove community event");
+      throw new Error("Unable to delete community event");
     }
     return new CommunityEvent(response.rows[0]);
   }

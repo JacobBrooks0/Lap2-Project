@@ -99,7 +99,7 @@ class Class {
     return newClass;
   }
 
-  async removeClass() {
+  async deleteClass() {
     await db.query(
       "DELETE FROM class_student WHERE class_id = $1 RETURNING *;",
       [this.id]
