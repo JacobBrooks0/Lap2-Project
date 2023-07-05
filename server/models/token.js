@@ -6,7 +6,7 @@ class Token {
   constructor({ token_id, user_id, token }) {
     this.token_id = token_id;
     this.user_id = user_id;
-    this.token = token;
+    this.token = String(token);
   }
 
   static async create(user_id) {
@@ -29,11 +29,7 @@ class Token {
     const response = await db.query("SELECT * FROM token WHERE token_id = $1", [
       id,
     ]);
-    if (response.rows.length != 1) {
-      throw new Error("Unable to locate token.");
-    } else {
-      return new Token(response.rows[0]);
-    }
+    return new Token(response.rows[0]);
   }
 
   static async getOneByToken(token) {
@@ -41,22 +37,15 @@ class Token {
       token,
     ]);
     if (response.rows.length != 1) {
-      throw new Error("Unable to locate token.");
+      throw new Error("Unable to find token.");
     } else {
       return new Token(response.rows[0]);
     }
   }
 
   async deleteToken() {
-    const response = await db.query("DELETE FROM token WHERE token = $1", [
-      this.token,
-    ]);
-
-    if (!response) {
-      throw new Error("Unable to locate token.");
-    } else {
-      return "Token Deleted";
-    }
+    await db.query("DELETE FROM token WHERE token = $1", [this.token]);
+    return "Token Deleted";
   }
 }
 

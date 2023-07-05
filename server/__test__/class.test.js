@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const db = require("../database/connect");
-const setupMockDB = require("./setup/setup-mock-db");
+const setupMockDB = require("./mock/database/setup");
 
 describe("Class Endpoints", () => {
   let token;
@@ -25,11 +25,19 @@ describe("Class Endpoints", () => {
     await db.end(); // Close the database connection
   });
 
-  //GET
-  it("Should get all classes", async () => {
-    const response = await request(app).get("/classes").expect(200);
-    expect(Array.isArray(response.body)).toBe(true);
-    expect(response.body.length).toBeGreaterThan(0);
+  it("Should give correct status codes when there are no classes available", async () => {
+    await request(app).get("/classes").expect(404);
+    await request(app).get("/classes/1/students").expect(404);
+    await request(app).get("/classes/1/find").expect(404);
+    await request(app).get("/classes/1/is-at-capacity").expect(404);
+    await request(app)
+      .get("/classes/enrolled")
+      .set({ authorization: token })
+      .expect(404);
+    await request(app)
+      .get("/classes/created")
+      .set({ authorization: token })
+      .expect(404);
   });
 
   //POST
@@ -55,7 +63,29 @@ describe("Class Endpoints", () => {
 
     expect(response.body).toHaveProperty("class_id", classId);
   });
-  
+
+  it("Should return an error message if conditions for creating a new class haven't been met", async () => {
+    const newClass = {
+      info: "Learn how to fix wooden appliances around the house",
+      start_date: 1688230800,
+      end_date: 1688330800,
+      capacity: 4,
+    };
+
+    await request(app)
+      .post("/classes")
+      .set({ authorization: token })
+      .send(newClass)
+      .expect(500);
+  });
+
+  //GET
+  it("Should get all classes", async () => {
+    const response = await request(app).get("/classes").expect(200);
+    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body.length).toBeGreaterThan(0);
+  });
+
   //GET
   it("Should make class not full before this user has enrolled", async () => {
     const response = await request(app)
@@ -81,7 +111,7 @@ describe("Class Endpoints", () => {
       .get(`/classes/created`)
       .set({ authorization: token })
       .expect(200);
-    
+
     const createdArr = response.body;
 
     expect(Array.isArray(createdArr)).toBe(true);
@@ -123,12 +153,22 @@ describe("Class Endpoints", () => {
     expect(response.body).toHaveProperty("class_student_id");
   });
 
+  //POST
+  it("Should give an error already enrolled user tries to enroll to a class again", async () => {
+    const response = await request(app)
+      .post(`/classes/${classId}/enroll`)
+      .set({ authorization: token })
+      .expect(500);
+
+    // expect(response.body).toHaveProperty("class_student_id");
+  });
+
   //GET
   it("Should get all student/users enrolled to class when requested", async () => {
     const response = await request(app)
       .get(`/classes/${classId}/students`)
       .expect(200);
-    
+
     const studentArr = response.body;
     expect(Array.isArray(studentArr)).toBe(true);
     expect(studentArr.length).toBe(1);
@@ -152,7 +192,7 @@ describe("Class Endpoints", () => {
       .get(`/classes/enrolled`)
       .set({ authorization: token })
       .expect(200);
-    
+
     const enrolledArr = response.body;
 
     expect(Array.isArray(enrolledArr)).toBe(true);
