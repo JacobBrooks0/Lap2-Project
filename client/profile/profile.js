@@ -1,48 +1,63 @@
-function setLoggedInUserId(userId) {
-  localStorage.setItem('loggedInUserId', userId);
-}
+const classesContainer = document.getElementById("classes-container");
+const userName = document.getElementById("user-name");
+const userDescription = document.getElementById("user-description");
+const profileImage = document.querySelector(".profile-image");
 
-function getLoggedInUserId() {
-  return localStorage.getItem('loggedInUserId');
-}
+async function getProfileDetails() {
+  const options = {
+    method: "GET",
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  };
 
-async function displayUserData(endpoint, containerId) {
-  const userId = getLoggedInUserId();
-  const response = await fetch(`http://localhost:3000/users/${userId}/${endpoint}`);
+  const response = await fetch("http://localhost:3000/users/details", options);
   const data = await response.json();
-   
-  document.getElementById('user-name').innerText = data.name;
-  document.getElementById('user-email').innerText = data.email;
 
-  let container = document.getElementById(containerId);
-
-  data.forEach(item => {
-    let itemContainer = document.createElement('div');
-    itemContainer.className = 'item-container'; 
-
-    let title = document.createElement('h3');
-    title.innerText = item.name;
-
-    let description = document.createElement('p');
-    description.innerText = item.info;
-
-    itemContainer.appendChild(title);
-    itemContainer.appendChild(description);
-
-    container.appendChild(itemContainer);
-  });
+  if (response.status === 200) {
+    userName.textContent = data.name;
+    userDescription.textContent = data.profile_summary;
+    profileImage.src = data.dp_url;
+  } else {
+    console.log(data);
+  }
 }
 
+async function getEnrolledClasses() {
+  const options = {
+    method: "GET",
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  };
 
-function handleLogin(userId) {
-  setLoggedInUserId(userId);
+  const response = await fetch("http://localhost:3000/classes/enrolled", options);
+  const data = await response.json();
 
-  displayUserData('skills', 'skills-container');
-  displayUserData('classes', 'classes-container');
-  displayUserData('events', 'events-container');
+  if (response.status === 200) {
+    data.forEach((classItem) => {
+      const classDiv = document.createElement("div");
+      classDiv.classList.add("item-container");
+
+      const className = document.createElement("h3");
+      className.textContent = classItem.name;
+      classDiv.appendChild(className);
+
+      const classInfo = document.createElement("p");
+      classInfo.textContent = classItem.info;
+      classDiv.appendChild(classInfo);
+
+      classesContainer.appendChild(classDiv);
+    });
+  } else {
+    console.log(data);
+  }
 }
 
-handleLogin(2);
+getProfileDetails();
+getEnrolledClasses();
+
+
 
 
 
