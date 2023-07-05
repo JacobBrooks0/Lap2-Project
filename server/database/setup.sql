@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS user_jobs;
 
 DROP TABLE IF EXISTS jobs;
 
-DROP TABLE IF EXISTS event_attendee;
+DROP TABLE IF EXISTS event_bookmarker;
 
 DROP TABLE IF EXISTS community_event;
 
@@ -50,19 +50,19 @@ CREATE TABLE community_event (
     FOREIGN KEY (creator_id) REFERENCES user_account("user_id")
 );
 
-CREATE TABLE event_attendee (
-    event_attendee_id INT GENERATED ALWAYS AS IDENTITY,
+CREATE TABLE event_bookmarker (
+    event_bookmarker_id INT GENERATED ALWAYS AS IDENTITY,
     event_id INT NOT NULL,
-    attendee_id INT NOT NULL,
-    confirmed_at FLOAT DEFAULT extract(
+    bookmarker_id INT NOT NULL,
+    bookmarked_at FLOAT DEFAULT extract(
         epoch
         from
             now()
     ),
-    PRIMARY KEY (event_attendee_id),
+    PRIMARY KEY (event_bookmarker_id),
     FOREIGN KEY (event_id) REFERENCES community_event("event_id"),
-    FOREIGN KEY (attendee_id) REFERENCES user_account("user_id"),
-    UNIQUE (event_id, attendee_id)
+    FOREIGN KEY (bookmarker_id) REFERENCES user_account("user_id"),
+    UNIQUE (event_id, bookmarker_id)
 );
 
 CREATE TABLE jobs (
@@ -172,10 +172,17 @@ VALUES
         'Our annual summer barbecue. Everyone''s invited.',
         1688230800,
         1688240800
+    ),
+    (
+        1,
+        'Florin Fun Fair',
+        'Have a great time at our summer fun fair. Everyone''s invited.',
+        1688230800,
+        1689240800
     );
 
 INSERT INTO
-    event_attendee (event_id, attendee_id)
+    event_bookmarker (event_id, bookmarker_id)
 VALUES
     (1, 1),
     (1, 2),
