@@ -38,7 +38,7 @@ describe("User Endpoints", () => {
     token = userObj.token;
   });
 
-  it("Should get profile details when created", async () => {
+  it("Should get profile details after being created", async () => {
     const response = await request(app)
       .get("/users/details")
       .set({ authorization: token })

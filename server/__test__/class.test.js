@@ -55,6 +55,15 @@ describe("Class Endpoints", () => {
 
     expect(response.body).toHaveProperty("class_id", classId);
   });
+  
+  //GET
+  it("Should make class not full before this user has enrolled", async () => {
+    const response = await request(app)
+      .get(`/classes/${classId}/is-at-capacity`)
+      .expect(200);
+    const { classIsFull } = response.body;
+    expect(classIsFull).toBe(false);
+  });
 
   //GET
   it("Should get the class that has been created", async () => {
@@ -90,7 +99,7 @@ describe("Class Endpoints", () => {
       info: "Test",
       start_date: 1688230800,
       end_date: 1688330800,
-      capacity: 4,
+      capacity: 1,
     };
 
     const response = await request(app)
@@ -126,6 +135,15 @@ describe("Class Endpoints", () => {
 
     const { username } = studentArr[0];
     expect(username).toBe("user");
+  });
+
+  //GET
+  it("Should make class full after this user has enrolled", async () => {
+    const response = await request(app)
+      .get(`/classes/${classId}/is-at-capacity`)
+      .expect(200);
+    const { classIsFull } = response.body;
+    expect(classIsFull).toBe(true);
   });
 
   //GET

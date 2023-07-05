@@ -6,6 +6,7 @@ const classRouter = Router();
 
 classRouter.get("/", ClassController.getAllClasses);
 classRouter.get("/:id/students", ClassController.getUsersEnrolled);
+classRouter.get("/:id/is-at-capacity", ClassController.getCapacityStatus);
 classRouter.get("/:id/find", ClassController.getClassByClassId);
 
 classRouter.use(authenticator);
