@@ -1,11 +1,16 @@
 const { Router } = require('express');
 const authenticator = require('../middleware/authenticator')
-const userController = require('../controllers/user.js');
+const UserController = require('../controllers/user.js');
 
 const userRouter = Router();
 
-userRouter.post("/register", userController.register);
-userRouter.post("/login", userController.login);
-userRouter.delete("/logout", authenticator, userController.logout);
+userRouter.post("/register", UserController.register);
+userRouter.post("/login", UserController.login);
+
+userRouter.use(authenticator); 
+
+userRouter.get("/details", UserController.getProfileDetails);
+userRouter.patch("/update", UserController.updateProfileDetails);
+userRouter.delete("/logout", UserController.logout);
 
 module.exports = userRouter;
