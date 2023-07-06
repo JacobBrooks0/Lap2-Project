@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/main.css">
-    <style src="./createEvents.js"></style>
+    <script src="./createEvents.js" defer></script>
     <title>Create an Event </title>
 </head>
 <body>
@@ -19,7 +19,7 @@
     </div>
     <main>
 
-    <form id="class-form">
+    <form id="event-form">
             <h1>Fill out the information below for your upcoming Event</h1> 
             <label for="name">Event name: </label>
             <input type="text" id="name" name="name" required>
@@ -39,7 +39,11 @@
             <br>
             <input type="submit" value="Create" id="post">
     </form>
-    </form>       
+
+    <div class="popup">
+
+    </div>
+    
     </main>
 
 </body>
