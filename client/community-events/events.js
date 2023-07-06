@@ -11,41 +11,63 @@ const showEvents = async () => {
         const row = document.createElement('tr')
         const eventImageColumn = document.createElement('td')
         const eventButtonColumn = document.createElement('td')
+        const eventName = document.createElement('td')
         const eventInfo = document.createElement('td')
         const eventImage = document.createElement('img')
         const eventDate = document.createElement('td')
-        const joinButton = document.createElement('button')
-        joinButton.textContent='Join'
+        const bookmarkButton = document.createElement('button')
+        bookmarkButton.textContent='Bookmark'
 
         eventImage.src = main_image_url
-        eventInfo.innerHTML = `${name ? name : ''}<br>${info ? info : ''}`
-        eventDate.textContent = `${(new Date(start_date* 1000)).toUTCString()} to ${(new Date(end_date* 1000)).toUTCString()}`
+        eventName.textContent = name
+        eventInfo.innerHTML = `${info ? info : ''}`
+        eventDate.innerHTML = `${(new Date(start_date* 1000)).toUTCString()}<br>to ${(new Date(end_date* 1000)).toUTCString()}`
 
         eventsTable.appendChild(row)
         eventImageColumn.appendChild(eventImage)
         row.appendChild(eventImageColumn)
+        row.appendChild(eventName)
         row.appendChild(eventInfo)
         row.appendChild(eventDate)
-        eventButtonColumn.appendChild(joinButton)
+        eventButtonColumn.appendChild(bookmarkButton)
     
-        joinButton.addEventListener('click',() => {
-            joinEvent(name)
+        bookmarkButton.addEventListener('click',() => {
+            bookmarkEvent(event)
         }) 
 
         row.appendChild(eventButtonColumn)
     })
 }
 
-const joinEvent = (event_name) => {
-    //add event to user in dtb
-    //alert(`You have joined the ${event_name} event!`)
-    popup.firstChild.remove()
-    const popupText = document.createElement('p')
-    popup.appendChild(popupText)
-    popupText.classList.add('popupText')
+const bookmarkEvent = async(event) => {
+    //grey out bookmarked events - delete bookmark
+    try {
+        const options = {
+            method: 'POST',
+            headers: {
+                authorization: localStorage.getItem("token"),
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            }
+        }
+        const resp = await fetch(`http://localhost:3000/events/${event.event_id}/bookmark`, options)
+        const data = await resp.json()
 
-    popupText.innerHTML=`You have joined the ${event_name} event!`
-    popupText.classList.toggle("show")
+        if (resp.status==201) {
+            popup.firstChild.remove()
+            const popupText = document.createElement('p')
+            popup.appendChild(popupText)
+            popupText.classList.add('popupText')
+        
+            popupText.innerHTML=`You have bookmarked the ${event.name} event!`
+            popupText.classList.toggle("show")
+        } else {
+            alert('something went wrong')
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 const createEvent = () => {
@@ -72,5 +94,8 @@ createButton.addEventListener('click', () => {
 })
 
 const popup = document.querySelector('.popup')
+
+localStorage.setItem('user_id',1)
+localStorage.setItem('token','d01b2d1f-0dad-4e1c-8e7c-41ef2c7d1077')
 
 showEvents()

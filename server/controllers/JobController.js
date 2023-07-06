@@ -32,10 +32,20 @@ class JobController {
 //         res.status(404).json({"error": err.message})
 //     }
 // }
+
+  static async getOneById(req, res) {
+    const job_id = req.params.id;
+    try {
+        const job = await Job.getOneById(job_id)
+        res.status(200).json(job);
+    } catch (err) {
+        res.status(404).json({"error": err.message})
+    }
+}
+
   static async createJob(req, res) {
     const user_id = req.tokenObj.user_id;
-    const JobInfo = Object.values(req.body);
-    JobInfo.unshift(user_id);
+    const JobInfo = {...req.body,user_id};
     try {
       const data = await Job.createJob(JobInfo);
       res.status(201).json(data);
@@ -45,16 +55,14 @@ class JobController {
     }
   }
   static async deleteJob(req, res) {
-    const id = req.tokenObj.job_id;
-    console.log(id)
+    const job_id = req.params.id;
+    const user_id = req.tokenObj.user_id
     try {
-        const job = await Job.getOneById(id)
-        console.log(job)
-        const result = await job.deleteJob();
-        
+        const job = await Job.getOneById(job_id)
+        const result = await job.deleteJob(user_id);
         res.status(204).json(result);
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(404).json({"error": err.message})
     }
     }
