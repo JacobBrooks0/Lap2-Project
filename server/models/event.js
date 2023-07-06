@@ -96,9 +96,9 @@ class CommunityEvent {
       "DELETE FROM community_event WHERE event_id = $1 RETURNING *;",
       [this.event_id]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to delete community event");
-    }
+    // if (response.rows.length != 1) {
+    //   throw new Error("Unable to delete community event");
+    // }
     return new CommunityEvent(response.rows[0]);
   }
 
@@ -107,9 +107,9 @@ class CommunityEvent {
       "INSERT INTO event_bookmarker (event_id, bookmarker_id) VALUES ($1, $2) RETURNING *;",
       [this.event_id, userId]
     );
-    if (response.rows.length != 1) {
-      throw new Error("Unable to confirm your attendance to this event.");
-    }
+    // if (response.rows.length != 1) {
+    //   throw new Error("Unable to confirm your attendance to this event.");
+    // }
     return response.rows[0];
   }
 
@@ -118,11 +118,11 @@ class CommunityEvent {
       "DELETE FROM event_bookmarker WHERE bookmarker_id = $1 AND event_id = $2 RETURNING *;",
       [userId,this.event_id]
     );
-    if (response.rows.length != 1) {
-      throw new Error(
-        "Unable to remove your attendance confirmation to this event."
-      );
-    }
+    // if (response.rows.length != 1) {
+    //   throw new Error(
+    //     "Unable to remove your attendance confirmation to this event."
+    //   );
+    // }
     return response.rows[0];
   }
 }
