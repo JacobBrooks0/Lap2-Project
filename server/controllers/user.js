@@ -16,7 +16,16 @@ class UserController {
 
       res.status(201).send(result);
     } catch (error) {
-      res.status(400).json({ Error: error.message });
+      switch (+error.code) {
+        case 23505:
+          res
+            .status(500)
+            .json({ Error: "A user with username already exists" });
+          break;
+        default:
+          res.status(500).json({ Error: error.message });
+          break;
+      }
     }
   }
 
