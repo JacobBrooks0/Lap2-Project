@@ -1,64 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+
 *{
     font-family: Arial, Helvetica, sans-serif; 
     /* import google fonts */
     margin: 0;
     padding: 0;
-    font-size: 15px;
+    font-size: 16px;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1,h2 {
+    font-family: 'Indie Flower', cursive;
+}
+
 
 /* #E0B1A9 */
 /* #46458C */
 /* #090580 */
 /* #F4D3D3 */
 
-#navbar ul li{
-    display: inline-block;
-    text-transform: uppercase;
-    list-style-type: none;
-    margin: 0 15px;
-    position: relative;
-}
+/* ...rest of your CSS */
 
-#navbar{
-    width: 90%;
-    margin: auto;
-    padding: 20px 0;
-    display: flex;
+#navbar {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    justify-content: center;
-    position: sticky;
-    top:0;
-    width:100%;
+    padding: 20px 0;
+    width: 99%;
+    margin: 0 auto;
     background-color: #E0B1A9;
 }
 
-#navbar a{
+.navbar-items, .logout-container {
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-items ul, .logout-container ul {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.navbar-items ul li, .logout-container ul li {
+    margin: 0 15px;
+}
+
+.navbar-items a, .logout-container a {
     text-decoration: none;
     color: black;
 }
 
-#navbar a:hover{
+.navbar-items a:hover, .logout-container a:hover {
     color: white;
 }
 
-button,#post{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    padding: 4px;
-    border-radius: 7px;
-    /* border-color:#46458C;
-    background-color: white ; */
-    border-color: #E0B1A9 ;
-    background-color: #E0B1A9;
-    color: black;
+.logout-container {
+    position: absolute;
+    right: 0;
+    justify-self: end;
 }
+
+/* ...rest of your CSS */
+
+button {
+    min-width: 150px; 
+}
+
+button, #post {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #E0B1A9;
+    color: white;
+    cursor: pointer;
+}
+
+
+button:hover, #post:hover {
+    background-color: #C99082;
+}
+
 
 /* button:hover{
     background-color:#46458C;
     color: white;
 } */
 
-main{
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(90vh - 60px); 
+    flex-direction: column;
+    overflow-y: auto;
     padding-top: 50px;
 }
 
@@ -96,16 +142,24 @@ th{
     text-align: left;
 }
  
-form{
+form {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    width: 375px;
+    margin-bottom: 20px;
     display: grid;
-    padding: 50px;
     justify-content: center;
 }
 
-input, label,textarea{
-    width:500px;
+input, label, textarea {
+    width: 92%; 
     padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
+
 
 #post{
     display: inline;
