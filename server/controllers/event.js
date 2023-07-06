@@ -1,4 +1,3 @@
-const { DatabaseError } = require("pg");
 const CommunityEvent = require("../models/event");
 
 class CommunityEventController {
@@ -79,8 +78,6 @@ class CommunityEventController {
       const data = await communityEvent.bookmarkEvent(user_id);
       res.status(201).json(data);
     } catch (error) {
-      console.log(error);
-      if (error instanceof DatabaseError) {
         switch (+error.code) {
           case 23505:
             res.status(500).json({
@@ -88,12 +85,9 @@ class CommunityEventController {
             });
             break;
           default:
-            res.status(500).json({ Error: error });
+            res.status(500).json({ Error: error.message });
             break;
         }
-      } else {
-        res.status(500).json({ Error: error.message });
-      }
     }
   }
 

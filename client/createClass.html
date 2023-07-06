@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <script src="assets/scripts/createClass.js" defer></script>
+    <script src="assets/scripts/logout.js" defer></script>
+    <title>Create a SkillsBoost Class</title>
+</head>
+<body>
+    <div id="navbar">
+        <div class="navbar-items">
+            <ul>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="skills.html">Skills Boost</a></li>
+                <li><a href="events.html">Community Events</a></li>
+                <li><a href="jobs.html">Jobs</a></li>
+            </ul>
+        </div>
+        <div class="logout-container">
+            <ul>
+                <li id="log-out"><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <main>
+
+    <form id="class-form">
+            <h1>Fill out the information below for your SkillsBoost class</h1> 
+            <label for="name">*Skill name: </label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="info">*Information: </label>
+            <textarea id="info" name="info" required></textarea>
+
+            <label for="image">Image URL: </label>
+            <input type="text" id="image" name="image" />
+
+            <label for="start-date">*Start Date: </label>
+            <input type="datetime-local" id="start-date" name="start-date" required />
+
+            <label for="end-date">End Date: </label>
+            <input type="datetime-local" id="end-date" name="end-date" required />
+
+            <label for="capacity">Capacity:</label>
+            <input type="text" id="capacity" name="capacity">
+
+            <br>
+            <input type="submit" value="Create" id="post">
+    </form>
+    </form>  
+    
+    <div class="popup">
+
+    </div>
+
+    </main>
+
+</body>
+</html>

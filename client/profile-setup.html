@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/scripts/profile-setup.js" defer></script>
+    <link rel="stylesheet" href="assets/styles/login.css">
+    <title>Profile Setup</title>
+</head>
+<body>
+    <header>
+        <h1>Create Your User Profile </h1>
+    </header>
+    <main>
+        <hr />
+        <form id="profile-form" class="profile-form">
+            <fieldset>
+                <label for="name">Enter Your Full Name: </label>
+                <input type="text" id="name" name="name" required>
+            </fieldset>
+            <fieldset>
+                <label for="dp_url">Enter a URL Linking to Your Display Picture </label>
+                <input type="text" id="dp_url" name="dp_url" />
+            </fieldset>
+            <fieldset>
+                <label for="profile_summary">Write Your Profile Summary/ Bio Here: </label>
+                <textarea id="profile_summary" name="profile_summary" required></textarea>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </main>
+</body>
+</html>
