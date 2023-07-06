@@ -2,10 +2,25 @@ const showEvents = async () => {
     //fetch events from dtb
     const resp = await fetch('http://localhost:3000/events')
     if (!resp.ok) {
-        console.log('something went wrong')
+        console.log('Something went wrong')
     }
     const events = await resp.json()
+
+    const options = {
+        method: 'GET',
+        headers: {
+            authorization: localStorage.getItem("token"),
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        }
+    }
+
+    const resp2 = await fetch('http://localhost:3000/events/bookmarked', options)
+    const bookmarkedEvents = (resp2.ok ? await resp2.json() : false)
+    console.log(bookmarkedEvents)
+
     events.forEach(event => {
+
         const { name, main_image_url, info, start_date, end_date} = event
     
         const row = document.createElement('tr')
@@ -16,7 +31,35 @@ const showEvents = async () => {
         const eventImage = document.createElement('img')
         const eventDate = document.createElement('td')
         const bookmarkButton = document.createElement('button')
-        bookmarkButton.textContent='Bookmark'
+
+        
+        const checkIfBookmarked = () => {
+            if (bookmarkedEvents) {
+                const bookmarked = bookmarkedEvents.find(bookmarkedEvent => 
+                    {
+                        console.log(event)
+                        return(bookmarkedEvent.event_id==event.event_id)
+                    })
+                return bookmarked
+            } else {
+                return false
+            }
+        }
+
+
+        if(checkIfBookmarked()) {
+            bookmarkButton.textContent = 'Un-bookmark'
+            row.style.backgroundColor = 'lightgrey'
+            bookmarkButton.addEventListener('click',() => {
+                deleteBookmark(event)
+            })
+        } else {
+            bookmarkButton.textContent='Bookmark'
+            bookmarkButton.addEventListener('click',() => {
+                bookmarkEvent(event)
+            }) 
+
+        }
 
         eventImage.src = main_image_url
         eventName.textContent = name
@@ -30,10 +73,6 @@ const showEvents = async () => {
         row.appendChild(eventInfo)
         row.appendChild(eventDate)
         eventButtonColumn.appendChild(bookmarkButton)
-    
-        bookmarkButton.addEventListener('click',() => {
-            bookmarkEvent(event)
-        }) 
 
         row.appendChild(eventButtonColumn)
     })
@@ -61,10 +100,39 @@ const bookmarkEvent = async(event) => {
         
             popupText.innerHTML=`You have bookmarked the ${event.name} event!`
             popupText.classList.toggle("show")
+            setTimeout(() => window.location.reload(),5000)
         } else {
             alert('something went wrong')
         }
 
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const deleteBookmark = async (event) => {
+    try {
+        const options = {
+            method: 'DELETE',
+            headers: {
+                authorization: localStorage.getItem("token"),
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            }
+        }
+        const resp = await fetch(`http://localhost:3000/events/${event.event_id}/bookmark`, options)
+        if (!resp.ok){
+            console.log(Error.detail)
+        }
+        if (resp.status==204){
+            const popupText = document.createElement('p')
+            popup.appendChild(popupText)
+            popupText.classList.add('popupText')
+            popupText.innerHTML=`You have un-bookmarked the ${event.name} event.`
+            popupText.classList.toggle("show")
+
+            setTimeout(() => window.location.reload(),5000)
+        }
     } catch (err) {
         console.log(err)
     }
