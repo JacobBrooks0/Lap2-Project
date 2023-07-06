@@ -5,10 +5,12 @@ const setupMockDB = require("./mock/database/setup");
 
 describe("User Endpoints", () => {
   beforeAll(async () => {
-    await setupMockDB(); //Set the database to it's default state before starting test
+    //Set the database to it's default state before starting test
+    await setupMockDB(); 
   });
   afterAll(async () => {
-    await db.end(); // Close the database connection
+    // Close the database connection
+    await db.end(); 
   });
 
   let token;

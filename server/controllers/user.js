@@ -16,7 +16,6 @@ class UserController {
 
       res.status(201).send(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json({ Error: error.message });
     }
   }
@@ -36,7 +35,6 @@ class UserController {
         res.status(201).json({ authenticated: true, token: token.token });
       }
     } catch (error) {
-      console.log(error);
       res.status(403).json({ Error: error.message });
     }
   }
@@ -48,7 +46,6 @@ class UserController {
       delete result.password;
       res.status(200).send(result);
     } catch (error) {
-      console.log(error);
       res.status(404).json({ Error: error.message });
     }
   }
@@ -61,7 +58,6 @@ class UserController {
       const result = await user.updateProfileDetails(data);
       res.status(202).send(result);
     } catch (error) {
-      console.log(error);
       res.status(304).json({ Error: error.message });
     }
   }
@@ -72,7 +68,6 @@ class UserController {
       const response = await tokenObj.deleteToken();
       res.status(202).json({ message: response });
     } catch (error) {
-      console.log(error);
       res.status(403).json({ Error: error.message });
     }
   }
