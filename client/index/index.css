@@ -53,13 +53,14 @@ text {
   display: inline-block;
   fill: #e0b1a9;
   stroke: #842191;
-  stroke-width: 0.5px;
+  stroke-width: 1.5px;
   stroke-linejoin: round;
   animation: 3s pulsate infinite;
 }
 
 @keyframes pulsate {
   50% {
-    stroke-width: 5px;
+    stroke-width: 6px;
+    stroke:#256e12;
   }
 }
