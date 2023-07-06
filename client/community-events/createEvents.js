@@ -1,9 +1,7 @@
 const popup = document.querySelector('.popup')
-console.log('test')
 
 document.querySelector('#event-form').addEventListener('submit', async (e) => {
     e.preventDefault()
-    console.log('test 2')
     try {
         const form = new FormData(e.target)
         const options = {
