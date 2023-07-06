@@ -7,7 +7,10 @@ const renderDOM = async (filename) => {
     const filePath = path.join(process.cwd(), filename)
     const dom = await JSDOM.fromFile(filePath, {
         runScripts: 'dangerously',
-        resources: 'usable'
+        resources: 'usable',
+        beforeParse(window) {
+            window.alert = window.console.log.bind(window.console);
+        }
     })
 
     return new Promise((resolve, _) => {
@@ -16,3 +19,5 @@ const renderDOM = async (filename) => {
         })
     })
 }
+
+module.exports = { renderDOM }
