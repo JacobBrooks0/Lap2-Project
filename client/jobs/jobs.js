@@ -1,9 +1,21 @@
 const showJobs = async () => {
     const resp = await fetch('http://localhost:3000/jobs')
     if (!resp.ok) {
-        console.log('something went wrong')
+        console.log(Error.detail)
     }
     const jobs = await resp.json()
+
+    const options = {
+        method: 'GET',
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+        }
+    }
+    const resp2 = await fetch (`http://localhost:3000/jobs/my`,options)
+    const myJobs = (resp2.ok ? await resp2.json() : false)
+
     jobs.forEach(job => {
         const { job_subject, job_description, job_location, job_requirements} = job
 
@@ -14,7 +26,28 @@ const showJobs = async () => {
         const jobLocation = document.createElement('td')
         const jobRequirements = document.createElement('td')
         const applyButton = document.createElement('button')
-        applyButton.textContent='Apply'
+
+        const checkIfApplied = () => {
+            if(myJobs){
+                const applied = myJobs.find(myJob => myJob.job_id==job.job_id)
+                return applied
+            } else {
+                return false
+            }
+        }
+
+        if(checkIfApplied()){
+            row.style.backgroundColor = 'lightgrey'
+            applyButton.textContent = 'Delete'
+            applyButton.addEventListener('click',() => {
+                deleteJob(job)
+            }) 
+        } else {
+            applyButton.textContent='Apply'
+            applyButton.addEventListener('click',() => {
+                applyToJob(job)
+            })
+        }
 
         jobSubject.textContent = job_subject
         jobDesc.textContent = job_description
@@ -26,17 +59,43 @@ const showJobs = async () => {
         row.appendChild(jobDesc)
         row.appendChild(jobRequirements)
         row.appendChild(jobLocation)
-        jobButtonColumn.appendChild(applyButton)
-        applyButton.addEventListener('click',() => {
-            applyToJob(job)
-        }) 
+        jobButtonColumn.appendChild(applyButton) 
         row.appendChild(jobButtonColumn)
     })
 }
 
+const deleteJob = async (job) => {
+    if (window.confirm(`Are you sure you want to delete the '${job.job_subject}' listing?`)){
+        try {
+            const options = {
+                method: 'DELETE',
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    authorization: localStorage.getItem("token"),
+                }
+            }
+            const resp = await fetch (`http://localhost:3000/jobs/my/${job.job_id}`,options)
+            if (!resp.ok){
+                console.log(Error.detail)
+            }
+            if (resp.status==204){
+                const popupText = document.createElement('p')
+                popup.appendChild(popupText)
+                popupText.classList.add('popupText')
+                popupText.innerHTML=`You have deleted the $'{job.job_subject}' job listing.`
+                popupText.classList.toggle("show")
+    
+                setTimeout(() => window.location.reload(),5000)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
 const applyToJob = (job) => {
     //add job to user in dtb
-    // alert(`You have applied to the ${job_name} job!`)
     const { job_subject } = job
     
     popup.firstChild.remove()
@@ -44,15 +103,12 @@ const applyToJob = (job) => {
     popup.appendChild(popupText)
     popupText.classList.add('popupText')
 
-    popupText.innerHTML=`You have applied to the ${job_subject} job!`
+    popupText.innerHTML=`You have applied to the $'{job_subject}' job!`
     popupText.classList.toggle("show")
 }
 
 const createJob = () => {
     //take to createJobs.html
-    //alert(`Create a job listing`)
-    // localStorage.setItem('user_id',1)
-    // localStorage.setItem('token','b13dc503-22f5-4ed9-9c87-b4f3a16610ac')
     window.open('./createJobs.html','_self')
 }
 

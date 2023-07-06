@@ -1,8 +1,6 @@
-// let user_id = localStorage.getItem('user_id')
 const popup = document.querySelector('.popup')
 
 document.querySelector('#class-form').addEventListener('submit', async (e) => {
-    console.log('test')
     e.preventDefault()
     try {
 
@@ -24,14 +22,14 @@ document.querySelector('#class-form').addEventListener('submit', async (e) => {
         }
         const result = await fetch(`http://localhost:3000/classes`, options)
         const data = await result.json()
-        console.log(data)
         if (result.status==201) {
-            popup.firstChild.remove()
             const popupText = document.createElement('p')
             popup.appendChild(popupText)
             popupText.classList.add('popupText')
             popupText.innerHTML=`You have created a skills class!`
             popupText.classList.toggle("show")
+
+            setTimeout(() => window.location.reload(),5000)
         } else {
             alert(data.Error)
         }

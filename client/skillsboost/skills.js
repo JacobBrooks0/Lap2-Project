@@ -17,7 +17,6 @@ const showSkills = async () => {
     const resp2 = await fetch('http://localhost:3000/classes/enrolled',options)
     const enrolledClasses = (resp2.ok ? await resp2.json():false)
 
-
     allSkillClasses.forEach(async skillClass => {
 
         const {class_id, name, info, main_image_url, start_date, end_date } = skillClass
@@ -32,7 +31,6 @@ const showSkills = async () => {
 
         const resp3 = await fetch(`http://localhost:3000/classes/${class_id}/is-at-capacity`)
         const data = await resp3.json()
-        console.log(data)
 
         const fullCapacity = () => {
             if(data.classIsFull==true){
@@ -49,6 +47,14 @@ const showSkills = async () => {
             }
         }
 
+        if (fullCapacity() && !checkIfEnrolled()){
+            row.style.backgroundColor = 'lightgrey'
+            applyButton.textContent = 'Full'
+            applyButton.style.backgroundColor = 'lightgrey'
+            applyButton.style.borderColor = 'lightgrey'
+            applyButton.disabled = true
+        }
+
         if (checkIfEnrolled()) {
             row.style.backgroundColor = 'lightgrey'
             applyButton.textContent = 'Leave'
@@ -62,21 +68,13 @@ const showSkills = async () => {
             })
         }
 
-        if (fullCapacity()){
-            row.style.backgroundColor = 'lightgrey'
-            applyButton.textContent = 'Full'
-            applyButton.style.backgroundColor = 'lightgrey'
-            applyButton.style.borderColor = 'lightgrey'
-            applyButton.disabled = true
-        }
-
         skillImage.src = main_image_url ? main_image_url : null
         skillInfo.innerHTML = `${name ? name : ''}<br>${info ? info : ''}`
-        classDate.textContent = `${(new Date(start_date* 1000)).toLocaleString('en-GB', {
+        classDate.innerHTML = `${(new Date(start_date* 1000)).toLocaleString('en-GB', {
             day: "numeric",
             month: "long",
             year: "numeric",
-          })} to ${(new Date(end_date* 1000)).toLocaleString('en-GB', {
+          })}<br> to ${(new Date(end_date* 1000)).toLocaleString('en-GB', {
             day: "numeric",
             month: "long",
             year: "numeric",
@@ -96,7 +94,6 @@ const showSkills = async () => {
 
 const applyToClass = async (skillClass) => {
     //add skill class to user in dtb
-    console.log('enroll')
     try{
         const { class_id, name } = skillClass
 
@@ -113,23 +110,22 @@ const applyToClass = async (skillClass) => {
         const data = await resp.json()
 
         if (resp.status==201){
-            // popup.firstChild.remove()
             const popupText = document.createElement('p')
             popup.appendChild(popupText)
             popupText.classList.add('popupText')
             popupText.innerHTML=`You have joined the ${name} class!`
             popupText.classList.toggle("show")
+
+            setTimeout(() => window.location.reload(),5000)
         } else {
             alert('Something went wrong :(')
         }
     } catch (err) {
-        console.log(err)
         alert(err)
     }
 }
 
 const leaveClass = async(skillClass) => {
-    console.log('leave')
     try {
         const options = {
             method: 'DELETE',
@@ -143,14 +139,14 @@ const leaveClass = async(skillClass) => {
         if (!resp.ok){
             console.log(Error.detail)
         }
-        console.log('left class')
         if (resp.status==204){
-            // popup.firstChild.remove()
             const popupText = document.createElement('p')
             popup.appendChild(popupText)
             popupText.classList.add('popupText')
             popupText.innerHTML=`You have left the ${skillClass.name} class.`
             popupText.classList.toggle("show")
+
+            setTimeout(() => window.location.reload(),5000)
         }
     } catch (err) {
         console.log(err)
@@ -160,11 +156,6 @@ const leaveClass = async(skillClass) => {
 const createClass = () => {
     window.open('./createClass.html','_self')
 }
-
-// localStorage.setItem('user_id',1)
-// localStorage.setItem('token','b13dc503-22f5-4ed9-9c87-b4f3a16610ac')
-
-// const user_id = localStorage.getItem('user_id')
 const token = localStorage.getItem('token')
 
 const skillsTable = document.querySelector('#skill-classes')
