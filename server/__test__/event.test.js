@@ -3,6 +3,10 @@ const app = require("../app");
 const db = require("../database/connect");
 const setupMockDB = require("./mock/database/setup")
 
+test('Should give message when running api', async () => {
+    const resp = await request(app).get('/')
+    .expect(200)
+})
 
 describe("Community Events Endpoints", () => {
     let token
@@ -98,6 +102,13 @@ describe("Community Events Endpoints", () => {
         .expect(201)
 
         expect(resp.body).toHaveProperty('event_id',eventID)
+    })
+
+    it("Should send error when bookmarking again", async() => {
+        const resp = await request(app)
+        .post(`/events/${eventID}/bookmark`)
+        .set({authorization: token})
+        .expect(500)
     })
 
     //read all bookmarks

@@ -1,0 +1,19 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest --detectOpenHandles --coverage",
+    "coverage": "jest --coverage",
+    "dev": "live-server login/index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.6.0",
+    "jsdom": "^22.1.0",
+    "live-server": "^1.2.2"
+  }
+}

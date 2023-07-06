@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(logger('tiny'));
 
 app.get("/", (req, res) => {
-  res.status(200).send("Welcome to 'Florinate' api");
+  res.status(200).send("Welcome to the Florination api");
 });
 
 app.use("/events", eventsRouter);

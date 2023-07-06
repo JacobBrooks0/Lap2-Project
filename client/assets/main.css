@@ -20,47 +20,35 @@ body {
 /* #090580 */
 /* #F4D3D3 */
 
-#navbar {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    padding: 20px 0;
-    width: 99%;
-    margin: 0 auto;
-}
-
-.navbar-items, .logout-container {
-    display: flex;
-    justify-content: center;
-    
-}
-
-.navbar-items ul, .logout-container ul {
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
+#navbar ul li{
+    display: inline-block;
+    text-transform: uppercase;
     list-style-type: none;
-}
-
-.navbar-items ul li, .logout-container ul li {
     margin: 0 15px;
+    position: relative;
 }
 
-.navbar-items a, .logout-container a {
+#navbar {
+    text-align: center;
+    background-color: #E0B1A9;
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: sticky;
+    top:0;
+    width:100%;
+}
+
+
+#navbar a{
     text-decoration: none;
     color: black;
 }
 
-.navbar-items a:hover, .logout-container a:hover {
-    color: #E0B1A9;
-}
-
-.logout-container {
-    position: absolute;
-    right: 0;
-    justify-self: end;
+#navbar a:hover{
+    color: white;
 }
 
 button, #post {
@@ -70,10 +58,6 @@ button, #post {
     background-color: #E0B1A9;
     color: white;
     cursor: pointer;
-}
-
-button {
-    min-width: 150px;
 }
 
 
