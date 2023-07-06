@@ -19,6 +19,20 @@ const showJobs = async () => {
   );
   const myJobs = resp2.ok ? await resp2.json() : false;
 
+  // <th>Subject</th>
+  // <th>Description</th>
+  // <th>Requirements</th>
+  // <th>Location</th>
+
+  if (resp.ok) {
+    jobsTable.innerHTML=`
+     <th>Subject</th>
+     <th>Description</th>
+     <th>Requirements</th>
+     <th>Location</th>
+     `
+  }
+
   jobs.forEach((job) => {
     const { job_subject, job_description, job_location, job_requirements } =
       job;
@@ -94,7 +108,7 @@ const deleteJob = async (job) => {
         const popupText = document.createElement("p");
         popup.appendChild(popupText);
         popupText.classList.add("popupText");
-        popupText.innerHTML = `You have deleted the $'{job.job_subject}' job listing.`;
+        popupText.innerHTML = `You have deleted the '${job.job_subject}' job listing.`;
         popupText.classList.toggle("show");
 
         setTimeout(() => window.location.reload(), 5000);
