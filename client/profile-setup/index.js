@@ -20,7 +20,7 @@ document.getElementById("profile-form").addEventListener("submit", async (e) => 
   try {
     const result = await fetch("http://localhost:3000/users/update", options);
     const data = await result.json();
-    console.log(data)
+
     if (result.status == 202) {
       window.location.assign("/client/skillsboost/skills.html");
     } else {

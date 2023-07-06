@@ -20,11 +20,10 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 
   if (response.status == 201) {
     localStorage.setItem("token", data.token);
+    checkForProfileDetails();
   } else {
     alert(data.Error);
   }
-
-  checkForProfileDetails();
 });
 
 async function checkForProfileDetails() {
@@ -35,9 +34,9 @@ async function checkForProfileDetails() {
   };
   try {
     const response = await fetch("http://localhost:3000/users/details", option);
-      const data = await response.json();
-      
-    if ((response.status = 200)) {
+    const data = await response.json();
+
+    if (response.status == 200) {
       if (!(data.name && data.profile_summary)) {
         window.location.assign("/client/profile-setup/index.html");
       } else {
