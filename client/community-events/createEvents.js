@@ -1,6 +1,3 @@
-// let user_id = localStorage.getItem('user_id')
-
-
 
 document.querySelector('#create').addEventListener('submit', async (e) => {
     // e.preventDefault()

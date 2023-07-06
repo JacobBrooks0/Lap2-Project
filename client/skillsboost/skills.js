@@ -160,11 +160,6 @@ const leaveClass = async(skillClass) => {
 const createClass = () => {
     window.open('./createClass.html','_self')
 }
-
-// localStorage.setItem('user_id',1)
-// localStorage.setItem('token','b13dc503-22f5-4ed9-9c87-b4f3a16610ac')
-
-// const user_id = localStorage.getItem('user_id')
 const token = localStorage.getItem('token')
 
 const skillsTable = document.querySelector('#skill-classes')
