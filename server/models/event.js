@@ -115,8 +115,8 @@ class CommunityEvent {
 
   async removeEventBookmark(userId) {
     const response = await db.query(
-      "DELETE FROM event_bookmarker WHERE bookmarker_id = $1 RETURNING *;",
-      [userId]
+      "DELETE FROM event_bookmarker WHERE bookmarker_id = $1 AND event_id = $2 RETURNING *;",
+      [userId,this.event_id]
     );
     if (response.rows.length != 1) {
       throw new Error(
