@@ -15,5 +15,11 @@
     "jest": "^29.6.0",
     "jsdom": "^22.1.0",
     "live-server": "^1.2.2"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironmentOptions": {
+      "url": "http://localhost/"
+    }
   }
 }
