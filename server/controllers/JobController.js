@@ -50,7 +50,7 @@ class JobController {
       const data = await Job.createJob(JobInfo);
       res.status(201).json(data);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       res.status(500).json({ Error: error.message });
     }
   }

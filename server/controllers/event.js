@@ -88,7 +88,7 @@ class CommunityEventController {
             });
             break;
           default:
-            res.status(500).json({ Error: error });
+            res.status(500).json({ Error: error.message });
             break;
         }
       } else {

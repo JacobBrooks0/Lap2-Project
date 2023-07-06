@@ -8,7 +8,9 @@ describe("Class Endpoints", () => {
   let classId;
 
   beforeAll(async () => {
-    setupMockDB(); //Set the database to it's default state before starting test
+    //Set the database to it's default state before starting test
+    await setupMockDB(); 
+
     //Create an account and login, getting the token at the end of it
     const registerDetails = {
       username: "user",
@@ -22,9 +24,11 @@ describe("Class Endpoints", () => {
   });
 
   afterAll(async () => {
-    await db.end(); // Close the database connection
+    // Close the database connection
+    await db.end(); 
   });
 
+  //GET
   it("Should give correct status codes when there are no classes available", async () => {
     await request(app).get("/classes").expect(404);
     await request(app).get("/classes/1/students").expect(404);
@@ -64,6 +68,7 @@ describe("Class Endpoints", () => {
     expect(response.body).toHaveProperty("class_id", classId);
   });
 
+  //POST
   it("Should return an error message if conditions for creating a new class haven't been met", async () => {
     const newClass = {
       info: "Learn how to fix wooden appliances around the house",

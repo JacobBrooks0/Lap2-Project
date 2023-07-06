@@ -1,4 +1,4 @@
-let user_id = localStorage.getItem('user_id')
+// let user_id = localStorage.getItem('user_id')
 const popup = document.querySelector('.popup')
 
 document.querySelector('#class-form').addEventListener('submit', async (e) => {

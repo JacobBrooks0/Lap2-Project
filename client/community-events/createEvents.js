@@ -1,4 +1,4 @@
-let user_id = localStorage.getItem('user_id')
+// let user_id = localStorage.getItem('user_id')
 
 
 
