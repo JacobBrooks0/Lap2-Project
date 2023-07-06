@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles",
     "coverage": "jest --coverage",
-    "dev": "live-server login/index.html"
+    "dev": "live-server index.html"
   },
   "keywords": [],
   "author": "",
