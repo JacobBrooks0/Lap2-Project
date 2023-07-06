@@ -30,6 +30,18 @@ describe("User Endpoints", () => {
     expect(userObj).toHaveProperty("username", "user");
   });
 
+    //POST
+    it("Should give an error if user tries to register again with the same details", async () => {
+      const response = await request(app)
+      .post("/users/register")
+      .send(registerDetails)
+        .expect(500);
+  
+      let { Error } = response.body;
+  
+      expect(Error).toBe("A user with username already exists" );
+    });
+
   //POST
   it("Should return a token after logging in", async () => {
     const response = await request(app)

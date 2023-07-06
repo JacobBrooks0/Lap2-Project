@@ -15,7 +15,10 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     }),
   };
 
-  const response = await fetch("http://localhost:3000/users/login", options);
+  const response = await fetch(
+    `https://florinate-api.onrender.com/users/login`,
+    options
+  );
   const data = await response.json();
 
   if (response.status == 201) {
@@ -33,14 +36,17 @@ async function checkForProfileDetails() {
     },
   };
   try {
-    const response = await fetch("http://localhost:3000/users/details", option);
+    const response = await fetch(
+      `https://florinate-api.onrender.com/users/details`,
+      option
+    );
     const data = await response.json();
 
     if (response.status == 200) {
       if (!(data.name && data.profile_summary)) {
-        window.location.assign("/client/profile-setup/index.html");
+        window.location.href = "profile-setup.html";
       } else {
-        window.location.assign("/client/skillsboost/skills.html");
+        window.location.href = "skills.html";
       }
     } else {
       alert(data.Error);

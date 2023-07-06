@@ -19,7 +19,7 @@ let document
 
 describe('register/index.html', () => {
     beforeEach(async () => {
-        dom = await renderDOM('./register/index.html')
+        dom = await renderDOM('./register.html')
         document = await dom.window.document
     })
 

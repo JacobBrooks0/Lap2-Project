@@ -10,10 +10,13 @@ logout.addEventListener("click", async (e) => {
   };
 
   try {
-    const response = await fetch("http://localhost:3000/users/logout", options);
+    const response = await fetch(
+      `https://florinate-api.onrender.com/users/logout`,
+      options
+    );
     const data = await response.json();
     localStorage.removeItem("token");
-    window.location.assign("../index/index.html");
+    window.location.href = "index.html";
   } catch (error) {
     console.log(error);
   }

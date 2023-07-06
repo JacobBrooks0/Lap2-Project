@@ -17,11 +17,18 @@
     "live-server": "^1.2.2"
   },
   "jest": {
+<<<<<<< HEAD
     "testPathIgnorePatterns": [
       "./__tests__/helpers.js"
     ]
   },
   "dependencies": {
     "supertest": "^6.3.3"
+=======
+    "verbose": true,
+    "testEnvironmentOptions": {
+      "url": "http://localhost/"
+    }
+>>>>>>> ac2a9c8c12edda98d5e9609c189016af1e5fbfca
   }
 }
