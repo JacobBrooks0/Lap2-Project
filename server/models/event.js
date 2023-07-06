@@ -2,6 +2,7 @@ const db = require("../database/connect");
 
 class CommunityEvent {
   constructor({
+    event_id,
     creator_id,
     name,
     info,
@@ -9,7 +10,8 @@ class CommunityEvent {
     start_date,
     end_date,
   }) {
-    this.id = creator_id;
+    this.event_id = event_id
+    this.creator_id = creator_id;
     this.name = name;
     this.info = info;
     this.main_image_url = main_image_url;
@@ -88,11 +90,11 @@ class CommunityEvent {
   async deleteCommunityEvent() {
     await db.query(
       "DELETE FROM event_bookmarker WHERE event_id = $1 RETURNING *;",
-      [this.id]
+      [this.event_id]
     );
     const response = await db.query(
       "DELETE FROM community_event WHERE event_id = $1 RETURNING *;",
-      [this.id]
+      [this.event_id]
     );
     if (response.rows.length != 1) {
       throw new Error("Unable to delete community event");
@@ -103,7 +105,7 @@ class CommunityEvent {
   async bookmarkEvent(userId) {
     const response = await db.query(
       "INSERT INTO event_bookmarker (event_id, bookmarker_id) VALUES ($1, $2) RETURNING *;",
-      [this.id, userId]
+      [this.event_id, userId]
     );
     if (response.rows.length != 1) {
       throw new Error("Unable to confirm your attendance to this event.");
@@ -113,8 +115,8 @@ class CommunityEvent {
 
   async removeEventBookmark(userId) {
     const response = await db.query(
-      "DELETE FROM event_bookmarker WHERE bookmarker_id = $1 RETURNING *;",
-      [userId]
+      "DELETE FROM event_bookmarker WHERE bookmarker_id = $1 AND event_id = $2 RETURNING *;",
+      [userId,this.event_id]
     );
     if (response.rows.length != 1) {
       throw new Error(

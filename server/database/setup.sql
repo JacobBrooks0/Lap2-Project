@@ -214,7 +214,7 @@ VALUES
         'Learn to garden so you don''t have to hire one',
         1688230800,
         1688240800,
-        6
+        5
     ),
     (
         1,
