@@ -62,7 +62,15 @@ const showEvents = async () => {
         eventImage.src = main_image_url
         eventName.textContent = name
         eventInfo.innerHTML = `${info ? info : ''}`
-        eventDate.innerHTML = `${(new Date(start_date* 1000)).toUTCString()}<br>to ${(new Date(end_date* 1000)).toUTCString()}`
+        eventDate.innerHTML = `${(new Date(start_date* 1000)).toLocaleString('en-GB', {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}<br> to ${(new Date(end_date* 1000)).toLocaleString('en-GB', {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}`
 
         eventsTable.appendChild(row)
         eventImageColumn.appendChild(eventImage)

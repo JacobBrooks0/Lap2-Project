@@ -70,11 +70,11 @@ const showSkills = async () => {
 
         skillImage.src = main_image_url ? main_image_url : null
         skillInfo.innerHTML = `${name ? name : ''}<br>${info ? info : ''}`
-        classDate.textContent = `${(new Date(start_date* 1000)).toLocaleString('en-GB', {
+        classDate.innerHTML = `${(new Date(start_date* 1000)).toLocaleString('en-GB', {
             day: "numeric",
             month: "long",
             year: "numeric",
-          })} to ${(new Date(end_date* 1000)).toLocaleString('en-GB', {
+          })}<br> to ${(new Date(end_date* 1000)).toLocaleString('en-GB', {
             day: "numeric",
             month: "long",
             year: "numeric",
