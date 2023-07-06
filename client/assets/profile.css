@@ -76,6 +76,7 @@ body {
 }
 
 #navbar {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
@@ -112,6 +113,8 @@ body {
 }
 
 .logout-container {
+    position: absolute;
+    right: 0;
     justify-self: end;
 }
 
