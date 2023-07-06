@@ -40,8 +40,7 @@ const showEvents = async () => {
 }
 
 const bookmarkEvent = async(event) => {
-    //add event to user in dtb
-    //alert(`You have joined the ${event_name} event!`)
+    //grey out bookmarked events - delete bookmark
     try {
         const options = {
             method: 'POST',
@@ -60,7 +59,7 @@ const bookmarkEvent = async(event) => {
             popup.appendChild(popupText)
             popupText.classList.add('popupText')
         
-            popupText.innerHTML=`You have bookmarked the ${event_name} event!`
+            popupText.innerHTML=`You have bookmarked the ${event.name} event!`
             popupText.classList.toggle("show")
         } else {
             alert('something went wrong')
@@ -73,16 +72,6 @@ const bookmarkEvent = async(event) => {
 
 const createEvent = () => {
     //take to createEvents.html
-    // alert(`Create a community event`)
-    // popup.firstChild.remove()
-    // const popupText = document.createElement('p')
-    // popup.appendChild(popupText)
-    // popupText.classList.add('popupText')
-
-    // popupText.innerHTML=`You have created a community event!`
-    // popupText.classList.toggle("show")
-    localStorage.setItem('user_id',1)
-    localStorage.setItem('token','f921ce3d-5dcc-48c2-8cbe-09693a62c488')
     window.open('./createEvent.html','_self')
 }
 
@@ -95,5 +84,8 @@ createButton.addEventListener('click', () => {
 })
 
 const popup = document.querySelector('.popup')
+
+localStorage.setItem('user_id',1)
+localStorage.setItem('token','d01b2d1f-0dad-4e1c-8e7c-41ef2c7d1077')
 
 showEvents()
