@@ -1,13 +1,12 @@
 const request = require("supertest");
 const app = require("../app");
 const db = require("../database/connect");
-const setupMockDB = require("./setup/setup-mock-db");
+const setupMockDB = require("./mock/database/setup")
 
-let eventID
-let token
-let userID
 
 describe("Community Events Endpoints", () => {
+    let token
+    let eventID
 
     beforeAll(async () => {
         setupMockDB()
@@ -17,36 +16,42 @@ describe("Community Events Endpoints", () => {
             password: "password",
           }
 
-          await request(app)
+        await request(app)
             .post("/users/register")
             .send(registerDetails)
 
-          const response = await request(app)
+        const response = await request(app)
             .post("/users/login")
             .send(registerDetails)
-          token = response.body.token
-          userID = response.body.user_id
+        token = response.body.token
     })
 
-    afterAll(async () => {
-        await db.end() // Close the database connection
+    //testing error handling
+    it("Should give correct status codes for errors", async () => {
+        await request(app).get('/events').expect(404);
+        await request(app).get('/events/1/find').expect(404);
+
+        await request(app).post('/events')
+        .set({authorization: token}).send({}).expect(500);
+        await request(app).delete('/events/1')
+        .set({authorization: token}).expect(500);
+
+        await request(app).get('/events/created')
+        .set({authorization: token}).expect(404);
+        await request(app).get('/events/bookmarked')
+        .set({authorization: token}).expect(404);
+
+        await request(app).delete('/events/1/bookmark')
+        .set({authorization: token}).expect(500);
+        await request(app).post('/events/1/bookmark')
+        .set({authorization: token}).expect(500);
     })
+
     //crud tests
 
-    //read all
-    it("Should get all community events", async() => {
-        const resp = await request(app)
-        .get("/events")
-        .expect(200)
-        
-        expect(Array.isArray(resp.body)).toBe(true)
-        expect(resp.body.length).toBeGreaterThan(0)
-    })
-
-    //create one
+    //create an event
     it("Should create a new event", async() => {
         const event = {
-            creator_id: userID,
             name: "Book club",
             main_image_url: "https://tse4.mm.bing.net/th?id=OIP.jHMwSwX0ZK2kiSGh0zdv6wHaE7&pid=Api",
             info:"New book club every week",
@@ -66,82 +71,75 @@ describe("Community Events Endpoints", () => {
         expect(resp.body).toHaveProperty("name",event.name)
     })
 
-    // //read one
-    // it("Should get an event by id", async() => {
-    //     const resp = await request(app)
-    //     .get(`/events/${eventID}/find`)
-    // })
+    //read all events
+    it("Should get all community events", async() => {
+        const resp = await request(app)
+        .get("/events")
+        .expect(200)
+        
+        expect(Array.isArray(resp.body)).toBe(true)
+        expect(resp.body.length).toBeGreaterThan(0)
+    })
+
+    //read one event
+    it("Should get the event created by id", async() => {
+        const resp = await request(app)
+        .get(`/events/${eventID}/find`)
+        .expect(200)
+
+        expect(resp.body).toHaveProperty('event_id',eventID)
+    })
+
+    //create a bookmark
+    it("Should bookmark the event created", async() => {
+        const resp = await request(app)
+        .post(`/events/${eventID}/bookmark`)
+        .set({authorization: token})
+        .expect(201)
+
+        expect(resp.body).toHaveProperty('event_id',eventID)
+    })
+
+    //read all bookmarks
+    it('Should show all bookmarked events by user', async() => {
+        const resp = await request(app)
+        .get('/events/bookmarked')
+        .set({authorization: token})
+        .expect(200)
+
+        expect(Array.isArray(resp.body)).toBe(true)
+        expect(resp.body.length).toBeGreaterThan(0)
+    })
+
+    //delete bookmark
+    it('Should delete bookmark made', async() => {
+        const resp = await request(app)
+        .delete(`/events/${eventID}/bookmark`)
+        .set({authorization: token})
+        .expect(204)
+    })
+
+    //read created events
+    it('Should show event created', async() => {
+        const resp = await request(app)
+        .get('/events/created')
+        .set({authorization:token})
+        .expect(200)
+
+        expect(Array.isArray(resp.body)).toBe(true)
+        expect(resp.body.length).toBeGreaterThan(0)
+    })
+
+    //delete event
+    it('Should delete the event created', async() => {
+        const resp = await request(app)
+        .delete(`/events/${eventID}`)
+        .set({authorization: token})
+        .expect(204)
+    })
+
+    afterAll(async () => {
+        await db.end() // Close the database connection
+    })
 })
 
-// describe("Community Events Endpoints", () => {
-//   afterAll(async () => {
-//     await db.end(); // Close the database connection
-//   });
-//   //Tests for our CRUD API
-//   let classID;
-
-//   //READ ALL
-//   it("Should get all community events", async () => {
-//     const response = await request(app).get("/events").expect(200);
-
-//     expect(Array.isArray(response.body)).toBe(true);
-//     expect(response.body.length).toBeGreaterThan(0);
-//   });
-
-//   //CREATE ONE
-//   it("Should create a new class", async () => {
-//     const newCountry = {
-//       name: "Test",
-//       capital: "Test City",
-//       population: 50000,
-//       languages: "English",
-//       fun_fact: "Testing is Fun",
-//       map_image_url: "www.test.com",
-//     };
-
-//     const response = await request(app)
-//       .post("/class")
-//       .send(newCountry)
-//       .expect(201);
-
-//     const { class_id } = response.body;
-//     classID = class_id;
-
-//     expect(response.body).toMatchObject(newCountry);
-//   });
-
-//   //READ ONE
-//   it("Should get the class that has been created", async () => {
-//     const response = await request(app)
-//       .get(`/class/${classID}`)
-//       .expect(200);
-
-//     const { capital } = response.body;
-//     expect(capital).toBe("Test City");
-//   });
-
-//   //UPDATE ONE
-//   it("Should update a class", async () => {
-//     const updatedCountry = {
-//       name: " U Test",
-//       capital: "U Test City",
-//       population: 60000,
-//       languages: "English",
-//       fun_fact: "Testing is Fun",
-//       map_image_url: "www.test.com",
-//     };
-
-//     const response = await request(app)
-//       .put(`/class/${classID}`)
-//       .send(updatedCountry)
-//       .expect(200);
-
-//     expect(response.body).toMatchObject(updatedCountry);
-//   });
-
-//   //DELETE ONE
-//   it("Should delete a class", async () => {
-//     await request(app).delete(`/class/${classID}`).expect(204);
-//     await request(app).get(`/class/${classID}`).expect(404);
-//   });
-// });
