@@ -3,7 +3,7 @@
     /* import google fonts */
     margin: 0;
     padding: 0;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 body {
@@ -20,35 +20,55 @@ body {
 /* #090580 */
 /* #F4D3D3 */
 
-#navbar ul li{
-    display: inline-block;
-    text-transform: uppercase;
-    list-style-type: none;
-    margin: 0 15px;
-    position: relative;
-}
+/* ...rest of your CSS */
 
 #navbar {
-    text-align: center;
-    background-color: #E0B1A9;
-    color: white;
-    padding: 20px 0;
-    display: flex;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    justify-content: flex-end;
-    position: sticky;
-    top:0;
-    width:100%;
+    padding: 20px 0;
+    width: 99%;
+    margin: 0 auto;
+    background-color: #E0B1A9;
 }
 
+.navbar-items, .logout-container {
+    display: flex;
+    justify-content: center;
+}
 
-#navbar a{
+.navbar-items ul, .logout-container ul {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.navbar-items ul li, .logout-container ul li {
+    margin: 0 15px;
+}
+
+.navbar-items a, .logout-container a {
     text-decoration: none;
     color: black;
 }
 
-#navbar a:hover{
+.navbar-items a:hover, .logout-container a:hover {
     color: white;
+}
+
+.logout-container {
+    position: absolute;
+    right: 0;
+    justify-self: end;
+}
+
+/* ...rest of your CSS */
+
+button {
+    min-width: 150px; 
 }
 
 button, #post {
@@ -127,7 +147,7 @@ form {
 }
 
 input, label, textarea {
-    width: 92%; /* Adjust this value to match the width in login.css */
+    width: 92%; 
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
