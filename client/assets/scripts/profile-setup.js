@@ -20,11 +20,14 @@ document
       }),
     };
     try {
-      const result = await fetch("http://localhost:3000/users/update", options);
+      const result = await fetch(
+        `https://florinate-api.onrender.com/users/update`,
+        options
+      );
       const data = await result.json();
 
       if (result.status == 202) {
-        window.location.href = "skillsboost/skills.html";
+        window.location.href = "skills.html";
       } else {
         alert(data.Error);
       }

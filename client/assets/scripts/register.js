@@ -18,14 +18,14 @@ document
     };
 
     const response = await fetch(
-      "http://localhost:3000/users/register",
+      `https://florinate-api.onrender.com/users/register`,
       options
     );
     const data = await response.json();
 
     if (response.status == 201) {
-      window.location.href = "login";
+      window.location.href = "login.html";
     } else {
-      alert(data.error);
+      alert(data.Error);
     }
   });

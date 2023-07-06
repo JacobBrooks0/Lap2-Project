@@ -4,29 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./index.js" defer></script>
-    <link rel="stylesheet" href="../assets/login.css" />
-    <title>Register</title>
+    <link rel="stylesheet" href="assets/styles/login.css">
+    <script src="assets/scripts/login.js" defer></script>
+    <title>Login</title>
   </head>
   <body>
     <header>
-      <h1>Register</h1>
+      <h1>Login</h1>
     </header>
 
     <main>
-      <form id="register-form">
+      <form id="login-form">
         <fieldset>
           <label for="username">Username:</label>
-          <input type="text" id="username" name="username" />
+          <input type="text" id="username" name="username" required/>
         </fieldset>
         <fieldset>
           <label for="password">Password:</label>
-          <input type="password" id="password" name="password" />
+          <input type="password" id="password" name="password" required/>
         </fieldset>
-
-        <input type="submit" value="Register" />
+        <input type="submit" value="Log in" />
       </form>
-      <p>Already registered? <a href="login">Log in here</a>.</p>
+      <p>No account? <a href="register.html">Sign up here</a>.</p>
     </main>
   </body>
 </html>

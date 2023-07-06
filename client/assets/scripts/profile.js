@@ -11,7 +11,10 @@ async function getProfileDetails() {
     },
   };
 
-  const response = await fetch("http://localhost:3000/users/details", options);
+  const response = await fetch(
+    `https://florinate-api.onrender.com/users/details`,
+    options
+  );
   const data = await response.json();
 
   if (response.status === 200) {
@@ -32,23 +35,26 @@ async function getJobs() {
     },
   };
 
-  const response = await fetch("http://localhost:3000/jobs/my", options);
+  const response = await fetch(
+    `https://florinate-api.onrender.com/jobs/my`,
+    options
+  );
   const data = await response.json();
 
   if (response.status === 200) {
     const jobsContainer = document.getElementById("jobs-container");
-    jobsContainer.innerHTML = ""; 
+    jobsContainer.innerHTML = "";
 
     data.forEach((job) => {
       const jobDiv = document.createElement("div");
       jobDiv.className = "job item-container";
 
       const jobName = document.createElement("h3");
-      jobName.textContent = job.job_subject; 
+      jobName.textContent = job.job_subject;
       jobDiv.appendChild(jobName);
 
       const jobDescription = document.createElement("p");
-      jobDescription.textContent = job.job_description; 
+      jobDescription.textContent = job.job_description;
       jobDiv.appendChild(jobDescription);
 
       jobsContainer.appendChild(jobDiv);
@@ -58,7 +64,6 @@ async function getJobs() {
   }
 }
 
-
 async function getEnrolledClasses() {
   const options = {
     method: "GET",
@@ -67,7 +72,10 @@ async function getEnrolledClasses() {
     },
   };
 
-  const response = await fetch("http://localhost:3000/classes/enrolled", options);
+  const response = await fetch(
+    `https://florinate-api.onrender.com/classes/enrolled`,
+    options
+  );
   const data = await response.json();
 
   if (response.status === 200) {
@@ -99,12 +107,15 @@ async function fetchBookmarkedEvents() {
     },
   };
 
-  const response = await fetch("http://localhost:3000/events/bookmarked", options);
+  const response = await fetch(
+    `https://florinate-api.onrender.com/events/bookmarked`,
+    options
+  );
   const data = await response.json();
 
   if (response.status === 200) {
     const eventsContainer = document.getElementById("events-container");
-    eventsContainer.innerHTML = ""; 
+    eventsContainer.innerHTML = "";
 
     data.forEach((event) => {
       const eventDiv = document.createElement("div");
@@ -129,11 +140,3 @@ getProfileDetails();
 getJobs();
 getEnrolledClasses();
 fetchBookmarkedEvents();
-
-
-
-
-
-
-
-  
