@@ -2,7 +2,7 @@ const showEvents = async () => {
     //fetch events from dtb
     const resp = await fetch('http://localhost:3000/events')
     if (!resp.ok) {
-        console.log('Something went wrong')
+        console.log(Error.detail)
     }
     const events = await resp.json()
 
@@ -17,7 +17,6 @@ const showEvents = async () => {
 
     const resp2 = await fetch('http://localhost:3000/events/bookmarked', options)
     const bookmarkedEvents = (resp2.ok ? await resp2.json() : false)
-    console.log(bookmarkedEvents)
 
     events.forEach(event => {
 
@@ -37,7 +36,6 @@ const showEvents = async () => {
             if (bookmarkedEvents) {
                 const bookmarked = bookmarkedEvents.find(bookmarkedEvent => 
                     {
-                        console.log(event)
                         return(bookmarkedEvent.event_id==event.event_id)
                     })
                 return bookmarked

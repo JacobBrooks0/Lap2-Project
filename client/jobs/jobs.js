@@ -1,7 +1,7 @@
 const showJobs = async () => {
     const resp = await fetch('http://localhost:3000/jobs')
     if (!resp.ok) {
-        console.log('something went wrong')
+        console.log(Error.detail)
     }
     const jobs = await resp.json()
     jobs.forEach(job => {
@@ -36,7 +36,6 @@ const showJobs = async () => {
 
 const applyToJob = (job) => {
     //add job to user in dtb
-    // alert(`You have applied to the ${job_name} job!`)
     const { job_subject } = job
     
     popup.firstChild.remove()

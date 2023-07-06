@@ -1,9 +1,7 @@
 
 document.querySelector('#create').addEventListener('submit', async (e) => {
     // e.preventDefault()
-    alert('hello')
     const form = new FormData(e.target)
-    console.log(form.get('subject'))
     const options = {
         method: "POST",
         headers: {
@@ -22,8 +20,13 @@ document.querySelector('#create').addEventListener('submit', async (e) => {
         const result = await fetch(`http://localhost:3000/events`, options)
         const data = await result.json()
         if (result.status==201) {
-            // window.location.reload()
-            alert('job created')
+            const popupText = document.createElement('p')
+            popup.appendChild(popupText)
+            popupText.classList.add('popupText')
+            popupText.innerHTML=`You have created a job listing!`
+            popupText.classList.toggle("show")
+
+            setTimeout(() => window.location.reload(),5000)
         } else {
             alert(data.Error.detail)
         }
