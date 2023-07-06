@@ -27,8 +27,16 @@ form {
     padding: 20px;
     border: 1px solid #ddd;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    width: 300px;
+    width: 375px;
     margin-bottom: 20px;
+}
+
+.profile-form {
+    width: 500px; 
+}
+
+.profile-form input[type="text"], .profile-form input[type="password"], .profile-form textarea {
+    width: 96%; 
 }
 
 fieldset {

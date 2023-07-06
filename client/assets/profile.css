@@ -149,6 +149,11 @@ body {
     text-align: center;
 }
 
+#user-name, #user-description {
+    font-family: 'Indie Flower', cursive;
+}
+
+
 
 
 
