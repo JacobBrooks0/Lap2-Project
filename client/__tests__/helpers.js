@@ -16,3 +16,5 @@ const renderDOM = async (filename) => {
         })
     })
 }
+
+module.exports = { renderDOM };

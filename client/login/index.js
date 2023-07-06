@@ -38,9 +38,9 @@ async function checkForProfileDetails() {
 
     if (response.status == 200) {
       if (!(data.name && data.profile_summary)) {
-        window.location.assign("/client/profile-setup/index.html");
+        window.location.href = "profile-setup";
       } else {
-        window.location.assign("/client/skillsboost/skills.html");
+        window.location.href = "skillsboost/skills.html";
       }
     } else {
       alert(data.Error);

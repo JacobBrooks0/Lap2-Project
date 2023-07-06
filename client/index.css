@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@400;700&display=swap");
 
 body {
-  background: linear-gradient(rgba(78, 226, 78, 0.5),rgba(247, 250, 155, 0.5)), url("/client/assets/images/floral_background.jpg");
+  background: linear-gradient(rgba(78, 226, 78, 0.5),rgba(247, 250, 155, 0.5)), url("assets/images/floral_background.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
