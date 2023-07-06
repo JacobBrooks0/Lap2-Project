@@ -6,7 +6,6 @@ class ClassController {
       const data = await Class.getAll();
       res.status(200).json(data);
     } catch (error) {
-      console.log(error);
       res.status(404).json({ Error: error.message });
     }
   }
@@ -17,7 +16,6 @@ class ClassController {
       const data = await Class.getOneByClassId(class_id);
       res.status(200).json(data);
     } catch (error) {
-      console.log(error);
       res.status(404).json({ Error: error.message });
     }
   }
@@ -28,7 +26,6 @@ class ClassController {
       const data = await Class.getUsersEnrolled(class_id);
       res.status(200).json(data);
     } catch (error) {
-      console.log(error);
       res.status(404).json({ Error: error.message });
     }
   }
@@ -49,7 +46,6 @@ class ClassController {
       const data = await Class.getCreatedByCreatorId(creator_id);
       res.status(200).json(data);
     } catch (error) {
-      console.log(error);
       res.status(404).json({ Error: error.message });
     }
   }
@@ -61,7 +57,6 @@ class ClassController {
       const data = await Class.createClass(creator_id, classInfo);
       res.status(201).json(data);
     } catch (error) {
-      console.log(error);
       res.status(500).json({ Error: error.message });
     }
   }
@@ -75,7 +70,6 @@ class ClassController {
       const data = await skillsClass.updateClass(creator_id, classInfo);
       res.status(202).json(data);
     } catch (error) {
-      console.log(error);
       res.status(500).json({ Error: error.message });
     }
   }
@@ -88,7 +82,6 @@ class ClassController {
       const data = await skillsClass.deleteClass(creator_id);
       res.status(204).json(data);
     } catch (error) {
-      console.log(error);
       res.status(500).json({ Error: error.message });
     }
   }
@@ -100,7 +93,6 @@ class ClassController {
       const data = await skillsClass.isAtCapacity();
       res.status(200).json({ classIsFull: data });
     } catch (error) {
-      console.log(error);
       res.status(404).json({ Error: error.message });
     }
   }
@@ -140,7 +132,6 @@ class ClassController {
       const data = await skillsClass.delistStudent(student_id);
       res.status(204).json(data);
     } catch (error) {
-      console.log(error);
       res
         .status(500)
         .json({
