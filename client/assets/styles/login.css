@@ -85,9 +85,14 @@ textarea {
     height: 100px; 
 }
 
-
-
-  
-  
+body {
+    background: linear-gradient(rgba(78, 226, 78, 0.5),rgba(247, 250, 155, 0.5)), url("../images/floral_background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+  }
   
   
