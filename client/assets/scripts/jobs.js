@@ -128,7 +128,7 @@ const applyToJob = (job) => {
   popup.appendChild(popupText);
   popupText.classList.add("popupText");
 
-  popupText.innerHTML = `You have applied to the $'{job_subject}' job!`;
+  popupText.innerHTML = `You have applied to the '${job_subject}' job!`;
   popupText.classList.toggle("show");
 };
 

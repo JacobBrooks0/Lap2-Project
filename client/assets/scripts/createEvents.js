@@ -28,7 +28,7 @@ document.querySelector("#event-form").addEventListener("submit", async (e) => {
       const popupText = document.createElement("p");
       popup.appendChild(popupText);
       popupText.classList.add("popupText");
-      popupText.innerHTML = `You have created a job listing!`;
+      popupText.innerHTML = `You have created an event!`;
       popupText.classList.toggle("show");
 
       setTimeout(() => window.location.reload(), 5000);

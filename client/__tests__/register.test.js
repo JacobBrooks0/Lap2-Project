@@ -37,12 +37,12 @@ describe('register/index.html', () => {
     })
 
     // it('Should alert when username already exists', async () => {
-    //     dom.window.alert = jest.fn()
-    //     // jest.spyOn(dom.window,'alert').mockImplementation(()=>{})
+    //     // dom.window.alert = jest.fn()
+    //     jest.spyOn(dom.window,'alert').mockImplementation(()=>{})
     //     dom.window.fetch = mockFetch
     //     const form = document.querySelector('#register-form')
     //     const username = document.querySelector('#username')
-    //     username.value = 'testing2'
+    //     username.value = 'florin'
     //     const password = document.querySelector('#password')
     //     password.value = '1'
     //     await form.dispatchEvent(new dom.window.Event('submit'))
