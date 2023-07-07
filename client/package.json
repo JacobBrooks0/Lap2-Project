@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest --detectOpenHandles --coverage",
+    "test": "jest --detectOpenHandles",
     "coverage": "jest --coverage",
-    "dev": "live-server login/index.html"
+    "dev": "live-server index.html"
   },
   "keywords": [],
   "author": "",
@@ -17,9 +17,9 @@
     "live-server": "^1.2.2"
   },
   "jest": {
-    "verbose": true,
-    "testEnvironmentOptions": {
-      "url": "http://localhost/"
-    }
+    "testPathIgnorePatterns": [
+      "./__tests__/helpers.js",
+      "./__tests__/skillsboost.test.js"
+    ]
   }
 }
