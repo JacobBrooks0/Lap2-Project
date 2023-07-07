@@ -30,12 +30,12 @@ h1,h2 {
 /* ...rest of your CSS */
 
 #navbar {
-    position: relative;
+    position: fixed;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
     padding: 20px 0;
-    width: 99%;
+    width: 100%;
     margin: 0 auto;
     background-color: #E0B1A9;
 }
@@ -102,10 +102,10 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(90vh - 60px); 
+    /* height: calc(90vh - 60px);  */
     flex-direction: column;
     overflow-y: auto;
-    padding-top: 50px;
+    padding-top: 80px;
 }
 
 form h1{
@@ -113,11 +113,12 @@ form h1{
     padding-bottom: 20px;
 }
 
-.skills, .jobs, .events {
-    padding-left: 150px;
-    padding-top: 20px;
-    margin: 10px;
-}
+/* .skills, .jobs, .events {
+    padding-left: 150px; */
+    /* padding-top: 20px; */
+    /* margin: 10px; 
+} */
+
 
 #skill-classes,#community-events,#job-listings{
     /* margin:10px; */
@@ -169,7 +170,7 @@ input, label, textarea {
 }
 
 .popup {
-    /* position: relative; */
+    position: relative;
     display: inline-block;
     cursor: pointer;
     -webkit-user-select: none;

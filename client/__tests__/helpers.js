@@ -7,7 +7,7 @@ const renderDOM = async (filename) => {
     const filePath = path.join(process.cwd(), filename)
     const dom = await JSDOM.fromFile(filePath, {
         runScripts: 'dangerously',
-        resources: 'usable'
+        resources: 'usable',
     })
 
     return new Promise((resolve, _) => {
@@ -17,4 +17,24 @@ const renderDOM = async (filename) => {
     })
 }
 
-module.exports = { renderDOM };
+// const mockFetch = (data) => {
+//     return jest.fn().mockImplementation(() => {
+//         Promise.resolve({
+//             ok: true,
+//             json: () => data,
+//         })
+//     })
+// }
+
+const mockFetch = (data) => {
+    return jest.fn().mockImplementation(() => {
+        Promise.resolve({ json: () => {
+            Promise.resolve(accepted) 
+                return data
+            }
+        })   
+    })
+
+}
+
+module.exports = { renderDOM, mockFetch }

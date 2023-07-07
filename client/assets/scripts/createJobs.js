@@ -24,7 +24,6 @@ document.querySelector("#job-form").addEventListener("submit", async (e) => {
     );
     const data = await result.json();
     if (result.status == 201) {
-      popup.firstChild.remove();
       const popupText = document.createElement("p");
       popup.appendChild(popupText);
       popupText.classList.add("popupText");
