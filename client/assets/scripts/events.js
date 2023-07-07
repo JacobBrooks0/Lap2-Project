@@ -112,7 +112,7 @@ const bookmarkEvent = async (event) => {
       popupText.classList.toggle("show");
       setTimeout(() => window.location.reload(), 5000);
     } else {
-      alert("something went wrong");
+      alert(data.Error);
     }
   } catch (err) {
     console.log(err);
@@ -133,9 +133,8 @@ const deleteBookmark = async (event) => {
       `https://florinate-api.onrender.com/events/${event.event_id}/bookmark`,
       options
     );
-    if (!resp.ok) {
-      console.log(Error.detail);
-    }
+    const data = await resp.json();
+
     if (resp.status == 204) {
       const popupText = document.createElement("p");
       popup.appendChild(popupText);
@@ -144,6 +143,8 @@ const deleteBookmark = async (event) => {
       popupText.classList.toggle("show");
 
       setTimeout(() => window.location.reload(), 5000);
+    } else {
+      console.log(data.Error);
     }
   } catch (err) {
     console.log(err);

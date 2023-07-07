@@ -44,7 +44,7 @@ CREATE TABLE community_event (
     event_id INT GENERATED ALWAYS AS IDENTITY,
     creator_id INT NOT NULL,
     name VARCHAR(50) UNIQUE NOT NULL,
-    info VARCHAR(1000),
+    info VARCHAR,
     main_image_url VARCHAR,
     start_date BIGINT NOT NULL,
     end_date BIGINT NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE class (
     class_id INT GENERATED ALWAYS AS IDENTITY,
     creator_id INT NOT NULL,
     name VARCHAR(50) UNIQUE NOT NULL,
-    info VARCHAR(1000),
+    info VARCHAR,
     main_image_url VARCHAR,
     start_date BIGINT,
     end_date BIGINT,
@@ -127,21 +127,21 @@ VALUES
     (
         'florin',
         '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'flo rin',
-        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
-        'My name is florin. Description ... '
+        'Florin Florinberg',
+        'https://img.freepik.com/premium-vector/woman-profile-cartoon_18591-58477.jpg',
+        'I am a mature, positive and hardworking individual, who always strives to achieve the highest standard possible, at any given task. In my previous role as a Sales Representative, I demonstrated the ability to work under intense pressure, sell products and services to customers from all backgrounds, handle customer complaints and solve problematic situations as and when they arose. I was promoted twice for exceeding my sales targets.'
     ),
     (
         'Student1',
         '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'flo rin',
-        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
+        'Alex Mooney',
+        'https://bootdey.com/img/Content/avatar/avatar7.png',
         'My name is florin. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     ),
     (
         'Student2',
         '$2b$10$.pj1LTt4HxpVVg6fZDhdFOMBfiywBTikuDqx3KjDy85aJNyZ4IoJC',
-        'flo rin',
+        'Alex Mooney',
         'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
         'My name is florin'
     ),
@@ -171,6 +171,7 @@ INSERT INTO
     community_event (
         creator_id,
         name,
+        main_image_url,
         info,
         start_date,
         end_date
@@ -179,6 +180,7 @@ VALUES
     (
         1,
         'Florin Barbecue',
+        'https://www.teamais.net/wp-content/uploads/2021/06/How-to-Have-a-Fun-and-Safe-Barbecue-Experience.jpg',
         'Our annual summer barbecue. Everyone''s invited.',
         1688230800,
         1688240800
@@ -186,6 +188,7 @@ VALUES
     (
         1,
         'Florin Fun Fair',
+        'https://www.shropshirestar.com/resizer/brSwl2Q7ElYor0cclGjaICMlfXg=/1200x0/cloudfront-us-east-1.images.arcpublishing.com/mna/O7MVBMXF7JAIHF3757W44CY2RE.jpg',
         'Have a great time at our summer fun fair. Everyone''s invited.',
         1688230800,
         1689240800
@@ -202,6 +205,7 @@ INSERT INTO
     class (
         creator_id,
         name,
+        main_image_url,
         info,
         start_date,
         end_date,
@@ -210,18 +214,20 @@ INSERT INTO
 VALUES
     (
         1,
-        'Gardening 101',
-        'Learn to garden so you don''t have to hire one',
+        'Gardening',
+        'https://www.allaboutgardening.com/wp-content/uploads/2021/08/Child-Gardening-With-Shovel.jpg',
+        'Horticulture is the science and art of cultivating plants, encompassing the study of plant growth, propagation, and management. You can learn about the biology of plants, how to cultivate them for food, fibre, and aesthetic purposes, and how to manage plant pests and diseases. By studying with us, you will be introduced to a unique array of plant collections, both within our campuses and across the capital, providing you with the opportunity to work within some of Florin''s most prestigious parks and gardens.',
         1688230800,
         1688240800,
         5
     ),
     (
         1,
-        'Garbage Learning',
-        'Learn to manage rubbish disposal',
-        1688230800,
-        1688240800,
+        'Knitting',
+        'https://hips.hearstapps.com/hmg-prod/images/knitting-642aeeb5e6b60.jpg?crop=0.668xw:1.00xh;0.210xw,0&resize=1200:*',
+        'Want a relaxing hobby you can enjoy almost anywhere? Come along and discover knitting at this relaxed and friendly craft class. During this basic knitting class, you will learn how to cast on, to knit a garter stitch and to cast off. Throughout the class, you will receive hands-on help and support from your friendly teacher – get ready to knit your cares away!',
+        1688119079,
+        1689240800,
         5
     );
 
