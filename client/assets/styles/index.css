@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 body {
   background: linear-gradient(rgba(78, 226, 78, 0.5),rgba(247, 250, 155, 0.5)), url("../images/floral_background.jpg");
@@ -30,11 +31,10 @@ nav > button {
   background-color: transparent;
   border: none;
   color: white;
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
-  -webkit-text-fill-color: #f7ff00;
-  -webkit-text-stroke: 0.8px;
-  -webkit-text-stroke-color: #256e12;
+  font-family: 'Indie Flower';
+  color: #4d1055;
   padding: 10px;
   margin: 10px;
   cursor: pointer;
@@ -43,7 +43,7 @@ nav > button {
 
 nav > button:hover {
     transform: translate(0px, -3px);
-    text-shadow: 0px 2px 2px #842191;
+    text-shadow: 0px 2px 2px #f7ff00;
   background-color: transparent;
 }
 
@@ -59,7 +59,7 @@ svg {
 text {
   display: inline-block;
   fill: #e0b1a9;
-  stroke: #842191;
+  stroke: #0d7477;
   stroke-width: 1.5px;
   stroke-linejoin: round;
   animation: 3s pulsate infinite;
@@ -67,7 +67,7 @@ text {
 
 @keyframes pulsate {
   50% {
-    stroke-width: 6px;
-    stroke:#256e12;
+    stroke-width: 5px;
+    stroke:#4d1055;
   }
 }
