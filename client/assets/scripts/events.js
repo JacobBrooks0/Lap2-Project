@@ -133,7 +133,6 @@ const deleteBookmark = async (event) => {
       `https://florinate-api.onrender.com/events/${event.event_id}/bookmark`,
       options
     );
-    const data = await resp.json();
 
     if (resp.status == 204) {
       const popupText = document.createElement("p");
@@ -144,6 +143,7 @@ const deleteBookmark = async (event) => {
 
       setTimeout(() => window.location.reload(), 5000);
     } else {
+      const data = await resp.json();
       console.log(data.Error);
     }
   } catch (err) {
