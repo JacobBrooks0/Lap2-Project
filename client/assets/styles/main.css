@@ -15,6 +15,14 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    background: linear-gradient(rgba(78, 226, 78, 0.5),rgba(247, 250, 155, 0.5)), url("../images/floral_background.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+        margin: 0;
+        position: relative;
+      
 }
 
 h1,h2 {
@@ -124,6 +132,7 @@ form h1{
     /* margin:10px; */
     /* padding-left: 150px; */
     padding-top: 10px;
+    background: white;
 }
 
 

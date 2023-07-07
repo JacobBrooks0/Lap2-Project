@@ -46,7 +46,7 @@ async function checkForProfileDetails() {
       if (!(data.name && data.profile_summary)) {
         window.location.href = "profile-setup.html";
       } else {
-        window.location.href = "skills.html";
+        window.location.href = "profile.html";
       }
     } else {
       alert(data.Error);
