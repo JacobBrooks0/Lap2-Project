@@ -7,7 +7,7 @@
     "test": "npx jest --detectOpenHandles --coverage",
     "coverage": "jest --coverage",
     "dev": "nodemon ./index.js",
-    "set-up": "node ./database/setup.js",
+    "setup-db": "node ./database/setup.js",
     "start": "node index.js"
   },
   "keywords": [],
